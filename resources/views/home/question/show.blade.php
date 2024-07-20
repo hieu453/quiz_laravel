@@ -9,7 +9,7 @@
                 @foreach($question->options as $option)
                     <div class="form-check">
                         <input type="hidden" value="{{ count($questions) }}" name="number_of_questions">
-                        <input class="form-check-input" type="radio" name="answers[answer_{{ $question->id }}]" id="flexRadioDefault1" value="{{ $option->is_correct }}">
+                        <input class="form-check-input radio" type="radio" name="answers[answer_{{ $question->id }}]" id="radio_{{ $option->id }}" value="{{ $option->is_correct }}">
                         <label class="form-check-label" for="flexRadioDefault1">
                             {{ $option->text }}
                         </label>
@@ -46,5 +46,27 @@
                 display = document.querySelector('#timer');
             startTimer(fiveMinutes, display);
         };
+
+
+        $(document).ready(function(){
+            //get the selected radios from storage, or create a new empty object
+            var radioGroups = JSON.parse(localStorage.getItem('selected') || '{}');
+
+            //loop over the ids we previously selected and select them again
+            Object.values(radioGroups).forEach(function(radioId){
+                document.getElementById(radioId).checked = true;
+            });
+
+            //handle the click of each radio
+            $('.radio').on('click', function(){
+
+                //set the id in the object based on the radio group name
+                //the name lets us segregate the values and easily replace
+                //previously selected radios in the same group
+                radioGroups[this.name] = this.id;
+                //finally store the updated object in storage for later use
+                localStorage.setItem("selected", JSON.stringify(radioGroups));
+            });
+        });
     </script>
 @endpush

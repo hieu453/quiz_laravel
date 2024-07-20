@@ -45,7 +45,45 @@ class QuestionController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new QuestionImport($request->get('quiz_id')), request()->file('spreadsheet'));
+        Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
+
+        return redirect()->route('question.all');
+    }
+
+    public function edit(int $id)
+    {
+        $question = Question::where('id', $id)->first();
+        $quizzes = Quiz::all();
+
+        return view('admin.question.edit', compact('question', 'quizzes'));
+    }
+
+    public function update(int $id, Request $request)
+    {
+        //dd($request->all());
+        $question = Question::find($id);
+
+        $question->title = $request->title;
+        $question->quiz_id = $request->quiz_id;
+
+        $question->save();
+
+        foreach ($request->options as $option) {
+            if ($option['option_id'] == $request->get('correct')) {
+                Option::where('id', $request->get('correct'))->update([
+                    'text' => $option['text'],
+                    'is_correct' => 1
+                ]);
+                continue;
+            }
+
+            Option::where('id', $option['option_id'])->update([
+                'text' => $option['text'],
+                'is_correct' => 0
+            ]);
+        }
+
+
 
         return redirect()->route('question.all');
     }

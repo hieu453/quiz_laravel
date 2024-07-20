@@ -17,6 +17,7 @@
                         <th>Title</th>
                         <th>Created at</th>
                         <th>Updated at</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,10 @@
                             <td>{{ $question->title }}</td>
                             <td>{{ $question->created_at }}</td>
                             <td>{{ $question->updated_at }}</td>
+                            <td>
+                                <a href="{{ route('question.edit', ['id' => $question->id]) }}" class="btn btn-sm btn-success">Update</a>
+                                <a href="" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

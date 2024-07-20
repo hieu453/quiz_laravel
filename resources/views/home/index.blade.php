@@ -1,6 +1,12 @@
 @extends('home.app')
 @section('content')
     <div class="container-fluid">
+        @if(session('message'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('message') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <h1 class="mt-4">Quizzes</h1>
         <div class="row">
             @foreach($quizzes as $quiz)
@@ -14,6 +20,9 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="row">
+            {{ $quizzes->links() }}
         </div>
     </div>
 {{--    <div class="mt-5">--}}

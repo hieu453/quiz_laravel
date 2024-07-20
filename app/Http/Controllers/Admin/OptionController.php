@@ -12,7 +12,7 @@ class OptionController extends Controller
     public function create()
     {
         $questions = Question::where('has_options', 0)->get();
-
+        
         return view('admin.option.create', compact('questions'));
     }
 
@@ -22,8 +22,8 @@ class OptionController extends Controller
         $question->has_options = 1;
         $question->save();
 
-        foreach ($request->get('options') as $option) {
-            if (array_key_exists('is_correct', $option)) {
+        foreach ($request->get('options') as $key => $option) {
+            if ($key == $request->correct) {
                 Option::create([
                     'question_id' => $request->get('question_id'),
                     'text' => $option['text'],
@@ -38,6 +38,6 @@ class OptionController extends Controller
             }
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
 }

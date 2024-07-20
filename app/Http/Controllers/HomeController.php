@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $quizzes = Quiz::all();
+        $quizzes = Quiz::cursorPaginate(2);
 
         return view('home.index', compact('quizzes'));
     }
 
     public function showQuizQuestions(int $id)
     {
-        $questions = Question::where('quiz_id', $id)->get();
+        $questions = Question::where('quiz_id', $id)->inRandomOrder()->get();
 
         return view('home.question.show', compact('questions'));
     }
@@ -35,6 +35,13 @@ class HomeController extends Controller
             }
         }
 
+        $points = number_format((float)$points, 2, '.', '');
+
         return view('home.question.result', compact('points'));
     }
+
+//    public function result()
+//    {
+//        return view('home.question.result');
+//    }
 }

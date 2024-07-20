@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\QuizImport;
+use App\Jobs\ProcessExcel;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -27,7 +28,7 @@ class QuizController extends Controller
     {
         Quiz::create($request->all());
 
-        return redirect()->route('quiz.all');
+        return to_route('quiz.all');
     }
 
     public function importSpreadsheet()
@@ -37,8 +38,23 @@ class QuizController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new QuizImport, $request->file('spreadsheet'));
+        Excel::queueImport(new QuizImport, $request->file('spreadsheet'));
 
-        return redirect()->route('quiz.all');
+        return to_route('quiz.all');
+    }
+
+    public function edit(int $id)
+    {
+        $quiz = Quiz::where('id', $id)->first();
+
+        return view('admin.quiz.edit', compact('quiz'));
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $quiz = Quiz::where('id', $id)->first();
+        $quiz->update($request->all());
+
+        return to_route('quiz.all');
     }
 }
