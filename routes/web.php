@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/quiz/{id}', [HomeController::class, 'showQuizQuestions'])->name('quiz.questions.show');
@@ -23,14 +25,18 @@ Route::prefix('admin')->group(function () {
     Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
     Route::get('/question-edit/{id}', [QuestionController::class, 'edit'])->name('question.edit');
     Route::post('/question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
+    Route::delete('/question-delete/{id}', [QuestionController::class, 'destroy'])->name('question.delete');
+    Route::delete('/question-deleteMultiple', [QuestionController::class, 'deleteMultiple'])->name('question.deleteMultiple');
 
     Route::get('/quiz-all', [QuizController::class, 'all'])->name('quiz.all');
     Route::get('/quiz-create', [QuizController::class, 'create'])->name('quiz.create');
     Route::get('/quiz-import', [QuizController::class, 'importSpreadsheet'])->name('quiz.import');
     Route::post('/quiz-import', [QuizController::class, 'import'])->name('quiz.import.store');
     Route::get('/quiz-edit/{id}', [QuizController::class, 'edit'])->name('quiz.edit');
-    Route::post('/quiz-update/{id}', [QuizController::class, 'update'])->name('quiz.update');
+    Route::put('/quiz-update/{id}', [QuizController::class, 'update'])->name('quiz.update');
     Route::post('/quiz-store', [QuizController::class, 'store'])->name('quiz.store');
+    Route::delete('quiz-delete/{id}', [QuizController::class, 'destroy'])->name('quiz.delete');
+    Route::delete('/quiz-deleteMultiple', [QuizController::class, 'deleteMultiple'])->name('quiz.deleteMultiple');
 
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');
     Route::post('/option-store', [OptionController::class, 'store'])->name('option.store');

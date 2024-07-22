@@ -1,7 +1,7 @@
 @extends('home.app')
 @section('content')
     <div class="mt-5">
-        <h2 id="timer">50:00</h2>
+        <h2 id="timer"></h2>
         <form id="question-form" action="{{ route('checkResult') }}" method="POST">
             @csrf
             @foreach($questions as $question)
@@ -22,32 +22,49 @@
 @endsection
 @push('javascript')
     <script>
-        function startTimer(duration, display) {
-            const questionForm = document.getElementById('question-form');
-            var timer = duration, minutes, seconds;
-            const x = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+        let minutes = 1;
+        let seconds = 0;
+        const questionForm = document.getElementById('question-form');
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(x);
-                    questionForm.submit();
-                }
-            }, 1000);
+        if (localStorage.getItem('currentTime')) {
+            minutes = JSON.parse(localStorage.getItem('currentTime')).minutes
+            seconds = JSON.parse(localStorage.getItem('currentTime')).seconds
         }
 
-        window.onload = function () {
-            var fiveMinutes = 60 * 50,
-                display = document.querySelector('#timer');
-            startTimer(fiveMinutes, display);
-        };
+        var timer = new Timer(/* default config */);
+        timer.start({
+            precision: 'seconds',
+            countdown: true,
+            startValues: {
+                minutes: minutes,
+                seconds: seconds
+            },
+            target: {
+                seconds: 0
+            }
+        });
+
+        // update every seconds
+        timer.addEventListener("secondsUpdated", function (e) {
+            $("#timer").html(timer.getTimeValues().toString());
+            let currentTime = {
+                'minutes': timer.getTimeValues().minutes,
+                'seconds': timer.getTimeValues().seconds
+            }
+            localStorage.setItem('currentTime', JSON.stringify(currentTime))
+        });
+
+        // when time reaches 0 then remove all localStorage and submit form
+        timer.addEventListener('targetAchieved', function () {
+            timer.stop();
+            localStorage.removeItem('currentTime');
+            localStorage.removeItem('selected');
+            questionForm.submit();
+        });
 
 
+
+        // remain answers
         $(document).ready(function(){
             //get the selected radios from storage, or create a new empty object
             var radioGroups = JSON.parse(localStorage.getItem('selected') || '{}');
@@ -67,6 +84,12 @@
                 //finally store the updated object in storage for later use
                 localStorage.setItem("selected", JSON.stringify(radioGroups));
             });
+
+            questionForm.addEventListener('submit', () => {
+                timer.stop();
+                localStorage.removeItem('currentTime');
+                localStorage.removeItem('selected');
+            })
         });
     </script>
 @endpush

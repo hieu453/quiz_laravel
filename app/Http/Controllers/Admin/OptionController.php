@@ -12,7 +12,7 @@ class OptionController extends Controller
     public function create()
     {
         $questions = Question::where('has_options', 0)->get();
-        
+
         return view('admin.option.create', compact('questions'));
     }
 
@@ -38,6 +38,6 @@ class OptionController extends Controller
             }
         }
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->back()->with('success', 'Option added');
     }
 }

@@ -28,6 +28,10 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
+        $quiz = Quiz::where('id', $request->get('quiz_id'))->first();
+        $quiz->has_questions = 1;
+        $quiz->save();
+
         Question::create([
             'quiz_id' => $request->get('quiz_id'),
             'title' => $request->get('title'),
@@ -47,7 +51,7 @@ class QuestionController extends Controller
     {
         Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
 
-        return redirect()->route('question.all');
+        return redirect()->back()->with('success', 'Excel Data Imported successfully.');
     }
 
     public function edit(int $id)
@@ -83,8 +87,24 @@ class QuestionController extends Controller
             ]);
         }
 
-
-
         return redirect()->route('question.all');
+    }
+
+    public function destroy(int $id)
+    {
+        Question::where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Question deleted successfully.');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+//        Question::destroy($request->get('ids'));
+
+//        Question::destroy([4, 5]);
+//        $questions = Question::where('id', 4)->first();
+//
+//        dd($questions);
+//        return response()->json(['message' => 'Question deleted successfully.']);
     }
 }

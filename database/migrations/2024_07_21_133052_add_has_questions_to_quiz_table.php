@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('option', function (Blueprint $table) {
-            $table->boolean('is_correct')->default(false);
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->boolean('has_questions')->default(false);
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('option', function (Blueprint $table) {
+        Schema::table('quizzes', function (Blueprint $table) {
             //
         });
     }

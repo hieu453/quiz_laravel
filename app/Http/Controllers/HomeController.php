@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $quizzes = Quiz::cursorPaginate(2);
+        $quizzes = Quiz::where('has_questions', 1)->cursorPaginate(2);
 
         return view('home.index', compact('quizzes'));
     }
@@ -18,6 +18,11 @@ class HomeController extends Controller
     public function showQuizQuestions(int $id)
     {
         $questions = Question::where('quiz_id', $id)->inRandomOrder()->get();
+
+        $questions = Question::where([
+            ['quiz_id', '=', $id],
+            ['has_options', '=', 1]
+        ])->inRandomOrder()->get();
 
         return view('home.question.show', compact('questions'));
     }
@@ -44,4 +49,5 @@ class HomeController extends Controller
 //    {
 //        return view('home.question.result');
 //    }
+
 }

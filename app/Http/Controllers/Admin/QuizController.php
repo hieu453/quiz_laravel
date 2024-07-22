@@ -40,7 +40,7 @@ class QuizController extends Controller
     {
         Excel::queueImport(new QuizImport, $request->file('spreadsheet'));
 
-        return to_route('quiz.all');
+        return redirect()->back()->with('success', 'Import success!');
     }
 
     public function edit(int $id)
@@ -56,5 +56,19 @@ class QuizController extends Controller
         $quiz->update($request->all());
 
         return to_route('quiz.all');
+    }
+
+    public function destroy(int $id)
+    {
+        Quiz::where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Delete success!');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        Quiz::destroy($request->get('ids'));
+
+        return response()->json(['message' => 'Delete quiz success!']);
     }
 }
