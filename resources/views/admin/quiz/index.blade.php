@@ -90,10 +90,16 @@
                                 },
                                 success: function (data) {
                                     table.rows({ selected: true }).remove().draw();
+                                    table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+                                    table.button().disable();
+
+                                    Toastify({
+                                        text: "Selected rows deleted",
+                                        close: true,
+                                        duration: 2000
+                                    }).showToast();
                                 }
                             })
-
-
                         }
                     }
                 ]
