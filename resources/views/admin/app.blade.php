@@ -44,6 +44,16 @@
 <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="{{ asset('js/scripts.js')  }}"></script>
+
+{{--Ajax setup--}}
+<script>
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
+
 @stack('javascript')
 </body>
 </html>

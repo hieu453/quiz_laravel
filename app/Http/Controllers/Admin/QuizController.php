@@ -38,7 +38,7 @@ class QuizController extends Controller
 
     public function import(Request $request)
     {
-        Excel::queueImport(new QuizImport, $request->file('spreadsheet'));
+        Excel::import(new QuizImport, $request->file('spreadsheet'));
 
         return redirect()->back()->with('success', 'Import success!');
     }

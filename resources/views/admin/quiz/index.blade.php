@@ -1,5 +1,23 @@
 @extends('admin.app')
 @section('content')
+    <!-- Modal -->
+    <div class="modal fade" id="quizDeleteModal" tabindex="-1" aria-labelledby="quizDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="quizDeleteModal">Xoá những record này?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger" id="delete-record">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid px-4">
         <h1 class="mt-4">All Quizzes</h1>
 
@@ -37,11 +55,12 @@
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
                                 <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-success">Update</a>
-                                <form action="{{ route('quiz.delete', ['id' => $quiz->id]) }}" method="POST" class="btn">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+{{--                                <form action="{{ route('quiz.delete', ['id' => $quiz->id]) }}" method="POST" class="btn">--}}
+{{--                                    @csrf--}}
+{{--                                    @method('DELETE')--}}
+{{--                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>--}}
+{{--                                </form>--}}
+                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -53,11 +72,18 @@
 @endsection
 @push('javascript')
 <script>
-    // let table = $('quizTable').DataTable()
     const ids = [];
     let state = false;
 
     let table = new DataTable('#quizTable', {
+        columns: [
+            { searchable: false },
+            { searchable: false },
+            null,
+            { searchable: false },
+            { searchable: false },
+            { searchable: false },
+        ],
         columnDefs: [
             {
                 orderable: false,
@@ -71,34 +97,16 @@
                     {
                         text: 'Delete record(s): 0',
                         className: 'btn btn-success',
+                        attr: {
+                            'data-bs-toggle': "modal",
+                            'data-bs-target': "#quizDeleteModal"
+                        },
                         action: function () {
-                            const ids = [];
                             const data = table.rows({ selected: true }).data();
                             data.each((item) => {
                                 // push id of each item into ids array
                                 ids.push(item[1])
-                            })
-
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: '/admin/quiz-deleteMultiple',
-                                type: 'DELETE',
-                                data: {
-                                    ids: ids
-                                },
-                                success: function (data) {
-                                    table.rows({ selected: true }).remove().draw();
-                                    table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
-                                    table.button().disable();
-
-                                    Toastify({
-                                        text: "Selected rows deleted",
-                                        close: true,
-                                        duration: 2000
-                                    }).showToast();
-                                }
+                                console.log(item[1])
                             })
                         }
                     }
@@ -124,5 +132,28 @@
         }
     })
 
+    // Ajax call to delete records
+    $('#delete-record').on('click', () => {
+        $.ajax({
+            url: '/admin/quiz-deleteMultiple',
+            type: 'DELETE',
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                table.rows({ selected: true }).remove().draw();
+                table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+                table.button().disable();
+
+                $('#quizDeleteModal').modal('hide');
+
+                Toastify({
+                    text: "Selected rows deleted",
+                    close: true,
+                    duration: 2000
+                }).showToast();
+            }
+        })
+    })
 </script>
 @endpush
