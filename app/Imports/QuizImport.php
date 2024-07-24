@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class QuizImport implements ToModel, WithChunkReading, ShouldQueue
+class QuizImport implements ToModel
 {
     /**
     * @param array $row
@@ -19,10 +19,5 @@ class QuizImport implements ToModel, WithChunkReading, ShouldQueue
         return new Quiz([
             'title' => $row[0],
         ]);
-    }
-
-    public function chunkSize(): int
-    {
-        return 1000;
     }
 }

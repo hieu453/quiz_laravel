@@ -42,6 +42,11 @@
 <script src="https://cdn.datatables.net/select/2.0.3/js/select.dataTables.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.colVis.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="{{ asset('js/scripts.js')  }}"></script>
 

@@ -9,7 +9,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    Hành động này sẽ xóa vĩnh viễn!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -88,7 +88,7 @@
             {
                 orderable: false,
                 render: DataTable.render.select(),
-                targets: 0
+                targets: 0,
             }
         ],
         layout: {
@@ -109,7 +109,23 @@
                                 console.log(item[1])
                             })
                         }
-                    }
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Export excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        },
+                        className: 'btn btn-primary'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'Export pdf',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        },
+                        className: 'btn btn-danger'
+                    },
                 ]
             }
         },
