@@ -23,7 +23,7 @@ class QuestionImport implements ToModel
     {
         return new Question([
             'title' => $row[0],
-            'quiz_id' => $this->quizId
+            'quiz_id' => $this->quizId,
         ]);
     }
 }

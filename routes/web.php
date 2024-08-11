@@ -7,15 +7,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
+use App\Http\Middleware\CheckIfUserIsAdmin;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/quiz/{id}', [HomeController::class, 'showQuizQuestions'])->name('quiz.questions.show');
-Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
-Route::get('/result/{uuid}', [HomeController::class, 'result'])->name('result');
+Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
 
-Route::prefix('admin')->group(function () {
+Route::middleware('auth')->group(function () {
+    Route::get('/quiz/{id}/start', [HomeController::class, 'startQuizQuestions'])->name('quiz.start');
+    Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
+    Route::get('/result/{uuid}', [HomeController::class, 'result'])->name('result');
+});
+
+Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/question-all', [QuestionController::class, 'all'])->name('question.all');
@@ -29,7 +32,6 @@ Route::prefix('admin')->group(function () {
     Route::delete('/question-deleteMultiple', [QuestionController::class, 'deleteMultiple'])->name('question.deleteMultiple');
 
     Route::get('/quiz-all', [QuizController::class, 'all'])->name('quiz.all');
-    Route::get('/quiz-create', [QuizController::class, 'create'])->name('quiz.create');
     Route::get('/quiz-import', [QuizController::class, 'importSpreadsheet'])->name('quiz.import');
     Route::post('/quiz-import', [QuizController::class, 'import'])->name('quiz.import.store');
     Route::get('/quiz-edit/{id}', [QuizController::class, 'edit'])->name('quiz.edit');
@@ -40,6 +42,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');
     Route::post('/option-store', [OptionController::class, 'store'])->name('option.store');
+
+    Route::get('/activities', [\App\Http\Controllers\ActivitiesController::class, 'activities'])->name('activities');
 });
 
 Route::get('/dashboard', function () {

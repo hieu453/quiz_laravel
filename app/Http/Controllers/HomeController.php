@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\User;
+use App\Events\PlayQuiz;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Events\NotificationEvent;
+use App\Notifications\ClickButton;
+use App\Notifications\exBroadcast;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -15,14 +22,31 @@ class HomeController extends Controller
         return view('home.index', compact('quizzes'));
     }
 
-    public function showQuizQuestions(int $id)
+    public function quizDetail(int $id)
     {
+        $quiz = Quiz::find($id);
+        return view('home.quiz.detail', compact('quiz'));
+    }
+
+    public function startQuizQuestions(int $id)
+    {
+        $user = User::where('is_admin', 1)->first();
+
+        $currentUser = Auth::user()->name;
         $questions = Question::where('quiz_id', $id)->inRandomOrder()->get();
 
         $questions = Question::where([
             ['quiz_id', '=', $id],
             ['has_options', '=', 1]
         ])->inRandomOrder()->get();
+
+        $notification = new \MBarlow\Megaphone\Types\General(
+            'Expected Downtime!', // Notification Title
+            "User {$currentUser} is playing quiz" // Notification text
+        );
+
+        // NotificationEvent::dispatch();
+        $user->notify($notification);
 
         return view('home.question.show', compact('questions'));
     }

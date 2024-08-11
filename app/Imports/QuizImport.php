@@ -18,6 +18,7 @@ class QuizImport implements ToModel
     {
         return new Quiz([
             'title' => $row[0],
+            'has_questions' => 1
         ]);
     }
 }

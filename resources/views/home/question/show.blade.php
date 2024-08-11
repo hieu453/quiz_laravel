@@ -22,50 +22,59 @@
 @endsection
 @push('javascript')
     <script>
-        let minutes = 1;
-        let seconds = 0;
-        const questionForm = document.getElementById('question-form');
+        $(document).ready(function() {
+            // Show remaining time
+            let minutes = 2;
+            let seconds = 0;
+            const questionForm = $('#question-form');
 
-        if (localStorage.getItem('currentTime')) {
-            minutes = JSON.parse(localStorage.getItem('currentTime')).minutes
-            seconds = JSON.parse(localStorage.getItem('currentTime')).seconds
-        }
-
-        var timer = new Timer(/* default config */);
-        timer.start({
-            precision: 'seconds',
-            countdown: true,
-            startValues: {
-                minutes: minutes,
-                seconds: seconds
-            },
-            target: {
-                seconds: 0
+            if (localStorage.getItem('currentTime')) {
+                minutes = JSON.parse(localStorage.getItem('currentTime')).minutes
+                seconds = JSON.parse(localStorage.getItem('currentTime')).seconds
             }
-        });
 
-        // update every seconds
-        timer.addEventListener("secondsUpdated", function (e) {
+            var timer = new Timer(/* default config */);
+            timer.start({
+                precision: 'seconds',
+                countdown: true,
+                startValues: {
+                    minutes: minutes,
+                    seconds: seconds
+                },
+                target: {
+                    seconds: 0
+                }
+            });
+            // Initialize time
             $("#timer").html(timer.getTimeValues().toString());
-            let currentTime = {
-                'minutes': timer.getTimeValues().minutes,
-                'seconds': timer.getTimeValues().seconds
-            }
-            localStorage.setItem('currentTime', JSON.stringify(currentTime))
-        });
 
-        // when time reaches 0 then remove all localStorage and submit form
-        timer.addEventListener('targetAchieved', function () {
-            timer.stop();
-            localStorage.removeItem('currentTime');
-            localStorage.removeItem('selected');
-            questionForm.submit();
-        });
+            // update every seconds
+            timer.addEventListener("secondsUpdated", function (e) {
+                $("#timer").html(timer.getTimeValues().toString());
+                let currentTime = {
+                    'minutes': timer.getTimeValues().minutes,
+                    'seconds': timer.getTimeValues().seconds
+                }
+                localStorage.setItem('currentTime', JSON.stringify(currentTime))
+            });
+
+            // when time reaches 0 then remove all localStorage and submit form
+            timer.addEventListener('targetAchieved', function () {
+                timer.stop();
+                localStorage.removeItem('currentTime');
+                localStorage.removeItem('selected');
+                questionForm.submit();
+            });
+
+            // when click submit button
+            questionForm.on('submit', () => {
+                timer.stop();
+                localStorage.removeItem('currentTime');
+                localStorage.removeItem('selected');
+            })
 
 
-
-        // remain answers
-        $(document).ready(function(){
+            // remain answers
             //get the selected radios from storage, or create a new empty object
             var radioGroups = JSON.parse(localStorage.getItem('selected') || '{}');
 
@@ -76,7 +85,6 @@
 
             //handle the click of each radio
             $('.radio').on('click', function(){
-
                 //set the id in the object based on the radio group name
                 //the name lets us segregate the values and easily replace
                 //previously selected radios in the same group
@@ -84,12 +92,6 @@
                 //finally store the updated object in storage for later use
                 localStorage.setItem("selected", JSON.stringify(radioGroups));
             });
-
-            questionForm.addEventListener('submit', () => {
-                timer.stop();
-                localStorage.removeItem('currentTime');
-                localStorage.removeItem('selected');
-            })
         });
     </script>
 @endpush

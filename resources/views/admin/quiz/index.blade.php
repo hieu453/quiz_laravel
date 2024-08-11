@@ -1,23 +1,11 @@
 @extends('admin.app')
 @section('content')
-    <!-- Modal -->
-    <div class="modal fade" id="quizDeleteModal" tabindex="-1" aria-labelledby="quizDeleteModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="quizDeleteModal">Xoá những record này?</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Hành động này sẽ xóa vĩnh viễn!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger" id="delete-record">Xóa</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Modal Delete -->
+    @include('admin.quiz.modals.delete-modal')
+
+    {{-- Modal Add --}}
+    @include('admin.quiz.modals.add-modal')
+
     <div class="container-fluid px-4">
         <h1 class="mt-4">All Quizzes</h1>
 
@@ -30,8 +18,10 @@
 
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                DataTable Example
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuizModal">
+                    Add Quiz
+                </button>
             </div>
             <div class="card-body">
                 <table id="quizTable" class="table table-striped display">
@@ -72,104 +62,14 @@
 @endsection
 @push('javascript')
 <script>
-    const ids = [];
-    let state = false;
-
-    let table = new DataTable('#quizTable', {
-        columns: [
-            { searchable: false },
-            { searchable: false },
-            null,
-            { searchable: false },
-            { searchable: false },
-            { searchable: false },
-        ],
-        columnDefs: [
-            {
-                orderable: false,
-                render: DataTable.render.select(),
-                targets: 0,
-            }
-        ],
-        layout: {
-            topStart: {
-                buttons: [
-                    {
-                        text: 'Delete record(s): 0',
-                        className: 'btn btn-success',
-                        attr: {
-                            'data-bs-toggle': "modal",
-                            'data-bs-target': "#quizDeleteModal"
-                        },
-                        action: function () {
-                            const data = table.rows({ selected: true }).data();
-                            data.each((item) => {
-                                // push id of each item into ids array
-                                ids.push(item[1])
-                                console.log(item[1])
-                            })
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        text: 'Export excel',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        },
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'pdf',
-                        text: 'Export pdf',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        },
-                        className: 'btn btn-danger'
-                    },
-                ]
-            }
-        },
-        select: true,
-    })
-
-    table.button().disable();
-
-    table.on('select', () => {
-        table.button().enable();
-        table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
-    })
-
-    table.on('deselect', () => {
-        if (table.rows({ selected: true }).count()) {
-            table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
-        } else {
-            table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
-            table.button().disable();
-        }
-    })
-
-    // Ajax call to delete records
-    $('#delete-record').on('click', () => {
-        $.ajax({
-            url: '/admin/quiz-deleteMultiple',
-            type: 'DELETE',
-            data: {
-                ids: ids
-            },
-            success: function (data) {
-                table.rows({ selected: true }).remove().draw();
-                table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
-                table.button().disable();
-
-                $('#quizDeleteModal').modal('hide');
-
-                Toastify({
-                    text: "Selected rows deleted",
-                    close: true,
-                    duration: 2000
-                }).showToast();
-            }
-        })
-    })
+    const columnsSettings = [
+        { searchable: false },
+        { searchable: false },
+        null,
+        { searchable: false },
+        { searchable: false },
+        { searchable: false },
+    ]
+    datatable('#quizTable', '#quizDeleteModal', "{{ route('quiz.deleteMultiple') }}", columnsSettings)
 </script>
 @endpush

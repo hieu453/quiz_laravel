@@ -3,7 +3,7 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">Dashboard</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Dashboard</li>
+            
         </ol>
         <div class="row">
             <div class="col-xl-3 col-md-6">
@@ -25,5 +25,32 @@
                 </div>
             </div>
         </div>
+        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+        Charts
+        <div style="width: 18rem;">
+            <canvas id="chartStatistics"></canvas>
+        </div>
     </div>
 @endsection
+@push('javascript')
+<script>
+    const ctx = $('#chartStatistics')
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Quizzes', 'Questions'],
+            datasets: [{
+                label: 'Dataset',
+                data: [{{ $numberOfQuizzes }}, {{ $numberOfQuestions }}],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                ],
+                hoverOffset: 4,
+                borderWidth: 0.5
+            }],
+        },
+    });
+</script>
+@endpush

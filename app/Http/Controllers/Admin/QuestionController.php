@@ -15,15 +15,9 @@ class QuestionController extends Controller
     public function all()
     {
         $questions = Question::all();
-
-        return view('admin.question.index', compact('questions'));
-    }
-
-    public function create()
-    {
         $quizzes = Quiz::all();
 
-        return view('admin.question.create', compact('quizzes'));
+        return view('admin.question.index', compact('questions', 'quizzes'));
     }
 
     public function store(Request $request)
@@ -99,12 +93,8 @@ class QuestionController extends Controller
 
     public function deleteMultiple(Request $request)
     {
-//        Question::destroy($request->get('ids'));
+        Question::destroy($request->get('ids'));
 
-//        Question::destroy([4, 5]);
-//        $questions = Question::where('id', 4)->first();
-//
-//        dd($questions);
-//        return response()->json(['message' => 'Question deleted successfully.']);
+        return response()->json(['message' => 'Question deleted successfully.']);
     }
 }
