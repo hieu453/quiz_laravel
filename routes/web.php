@@ -1,21 +1,50 @@
 <?php
 
-use App\Http\Controllers\Admin\OptionController;
-use App\Http\Controllers\Admin\QuestionController;
-use App\Http\Controllers\Admin\QuizController;
+use App\Models\Quiz;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckIfUserIsAdmin;
+use App\Http\Controllers\Admin\QuizController;
+use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\CommentController;
+use Illuminate\Http\Request;
+
+// Get all users who commented on post
+// $comments = Comment::where('quiz_id', 7)->get();
+// $users = $comments->map->user->unique('id');
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
+Route::get('/test', function (Request $request) {
+
+    $quiz = Quiz::where('id', 7)->first();
+    $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
+    // $replies = Comment::whereNotNull('parent_id')->get();
+    $quiz_id = $quiz->id;
+
+    if ($request->ajax()) {
+        $view = view('home.quiz.comments.comments', compact('comments', 'quiz_id'))->render();
+
+        return response()->json(['html' => $view]);
+    }
+
+    return view('home.quiz.comments.index', [
+        'quiz'      =>  $quiz,
+        'comments'  =>  $comments,
+    ]);
+})->name('comments.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/quiz/{id}/start', [HomeController::class, 'startQuizQuestions'])->name('quiz.start');
     Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
     Route::get('/result/{uuid}', [HomeController::class, 'result'])->name('result');
+
+    Route::post('/comment-store', [CommentController::class, 'store'])->name('comment.store');
+    Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
 });
 
 Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
