@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
@@ -24,5 +25,10 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function quiz(): BelongsTo
+    {
+        return $this->belongsTo(Quiz::class, 'quiz_id', 'id');
     }
 }

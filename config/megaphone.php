@@ -23,7 +23,6 @@ return [
             Associative array in the format of
             \Namespace\To\Notification::class => 'path.to.view',
          */
-        \App\Megaphone\CustomNotification::class => 'megaphone.custom-notification',
     ],
 
     /*

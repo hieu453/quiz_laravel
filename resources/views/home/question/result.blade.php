@@ -11,6 +11,7 @@
                     <p class="congratulation-contents-para"> Bấm nút dưới để về trang chủ. </p>
                     <div class="btn-wrapper mt-4">
                         <a href="{{ route('index') }}" class="cmn-btn btn btn-primary"> Go to Home </a>
+                        <a href="{{ route('show.correct', ['id' => $quiz_id]) }}" class="cmn-btn btn btn-success">Xem dap an</a>
                     </div>
                 </div>
             </div>

@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\User;
+use App\Models\Option;
+use App\Models\Comment;
 use App\Events\PlayQuiz;
 use App\Models\Question;
+use App\Models\UserPoint;
+use App\Models\UserAnswer;
 use Illuminate\Http\Request;
 use App\Events\NotificationEvent;
 use App\Notifications\ClickButton;
@@ -22,33 +26,34 @@ class HomeController extends Controller
         return view('home.index', compact('quizzes'));
     }
 
-    public function quizDetail(int $id)
+    public function quizDetail(int $id, Request $request)
     {
         $quiz = Quiz::find($id);
-        return view('home.quiz.detail', compact('quiz'));
+        $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
+
+        if ($request->ajax()) {
+            $view = view('home.quiz.comments.comments', compact('comments'))->render();
+
+            return response()->json(['html' => $view]);
+        }
+
+        return view('home.quiz.detail', [
+            'quiz'      =>  $quiz,
+            'comments'  =>  $comments,
+        ]);
     }
 
     public function startQuizQuestions(int $id)
     {
-        $user = User::where('is_admin', 1)->first();
-
-        $currentUser = Auth::user()->name;
-        $questions = Question::where('quiz_id', $id)->inRandomOrder()->get();
-
         $questions = Question::where([
             ['quiz_id', '=', $id],
             ['has_options', '=', 1]
         ])->inRandomOrder()->get();
 
-        $notification = new \MBarlow\Megaphone\Types\General(
-            'Expected Downtime!', // Notification Title
-            "User {$currentUser} is playing quiz" // Notification text
-        );
-
-        // NotificationEvent::dispatch();
-        $user->notify($notification);
-
-        return view('home.question.show', compact('questions'));
+        return view('home.question.show', [
+            'questions' => $questions,
+            'quiz_id'      => $id,
+        ]);
     }
 
     public function checkResult(Request $request)
@@ -56,22 +61,47 @@ class HomeController extends Controller
         $pointPerQuestion = (float)10 / $request->number_of_questions;
         $points = 0;
 
-        if ($request->answers) {
-            foreach ($request->answers as $answer) {
-                if ((int) $answer == 1) {
+        $answers = Option::find($request->answers);
+
+        if ($answers) {
+            foreach ($answers as $answer) {
+                if ($answer->is_correct == 1) {
                     $points += $pointPerQuestion;
                 }
             }
         }
 
         $points = number_format((float)$points, 2, '.', '');
+        UserAnswer::create([
+            'user_id' => Auth::user()->id,
+            'quiz_id' => $request->quiz_id,
+            'answers' => $request->answers
+        ]);
 
-        return view('home.question.result', compact('points'));
+        // UserPoint::create([
+        //     'user_id' => Auth::user()->id,
+        //     'quiz_id' => $request->quiz_id,
+        //     'points'  => $points
+        // ]);
+
+        return view('home.question.result', [
+            'points'    => $points,
+            'quiz_id'   => $request->quiz_id
+        ]);
     }
 
-//    public function result()
-//    {
-//        return view('home.question.result');
-//    }
+    public function showCorrectAnswer($id)
+    {
+        $userAnswersIds = UserAnswer::where('quiz_id', $id)->orderBy('id', 'desc')->first()->answers;
+        $questions = Quiz::find($id)->questions;
+        // dd($questions);
+
+        $userAnswers = Option::find($userAnswersIds);
+
+        return view('home.question.correct-answers', [
+            'questions'     => $questions,
+            'userAnswers'   => $userAnswers
+        ]);
+    }
 
 }

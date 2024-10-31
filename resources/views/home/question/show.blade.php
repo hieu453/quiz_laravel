@@ -8,8 +8,9 @@
                 <h4>{{ $question->title }}</h4>
                 @foreach($question->options as $option)
                     <div class="form-check">
-                        <input type="hidden" value="{{ count($questions) }}" name="number_of_questions">
-                        <input class="form-check-input radio" type="radio" name="answers[answer_{{ $question->id }}]" id="radio_{{ $option->id }}" value="{{ $option->is_correct }}">
+                        <input type="hidden" name="number_of_questions" value="{{ count($questions) }}">
+                        <input type="hidden" name="quiz_id" value="{{ $quiz_id }}">
+                        <input class="form-check-input radio" type="radio" name="answers[answer_{{ $question->id }}]" id="radio_{{ $option->id }}" value="{{ $option->id }}">
                         <label class="form-check-label" for="flexRadioDefault1">
                             {{ $option->text }}
                         </label>

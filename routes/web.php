@@ -1,50 +1,84 @@
 <?php
 
-use App\Models\Quiz;
-use App\Models\Comment;
+
+use App\Models\User;
+use App\Models\Option;
+use App\Models\UserAnswer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Notifications\NewAnnouncement;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckIfUserIsAdmin;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\CommentController;
-use Illuminate\Http\Request;
 
 // Get all users who commented on post
 // $comments = Comment::where('quiz_id', 7)->get();
 // $users = $comments->map->user->unique('id');
 
+
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/test', function () {
+    return view('home.quiz.index');
+});
 Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
-Route::get('/test', function (Request $request) {
 
-    $quiz = Quiz::where('id', 7)->first();
-    $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
-    // $replies = Comment::whereNotNull('parent_id')->get();
-    $quiz_id = $quiz->id;
+// Route::get('/test', function (Request $request) {
 
-    if ($request->ajax()) {
-        $view = view('home.quiz.comments.comments', compact('comments', 'quiz_id'))->render();
+//     $quiz = Quiz::where('id', 7)->first();
+//     $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
+//     // $replies = Comment::whereNotNull('parent_id')->get();
+//     $quiz_id = $quiz->id;
 
-        return response()->json(['html' => $view]);
-    }
+//     if ($request->ajax()) {
+//         $view = view('home.quiz.comments.comments', compact('comments', 'quiz_id'))->render();
 
-    return view('home.quiz.comments.index', [
-        'quiz'      =>  $quiz,
-        'comments'  =>  $comments,
-    ]);
-})->name('comments.index');
+//         return response()->json(['html' => $view]);
+//     }
+
+//     return view('home.quiz.comments.index', [
+//         'quiz'      =>  $quiz,
+//         'comments'  =>  $comments,
+//     ]);
+// })->name('comments.index');
+
+// Route::get('/more-comments', [CommentController::class, 'showMoreComment'])->name('comments.index');
+
+
 
 Route::middleware('auth')->group(function () {
+    Route::get('/send', function () {
+        $messages = [
+            'title'     => 'Hello World',
+            'body'      => 'This is a text',
+            'link'      => '',
+            'linkText'  => ''
+        ];
+
+        $user = User::where('is_admin', 0)->first();
+
+        $user->notify(new NewAnnouncement($messages));
+    });
+
+    Route::get('/unread-notifications', function () {
+        return Auth::user()->unreadNotifications->count();
+    });
+
+
     Route::get('/quiz/{id}/start', [HomeController::class, 'startQuizQuestions'])->name('quiz.start');
     Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
-    Route::get('/result/{uuid}', [HomeController::class, 'result'])->name('result');
+    Route::get('/show-correct-answer/quiz/{id}', [HomeController::class, 'showCorrectAnswer'])->name('show.correct');
 
     Route::post('/comment-store', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
+
+    Route::get('/notification/{id}', [NotificationController::class, 'index'])->name('notification.index');
 });
 
 Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
@@ -75,9 +109,9 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::get('/activities', [\App\Http\Controllers\ActivitiesController::class, 'activities'])->name('activities');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

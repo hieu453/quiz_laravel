@@ -55,7 +55,7 @@
                     @csrf
                     <div class="form-group">
                         <textarea name="message" class="form-control"></textarea>
-                        <input type="hidden" name="quiz_id" value="{{ $quiz_id }}" />
+                        <input type="hidden" name="quiz_id" value="{{ $comment->quiz->id }}" />
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                     </div>
 
@@ -72,13 +72,14 @@
                     @csrf
                     <div class="form-group">
                         <textarea name="message" class="form-control"></textarea>
-                        <input type="hidden" name="quiz_id" value="{{ $quiz_id }}" />
+                        <input type="hidden" name="quiz_id" value="{{ $comment->quiz->id }}" />
                         <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                     </div>
 
                     <div class="form-group mt-2">
                         <input type="submit" class="btn btn-warning" value="Reply" />
+                        <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
             </div>
@@ -120,7 +121,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <textarea name="message" class="form-control"></textarea>
-                                    <input type="hidden" name="quiz_id" value="{{ $quiz_id }}" />
+                                    <input type="hidden" name="quiz_id" value="{{ $comment->quiz->id }}" />
                                     <input type="hidden" name="parent_id" value="{{ $comment->id }}" />
                                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 </div>

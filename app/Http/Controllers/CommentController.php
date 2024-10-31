@@ -21,4 +21,17 @@ class CommentController extends Controller
 
         return redirect()->back();
     }
+
+    // public function showMoreComment(Request $request)
+    // {
+    //     $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
+
+    //     $quiz_id = $quiz->id;
+
+    //     if ($request->ajax()) {
+    //         $view = view('home.quiz.comments.comments', compact('comments', 'quiz_id'))->render();
+
+    //         return response()->json(['html' => $view]);
+    //     }
+    // }
 }
