@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\QuizImport;
-use App\Jobs\ProcessExcel;
+use App\Models\Category;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,9 +14,10 @@ class QuizController extends Controller
 {
     public function all(): View
     {
-        $quizzes = Quiz::all();
-
-        return view('admin.quiz.index', compact('quizzes'));
+        return view('admin.quiz.index', [
+            'quizzes'       => Quiz::all(),
+            'categories'    => Category::all()
+        ]);
     }
 
     public function create(): View
@@ -33,13 +34,14 @@ class QuizController extends Controller
 
     public function importSpreadsheet()
     {
-        return view('admin.quiz.import');
+        return view('admin.quiz.import', [
+            'categories' => Category::all()
+        ]);
     }
 
     public function import(Request $request)
     {
-        Excel::import(new QuizImport, $request->file('spreadsheet'));
-
+        Excel::import(new QuizImport($request->category_id), $request->file('spreadsheet'));
         return redirect()->back()->with('success', 'Import success!');
     }
 
@@ -58,12 +60,12 @@ class QuizController extends Controller
         return to_route('quiz.all');
     }
 
-    public function destroy(int $id)
-    {
-        Quiz::where('id', $id)->delete();
+    // public function destroy(int $id)
+    // {
+    //     Quiz::where('id', $id)->delete();
 
-        return redirect()->back()->with('success', 'Delete success!');
-    }
+    //     return redirect()->back()->with('success', 'Delete success!');
+    // }
 
     public function deleteMultiple(Request $request)
     {

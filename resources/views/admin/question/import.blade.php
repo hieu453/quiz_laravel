@@ -10,7 +10,7 @@
         @csrf
         <div class="mb-3">
             <label class="form-label">Quiz</label>
-            <select name="quiz_id">
+            <select class="form-select" name="quiz_id">
                 @foreach($quizzes as $quiz)
                     <option value="{{ $quiz->id }}">{{ $quiz->title }}</option>
                 @endforeach

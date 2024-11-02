@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\CategoryController;
 
 // Get all users who commented on post
 // $comments = Comment::where('quiz_id', 7)->get();
@@ -84,8 +85,29 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+    //Categories routes
+    Route::get('/category-all', [CategoryController::class, 'all'])->name('category.all');
+    Route::post('/category-store', [CategoryController::class, 'store'])->name('category.store');
+    Route::delete('category-delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
+    Route::delete('/category-deleteMultiple', [CategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
+    Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category-deleteMultiple', [CategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
+    Route::get('/category-import', [CategoryController::class, 'importSpreadsheet'])->name('category.import');
+    Route::post('/category-import', [CategoryController::class, 'import'])->name('category.import.store');
+
+    //Quiz routes
+    Route::get('/quiz-all', [QuizController::class, 'all'])->name('quiz.all');
+    Route::get('/quiz-import', [QuizController::class, 'importSpreadsheet'])->name('quiz.import');
+    Route::post('/quiz-import', [QuizController::class, 'import'])->name('quiz.import.store');
+    Route::get('/quiz-edit/{id}', [QuizController::class, 'edit'])->name('quiz.edit');
+    Route::put('/quiz-update/{id}', [QuizController::class, 'update'])->name('quiz.update');
+    Route::post('/quiz-store', [QuizController::class, 'store'])->name('quiz.store');
+    // Route::delete('quiz-delete/{id}', [QuizController::class, 'destroy'])->name('quiz.delete');
+    Route::delete('/quiz-deleteMultiple', [QuizController::class, 'deleteMultiple'])->name('quiz.deleteMultiple');
+
+    //Question routes
     Route::get('/question-all', [QuestionController::class, 'all'])->name('question.all');
-    Route::get('/question-create', [QuestionController::class, 'create'])->name('question.create');
     Route::get('/question-import', [QuestionController::class, 'importSpreadsheet'])->name('question.import');
     Route::post('/question-import', [QuestionController::class, 'import'])->name('question.import.store');
     Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
@@ -94,15 +116,7 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::delete('/question-delete/{id}', [QuestionController::class, 'destroy'])->name('question.delete');
     Route::delete('/question-deleteMultiple', [QuestionController::class, 'deleteMultiple'])->name('question.deleteMultiple');
 
-    Route::get('/quiz-all', [QuizController::class, 'all'])->name('quiz.all');
-    Route::get('/quiz-import', [QuizController::class, 'importSpreadsheet'])->name('quiz.import');
-    Route::post('/quiz-import', [QuizController::class, 'import'])->name('quiz.import.store');
-    Route::get('/quiz-edit/{id}', [QuizController::class, 'edit'])->name('quiz.edit');
-    Route::put('/quiz-update/{id}', [QuizController::class, 'update'])->name('quiz.update');
-    Route::post('/quiz-store', [QuizController::class, 'store'])->name('quiz.store');
-    Route::delete('quiz-delete/{id}', [QuizController::class, 'destroy'])->name('quiz.delete');
-    Route::delete('/quiz-deleteMultiple', [QuizController::class, 'deleteMultiple'])->name('quiz.deleteMultiple');
-
+    //Option routes
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');
     Route::post('/option-store', [OptionController::class, 'store'])->name('option.store');
 

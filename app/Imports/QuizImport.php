@@ -9,6 +9,12 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 class QuizImport implements ToModel
 {
+    public function __construct(
+        private int $category_id
+    )
+    {
+
+    }
     /**
     * @param array $row
     *
@@ -17,8 +23,9 @@ class QuizImport implements ToModel
     public function model(array $row)
     {
         return new Quiz([
-            'title' => $row[0],
-            'has_questions' => 1
+            'title'         => $row[0],
+            'category_id'   => $this->category_id,
+            'has_questions' => 0
         ]);
     }
 }

@@ -9,7 +9,13 @@
         </div>
         <div class="modal-body">
             <div class="mb-3">
-                <label for="exampleInputText" class="form-label">Quiz</label>
+                <label class="form-label">Category</label>
+                <select name="category_id" class="form-select">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                <label class="form-label">Quiz</label>
                 <input type="text" name="title" class="form-control">
                 <input type="hidden" name="has_questions" value="0">
             </div>

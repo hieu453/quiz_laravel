@@ -30,6 +30,7 @@
                         <th></th>
                         <th>Id</th>
                         <th>Title</th>
+                        <th>Category</th>
                         <th>Created at</th>
                         <th>Updated at</th>
                         <th>Action</th>
@@ -41,6 +42,7 @@
                             <td></td>
                             <td>{{ $quiz->id }}</td>
                             <td>{{ $quiz->title }}</td>
+                            <td>{{ $quiz->category->name }}</td>
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
@@ -66,6 +68,7 @@
         { searchable: false },
         { searchable: false },
         null,
+        { searchable: false },
         { searchable: false },
         { searchable: false },
         { searchable: false },

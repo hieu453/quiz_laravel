@@ -13,6 +13,7 @@ class Quiz extends Model
 
     protected $fillable = [
         'title',
+        'category_id',
         'has_questions'
     ];
 
@@ -24,5 +25,10 @@ class Quiz extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }
