@@ -25,7 +25,7 @@ class CheckIfUserIsAdmin
             }
         }
 
-        Session::flash('message', 'You do not have permission to access this page.');
+        Session::flash('message', 'Bạn không có quyền truy cập vào admin!');
         return redirect()->route('index');
     }
 }

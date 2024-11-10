@@ -1,16 +1,27 @@
 @extends('home.app')
 @section('content')
-    <div class="mt-5">
-        <h2 id="timer"></h2>
+<div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <h2 id="timer"></h2>
+            </div>
+            <div class="col-6 d-flex flex-row align-items-center">
+                @foreach ($questions as $key => $question)
+                <div class="checkbox-choose-question text-center me-1" id="checkboxAnswer_{{ $key + 1 }}">{{ $key + 1 }}</div>
+                @endforeach
+            </div>
+        </div>
+
         <form id="question-form" action="{{ route('checkResult') }}" method="POST">
             @csrf
-            @foreach($questions as $question)
+            <input type="hidden" name="number_of_questions" value="{{ count($questions) }}">
+            <input type="hidden" name="quiz_id" value="{{ $quiz_id }}">
+
+            @foreach($questions as $key => $question)
                 <h4>{{ $question->title }}</h4>
                 @foreach($question->options as $option)
                     <div class="form-check">
-                        <input type="hidden" name="number_of_questions" value="{{ count($questions) }}">
-                        <input type="hidden" name="quiz_id" value="{{ $quiz_id }}">
-                        <input class="form-check-input radio" type="radio" name="answers[answer_{{ $question->id }}]" id="radio_{{ $option->id }}" value="{{ $option->id }}">
+                        <input class="form-check-input radio answer_{{ $key + 1 }}" type="radio" name="answers[answer_{{ $question->id }}]" id="radio_{{ $option->id }}" value="{{ $option->id }}">
                         <label class="form-check-label" for="flexRadioDefault1">
                             {{ $option->text }}
                         </label>
@@ -23,9 +34,27 @@
 @endsection
 @push('javascript')
     <script>
+        const questions = {{ count($questions) }}
+        const checkedBox = {}
+        for (let i = 1; i <= questions; i++) {
+            $(`.answer_${i}`).change(function() {
+                $(`#checkboxAnswer_${i}`).addClass('bg-info text-white')
+                checkedBox[i] = i
+                localStorage.setItem('checkedBox', JSON.stringify(checkedBox))
+            })
+        }
+
+
         $(document).ready(function() {
+            const checkedBox = JSON.parse(localStorage.getItem('checkedBox'))
+            if (checkedBox) {
+                for (let i = 1; i <= Object.values(checkedBox).length; i++) {
+                    $(`#checkboxAnswer_${i}`).addClass('bg-info text-white')
+                }
+            }
+
             // Show remaining time
-            let minutes = 2;
+            let minutes = 50;
             let seconds = 0;
             const questionForm = $('#question-form');
 
@@ -64,6 +93,7 @@
                 timer.stop();
                 localStorage.removeItem('currentTime');
                 localStorage.removeItem('selected');
+                localStorage.removeItem('checkedBox');
                 questionForm.submit();
             });
 
@@ -72,6 +102,7 @@
                 timer.stop();
                 localStorage.removeItem('currentTime');
                 localStorage.removeItem('selected');
+                localStorage.removeItem('checkedBox');
             })
 
 
@@ -94,5 +125,8 @@
                 localStorage.setItem("selected", JSON.stringify(radioGroups));
             });
         });
+
+
+
     </script>
 @endpush

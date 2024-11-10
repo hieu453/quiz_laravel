@@ -15,10 +15,16 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Quiz</label>
                 <input type="text" name="title" class="form-control">
-                <input type="hidden" name="has_questions" value="0">
             </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+            <input type="hidden" name="has_questions" value="0">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

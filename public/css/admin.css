@@ -1,0 +1,50 @@
+.iconClass {
+    position: relative;
+}
+
+.iconClass span {
+    position: absolute;
+    top: 0px;
+    right: -4px;
+    display: block;
+}
+
+.listBgColor {
+    background-color: #e5e9ee!important;
+}
+
+.announcements {
+    overflow-y: scroll;
+}
+
+.announcements::-webkit-scrollbar {
+    width: 5px;
+}
+
+.announcements::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.announcements::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #00d2ff;
+    background-image: linear-gradient(to top, #00d2ff 0%, #3a7bd5 100%);
+}
+
+ul {
+    padding: 0!important;
+}
+
+.header-notification {
+    width: 100%;
+    background-color: #daf0f4;
+}
+
+.footer-notification {
+    background-color: #daf0f4;
+    margin-bottom: 0;
+}
+
+.footer-notification:hover {
+    font-weight: bolder;
+}

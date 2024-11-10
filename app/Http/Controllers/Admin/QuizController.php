@@ -41,8 +41,13 @@ class QuizController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new QuizImport($request->category_id), $request->file('spreadsheet'));
-        return redirect()->back()->with('success', 'Import success!');
+        try {
+            Excel::import(new QuizImport($request->category_id), $request->file('spreadsheet'));
+            return redirect()->back()->with('success', 'Import success!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Kiểm tra lại file excel đi!');
+        }
     }
 
     public function edit(int $id)

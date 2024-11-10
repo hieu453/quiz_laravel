@@ -18,18 +18,28 @@
         </div>
     </div>
 </div>
-<h1>Quiz title</h1>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-@if (Auth::check())
-<a href="{{ route('quiz.start', ['id' => $quiz->id]) }}" class="btn btn-primary">Bắt đầu làm bài</a>
-@else
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Bắt đầu làm bài
-</button>
-@endif
 
-{{-- Comment section --}}
-@include('home.quiz.comments.index', ['quiz' => $quiz, 'comments' => $comments])
+<div class="container my-5">
+    <div class="row rounded py-5" style="background-image: linear-gradient(#e7f0fd, #accbee)">
+        <h1>{{ $quiz->title }}</h1>
+        <p>{{ $quiz->description }}</p>
+        @if (Auth::check())
+            <a href="{{ route('quiz.start', ['id' => $quiz->id]) }}" class="text-success text-decoration-none play-link">
+                <i class="fa-solid fa-hand-point-right"></i>
+                Bắt đầu làm bài!
+            </a>
+        @else
+            <!-- Button trigger modal -->
+            <a class="text-success text-decoration-none play-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-hand-point-right"></i>
+                Bắt đầu làm bài!
+            </a>
+        @endif
+    </div>
 
+    {{-- Comment section --}}
+    @include('home.quiz.comments.index', ['quiz' => $quiz, 'comments' => $comments, 'commentsAndRepliesLength' => $commentsAndRepliesLength])
+    {{-- Rating section --}}
+    <livewire:rating :quizId="$quiz->id"></livewire:rating>
+</div>
 @endsection

@@ -36,11 +36,30 @@
     {{-- </div> --}}
 {{-- </div> --}}
 
+{{-- @if (session('message'))
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Bootstrap</strong>
+        <small>11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Hello, world! This is a toast message.
+    </div>
+</div>
+@endif --}}
 
+@if(session('message'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ session('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 <div class="bg landing-background">
     <h1 class="display-1 fw-bold" style="position: relative;">Hello</h1>
-    <h3 class="fw-bold" style="position: relative">Cac bai trac nghiem hay dang cho doi ban</h3>
-    <a href="/test" class="btn btn-outline-success" style="position: relative">Kham pha ngay</a>
+    <h3 class="fw-bold" style="position: relative">Các bài trắc nghiệm</h3>
+    <a href="/categories" class="btn btn-outline-success" style="position: relative">Khám phá ngay</a>
 </div>
 <div class="container">
     <div class="row">
@@ -125,3 +144,5 @@
     </div>
 </div>
 @endsection
+
+

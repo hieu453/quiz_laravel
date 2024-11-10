@@ -66,19 +66,21 @@ class QuestionController extends Controller
 
         $question->save();
 
-        foreach ($request->options as $option) {
-            if ($option['option_id'] == $request->get('correct')) {
-                Option::where('id', $request->get('correct'))->update([
-                    'text' => $option['text'],
-                    'is_correct' => 1
-                ]);
-                continue;
-            }
+        if ($request->options) {
+            foreach ($request->options as $option) {
+                if ($option['option_id'] == $request->get('correct')) {
+                    Option::where('id', $request->get('correct'))->update([
+                        'text' => $option['text'],
+                        'is_correct' => 1
+                    ]);
+                    continue;
+                }
 
-            Option::where('id', $option['option_id'])->update([
-                'text' => $option['text'],
-                'is_correct' => 0
-            ]);
+                Option::where('id', $option['option_id'])->update([
+                    'text' => $option['text'],
+                    'is_correct' => 0
+                ]); 
+            }
         }
 
         return redirect()->route('question.all');

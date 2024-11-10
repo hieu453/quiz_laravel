@@ -14,7 +14,8 @@ class Quiz extends Model
     protected $fillable = [
         'title',
         'category_id',
-        'has_questions'
+        'has_questions',
+        'description'
     ];
 
     public function questions(): HasMany

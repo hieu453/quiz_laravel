@@ -1,9 +1,9 @@
 @extends('admin.app')
 @section('content')
-    <div class="container-fluid px-4">
+    <div class="container-fluid px-4 rounded shadow" style="background-color: #e5e9ee;">
         <h1 class="mt-4">Dashboard</h1>
         <ol class="breadcrumb mb-4">
-            
+
         </ol>
         <div class="row">
             <div class="col-xl-3 col-md-6">
@@ -39,13 +39,14 @@
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Quizzes', 'Questions'],
+            labels: ['Quizzes', 'Questions', 'Categories'],
             datasets: [{
                 label: 'Dataset',
-                data: [{{ $numberOfQuizzes }}, {{ $numberOfQuestions }}],
+                data: [{{ $numberOfQuizzes }}, {{ $numberOfQuestions }}, {{ $numberOfCategories }}],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
                     'rgb(54, 162, 235)',
+                    'rgb(77, 164, 112)'
                 ],
                 hoverOffset: 4,
                 borderWidth: 0.5

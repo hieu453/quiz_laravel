@@ -3,69 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Imports\CategoriesImport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
     public function all()
     {
-        $categories = Category::all();
-
-        return view('admin.categories.index', [
-            'categories' => $categories
+        return view('home.categories.index', [
+            'categories' => Category::all()
         ]);
     }
 
-    public function store(Request $request)
+    public function show($slug)
     {
-        Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
+        // dd(Category::where('slug', $slug)->first());
+        return view('home.categories.show', [
+            'categories' => Category::all(),
+            'category'   => Category::where('slug', $slug)->first()
         ]);
-
-        return to_route('category.all');
-    }
-
-    public function importSpreadsheet()
-    {
-        return view('admin.categories.import');
-    }
-
-    public function import(Request $request)
-    {
-        Excel::import(new CategoriesImport, $request->file('spreadsheet'));
-
-        return redirect()->back()->with('success', 'Import success!');
-    }
-
-    public function edit(int $id)
-    {
-        return view('admin.categories.edit', [
-            'category' => Category::findOrFail($id)
-        ]);
-    }
-
-    public function update(int $id, Request $request)
-    {
-        Category::where('id', $id)->first()->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
-        ]);
-
-        return to_route('category.all');
-    }
-
-    // public function destroy()
-    // {
-
-    // }
-
-    public function deleteMultiple(Request $request)
-    {
-        Category::destroy($request->get('ids'));
-        return response()->json(['message' => 'Delete category success!']);
     }
 }

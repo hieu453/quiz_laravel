@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\CategoryController;
 
 // Get all users who commented on post
@@ -28,6 +29,9 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/test', function () {
     return view('home.quiz.index');
 });
+Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
+Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('home.category.show');
+
 Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
 
 // Route::get('/test', function (Request $request) {
@@ -86,15 +90,15 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     //Categories routes
-    Route::get('/category-all', [CategoryController::class, 'all'])->name('category.all');
-    Route::post('/category-store', [CategoryController::class, 'store'])->name('category.store');
-    Route::delete('category-delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
-    Route::delete('/category-deleteMultiple', [CategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
-    Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/category-deleteMultiple', [CategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
-    Route::get('/category-import', [CategoryController::class, 'importSpreadsheet'])->name('category.import');
-    Route::post('/category-import', [CategoryController::class, 'import'])->name('category.import.store');
+    Route::get('/category-all', [AdminCategoryController::class, 'all'])->name('category.all');
+    Route::post('/category-store', [AdminCategoryController::class, 'store'])->name('category.store');
+    Route::delete('category-delete/{id}', [AdminCategoryController::class, 'destroy'])->name('category.delete');
+    Route::delete('/category-deleteMultiple', [AdminCategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
+    Route::get('/category-edit/{id}', [AdminCategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category-update/{id}', [AdminCategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category-deleteMultiple', [AdminCategoryController::class, 'deleteMultiple'])->name('category.deleteMultiple');
+    Route::get('/category-import', [AdminCategoryController::class, 'importSpreadsheet'])->name('category.import');
+    Route::post('/category-import', [AdminCategoryController::class, 'import'])->name('category.import.store');
 
     //Quiz routes
     Route::get('/quiz-all', [QuizController::class, 'all'])->name('quiz.all');

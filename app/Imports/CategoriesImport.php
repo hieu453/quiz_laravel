@@ -17,7 +17,7 @@ class CategoriesImport implements ToModel
     {
         return new Category([
             'name' => $row[0],
-            'slug' => Str::slug($row[0])
+            'slug' => Str::slug($row[0]) . '-' . Str::random()
         ]);
     }
 }

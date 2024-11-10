@@ -23,13 +23,16 @@ class HomeController extends Controller
     {
         $quizzes = Quiz::where('has_questions', 1)->cursorPaginate(2);
 
-        return view('home.index', compact('quizzes'));
+        return view('home.index', [
+            'quizzes' => $quizzes
+        ]);
     }
 
     public function quizDetail(int $id, Request $request)
     {
         $quiz = Quiz::find($id);
-        $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
+        $comments = Comment::whereNull('parent_id')->where('quiz_id', $id)->orderBy('created_at', 'DESC')->paginate(2);
+        $commentsAndRepliesLength = Comment::where('quiz_id', $id)->orderBy('created_at', 'DESC')->count();
 
         if ($request->ajax()) {
             $view = view('home.quiz.comments.comments', compact('comments'))->render();
@@ -40,6 +43,7 @@ class HomeController extends Controller
         return view('home.quiz.detail', [
             'quiz'      =>  $quiz,
             'comments'  =>  $comments,
+            'commentsAndRepliesLength' => $commentsAndRepliesLength
         ]);
     }
 
@@ -72,6 +76,7 @@ class HomeController extends Controller
         }
 
         $points = number_format((float)$points, 2, '.', '');
+        // dd($answers);
         UserAnswer::create([
             'user_id' => Auth::user()->id,
             'quiz_id' => $request->quiz_id,
@@ -97,7 +102,6 @@ class HomeController extends Controller
         // dd($questions);
 
         $userAnswers = Option::find($userAnswersIds);
-
         return view('home.question.correct-answers', [
             'questions'     => $questions,
             'userAnswers'   => $userAnswers

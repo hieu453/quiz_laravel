@@ -1,31 +1,29 @@
+<div>
 <li class="nav-item dropdown">
-    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link iconClass" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="fa-regular fa-bell">
-            <span class="badge text-bg-secondary">{{ Auth::user()->unreadNotifications->count() }}</span>
+            @if (count(Auth::user()->unreadNotifications) > 0)
+                <span class="badge badege-light text-danger"><i class="fa-solid fa-circle"></i></span>
+            @endif
         </i>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end announcements overflow-auto" style="max-height: 300px; min-width: 400px;">
+    <ul class="dropdown-menu dropdown-menu-end announcements shadow" style="max-height: 350px; min-width: 300px;">
+        <div class="sticky-top text-center header-notification py-2"><h3>Thông báo</h3></div>
         @foreach (Auth::user()->notifications as $key => $notification)
             @if ($key === 10)
             @break
             @endif
-            <li class="announcement row">
-                <div class="col-10">
-                    <a class="dropdown-item" href="#" wire:click.prevent="markAsRead('{{ $notification->id }}')">
+                <li>
+                    <a class="dropdown-item {{ $notification->read_at == null ? 'listBgColor' : '' }}" href="#" wire:click.prevent="markAsRead('{{ $notification->id }}')">
                         <h5>{{ $notification->data['title'] }}</h5>
                         {{ $notification->data['body'] }}
                     </a>
-                </div>
-                <div class="col-2 d-flex align-items-center">
-                    @if ($notification->read_at == null)
-                        <i class="fa-solid fa-circle-dot"></i>
-                    @endif
-                </div>
-            </li>
+                </li>
         @endforeach
+        <p class="text-center sticky-bottom footer-notification py-1"><a href="" class="text-decoration-none text-info-emphasis">Xem tất cả thông báo</a></p>
     </ul>
 </li>
-
+</div>
 <script type="module">
 Echo.channel('all')
     .notification((notification) => {
@@ -50,4 +48,5 @@ Echo.channel('all')
 
     });
 </script>
+
 
