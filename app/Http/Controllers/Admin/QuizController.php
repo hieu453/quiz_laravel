@@ -52,9 +52,10 @@ class QuizController extends Controller
 
     public function edit(int $id)
     {
-        $quiz = Quiz::where('id', $id)->first();
-
-        return view('admin.quiz.edit', compact('quiz'));
+        return view('admin.quiz.edit', [
+            'quiz' => Quiz::where('id', $id)->first(),
+            'categories'    => Category::all()
+        ]);
     }
 
     public function update(Request $request, int $id)

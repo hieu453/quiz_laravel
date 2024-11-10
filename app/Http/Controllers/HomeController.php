@@ -76,12 +76,20 @@ class HomeController extends Controller
         }
 
         $points = number_format((float)$points, 2, '.', '');
-        // dd($answers);
-        UserAnswer::create([
-            'user_id' => Auth::user()->id,
-            'quiz_id' => $request->quiz_id,
-            'answers' => $request->answers
-        ]);
+
+        $answered = UserAnswer::where('quiz_id', $request->quiz_id)->first();
+        if ($answered) {
+            $answered->update([
+                'quiz_id' => $request->quiz_id,
+                'answers' => $request->answers
+            ]);
+        } else {
+            UserAnswer::create([
+                'user_id' => Auth::user()->id,
+                'quiz_id' => $request->quiz_id,
+                'answers' => $request->answers
+            ]);
+        }
 
         // UserPoint::create([
         //     'user_id' => Auth::user()->id,
