@@ -52,7 +52,7 @@ class HomeController extends Controller
         $questions = Question::where([
             ['quiz_id', '=', $id],
             ['has_options', '=', 1]
-        ])->inRandomOrder()->get();
+        ])->get();
 
         return view('home.question.show', [
             'questions' => $questions,
@@ -102,6 +102,7 @@ class HomeController extends Controller
         // dd($questions);
 
         $userAnswers = Option::find($userAnswersIds);
+        // dd($userAnswers);
         return view('home.question.correct-answers', [
             'questions'     => $questions,
             'userAnswers'   => $userAnswers
