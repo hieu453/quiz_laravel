@@ -1,6 +1,6 @@
 @extends('home.app')
 @section('content')
-    <div class="mt-5">
+    <div class="pt-5">
         <div class="container">
             <div class="row">
                 <div class="col-6">
@@ -12,19 +12,19 @@
                                     @if (count($userAnswers) == count($questions))
                                         @foreach ($userAnswers as $answer)
                                             @if ($answer->id == $option->id && $answer->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: aqua;">
+                                                <div class="form-check" style="background-color: #add8e6;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
                                             @elseif ($option->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: green;">
+                                                <div class="form-check" style="background-color: #90ee90;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
                                             @elseif ($answer->id == $option->id && !$answer->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: red;">
+                                                <div class="form-check" style="background-color: #f2476a;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
@@ -42,34 +42,22 @@
                                         @foreach ($userAnswers as $answer)
                                             @if ($answer->id == $option->id && $answer->is_correct && $answer->question->id == $question->id)
                                                 @php $answeredFlag = true @endphp
-                                                <div class="form-check" style="background-color: aqua;">
+                                                <div class="form-check" style="background-color: #add8e6;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
-                                            {{-- @elseif ($option->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: green;">
-                                                    <label class="form-check-label">
-                                                        {{ $option->text }}
-                                                    </label>
-                                                </div> --}}
                                             @elseif ($answer->id == $option->id && !$answer->is_correct && $answer->question->id == $question->id)
                                                 @php $answeredFlag = true @endphp
-                                                <div class="form-check" style="background-color: red;">
+                                                <div class="form-check" style="background-color: #f2476a;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
-                                            {{-- @elseif ($answer->question->id == $question->id && !$answer->is_correct)
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        {{ $option->text }}
-                                                    </label>
-                                                </div> --}}
                                             @endif
                                         @endforeach
                                         @if (!$answeredFlag)
-                                        <div class="form-check {{ $option->is_correct ? 'bg-success' : '' }}">
+                                        <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
                                             <label class="form-check-label">
                                                 {{ $option->text }}
                                             </label>
@@ -78,7 +66,7 @@
                                         @php $answeredFlag = false @endphp
                                     @endif
                                 @else
-                                    <div class="form-check {{ $option->is_correct ? 'bg-success' : '' }}">
+                                    <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
                                         <label class="form-check-label">
                                             {{ $option->text }}
                                         </label>
@@ -89,25 +77,28 @@
                     @endforeach
                 </div>
                 <div class="col-6">
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column ps-5" style="position: fixed; top: 20%;">
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: red;">
+                            <div class="annotation-box mb-2" style="background-color: #f2476a;">
 
                             </div>
-                            <p>: hello</p>
+                            <p>: Đáp án của bạn sai</p>
                         </div>
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: green;">
+                            <div class="annotation-box mb-2" style="background-color: #90ee90;">
 
                             </div>
-                            <p>: hello</p>
+                            <p>: Đáp án đúng của câu chưa làm</p>
                         </div>
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: aqua;">
+                            <div class="annotation-box mb-2" style="background-color: #add8e6;">
 
                             </div>
-                            <p>: hello</p>
+                            <p>: Đáp án của bạn đúng</p>
                         </div>
+                    </div>
+                    <div style="position: fixed; margin-top: 12%; margin-left: 5%;">
+                        <a href="{{ route('quiz.start', ['id' => $question->quiz_id]) }}" class="btn btn-info">Làm lại</a>
                     </div>
                 </div>
             </div>
