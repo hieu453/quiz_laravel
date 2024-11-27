@@ -162,3 +162,9 @@ ul {
 .correct-option {
     background-color: #90ee90;
 }
+
+.avatar {
+    background-color: #cbc8c8;
+    width: 30px;
+    height: 30px;
+}

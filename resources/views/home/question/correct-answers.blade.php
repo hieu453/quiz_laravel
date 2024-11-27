@@ -46,6 +46,7 @@
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
+                                                    <label>(Đáp án của bạn)</label>
                                                 </div>
                                             @elseif ($answer->id == $option->id && !$answer->is_correct && $answer->question->id == $question->id)
                                                 @php $answeredFlag = true @endphp
@@ -53,6 +54,7 @@
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
+                                                    <label>(Đáp án của bạn)</label>
                                                 </div>
                                             @endif
                                         @endforeach
@@ -68,7 +70,7 @@
                                 @else
                                     <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
                                         <label class="form-check-label">
-                                            {{ $option->text }}
+                                            {{ $option->text }} hello
                                         </label>
                                     </div>
                                 @endif
@@ -85,19 +87,21 @@
                             <p>: Đáp án của bạn sai</p>
                         </div>
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: #90ee90;">
-
-                            </div>
-                            <p>: Đáp án đúng của câu chưa làm</p>
-                        </div>
-                        <div class="d-flex flex-row">
                             <div class="annotation-box mb-2" style="background-color: #add8e6;">
 
                             </div>
                             <p>: Đáp án của bạn đúng</p>
                         </div>
+                        <div class="d-flex flex-row">
+                            <div class="annotation-box mb-2" style="background-color: #90ee90;">
+
+                            </div>
+                            <p>: Đáp án của câu hỏi</p>
+                        </div>
                     </div>
                     <div style="position: fixed; margin-top: 12%; margin-left: 5%;">
+                        <p><b>Số câu đã làm: {{ $userAnswers ? count($userAnswers) : 0 }}/{{ count($questions) }}</b></p>
+                        <p><b>Số câu làm đúng: {{ $userCorrectAnswers }}/{{ $userAnswers ? count($userAnswers) : 0 }}</b></p>
                         <a href="{{ route('quiz.start', ['id' => $question->quiz_id]) }}" class="btn btn-info">Làm lại</a>
                     </div>
                 </div>

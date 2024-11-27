@@ -1,12 +1,15 @@
-<div class="row py-3 rounded mt-3" style="background-image: linear-gradient(#accbee, #e7f0fd)">
+<div class="row py-3 rounded mt-3 border border-info">
     <h4>Bình luận ({{ $commentsAndRepliesLength }})</h4>
     <hr />
 
     <div class="comment-wrapper">
     @foreach($comments as $comment)
-    <div class="display-comment">
-        <strong>{{ $comment->user->name }}</strong>
-        <p>{{ $comment->message }}</p>
+    <div id="{{ $comment->id }}" class="display-comment border border-info mb-3 px-3 py-3">
+        <div class="d-flex">
+            <div class="avatar text-center rounded"><i class="fa-regular fa-user"></i></div>
+            <strong class="ms-2">{{ $comment->user->name }}</strong>
+        </div>
+        <p class="ms-2">{{ $comment->message }}</p>
 
         @if (Auth::check())
         <a
@@ -90,15 +93,17 @@
             </div>
         @endif
     </div>
-    <hr />
 
     @if ($comment->replies()->exists())
         <div class="collapse" id="collapseReplies{{ $comment->id }}">
             @foreach ($comment->replies as $reply)
                 @if ($reply->parent_id == $comment->id)
-                    <div class="display-comment ms-5">
-                        <strong>{{ $reply->user->name }}</strong>
-                        <p>{{ $reply->message }}</p>
+                    <div id="{{ $reply->id }}" class="display-comment ms-5 border-start border-info mb-3 px-3 py-1">
+                        <div class="d-flex">
+                            <div class="avatar rounded text-center"><i class="fa-regular fa-user"></i></div>
+                            <strong class="ms-2">{{ $reply->user->name }}</strong>
+                        </div>
+                        <p class="ms-2">{{ $reply->message }}</p>
 
                         @if (Auth::check())
                             @if (Auth::user()->id == $reply->user->id)
@@ -139,7 +144,6 @@
                         </div>
                         @endif
                     </div>
-                    <hr />
                 @endif
             @endforeach
         </div>

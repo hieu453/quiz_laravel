@@ -1,5 +1,24 @@
 @extends('home.app')
 @section('content')
+{{-- Modal when click submit btn --}}
+<div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc muốn nộp bài?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        {{-- <div class="modal-body">
+          ...
+        </div> --}}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button id="submit-exam" type="button" class="btn btn-primary">Nộp</button>
+        </div>
+      </div>
+    </div>
+</div>
+{{-- Content --}}
 <div class="container py-5">
         <form id="question-form" action="{{ route('checkResult') }}" method="POST">
             @csrf
@@ -36,10 +55,13 @@
                         <span>Thời gian:</span>
                         <h4 id="timer"></h4>
                     </div>
+                    <div class="row" style="position: fixed; margin: 130px 0 0 0;">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal">
+                            Nộp bài
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </form>
     </div>
 @endsection
@@ -109,15 +131,23 @@
             });
 
             // when click submit button
-            questionForm.on('submit', (e) => {
-                e.preventDefault();
-                if (confirm('Bạn có chắc muốn nộp bài?')) {
-                    timer.stop();
-                    localStorage.removeItem('currentTime');
-                    localStorage.removeItem('selected');
-                    localStorage.removeItem('checkedBox');
-                    questionForm[0].submit();
-                }
+            // questionForm.on('submit', (e) => {
+            //     e.preventDefault();
+            //     if (confirm('Bạn có chắc muốn nộp bài?')) {
+            //         timer.stop();
+            //         localStorage.removeItem('currentTime');
+            //         localStorage.removeItem('selected');
+            //         localStorage.removeItem('checkedBox');
+            //         questionForm[0].submit();
+            //     }
+            // })
+
+            $('#submit-exam').on('click', (e) => {
+                timer.stop();
+                localStorage.removeItem('currentTime');
+                localStorage.removeItem('selected');
+                localStorage.removeItem('checkedBox');
+                questionForm.submit();
             })
 
             // remain answers

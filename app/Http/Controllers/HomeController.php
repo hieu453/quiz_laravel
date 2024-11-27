@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function quizDetail(int $id, Request $request)
     {
         $quiz = Quiz::find($id);
-        $comments = Comment::whereNull('parent_id')->where('quiz_id', $id)->orderBy('created_at', 'DESC')->paginate(2);
+        $comments = Comment::whereNull('parent_id')->where('quiz_id', $id)->orderBy('created_at', 'DESC')->paginate(3);
         $commentsAndRepliesLength = Comment::where('quiz_id', $id)->orderBy('created_at', 'DESC')->count();
 
         if ($request->ajax()) {
@@ -110,10 +110,21 @@ class HomeController extends Controller
         // dd($questions);
 
         $userAnswers = Option::find($userAnswersIds);
+
+        $userCorrectAnswers = 0;
+
+        if ($userAnswers) {
+            foreach($userAnswers as $answer) {
+                if ($answer->is_correct) {
+                    $userCorrectAnswers++;
+                }
+            }
+        }
         // dd($userAnswers);
         return view('home.question.correct-answers', [
-            'questions'     => $questions,
-            'userAnswers'   => $userAnswers
+            'questions'             => $questions,
+            'userAnswers'           => $userAnswers,
+            'userCorrectAnswers'    => $userCorrectAnswers
         ]);
     }
 

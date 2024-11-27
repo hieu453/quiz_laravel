@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="container my-5">
+<div class="container mt-5">
     <div class="row rounded py-5" style="background-image: linear-gradient(#e7f0fd, #accbee)">
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>

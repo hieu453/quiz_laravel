@@ -27,7 +27,7 @@
             </div>
             <div class="row">
                 @foreach ($category->quizzes as $quiz)
-                    <div class="col-lg-3 d-flex justify-content-center mt-3">
+                    {{-- <div class="col-lg-3 d-flex justify-content-center mt-3">
                         <div class="card box-shadow" style="width: 18rem; background-image: linear-gradient(#c1dfc4, #deecdd);">
                             <i class="fa-regular fa-bookmark"></i>
                             <a href="" class="text-reset text-decoration-none text-center">
@@ -38,7 +38,8 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
+                    <p><i class="fa-regular fa-hand-point-right"></i><a href="{{ route('quiz.detail', ['id' => $quiz->id]) }}" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"> {{ $quiz->title }}</a></p>
                 @endforeach
             </div>
         </div>

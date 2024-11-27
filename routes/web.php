@@ -2,9 +2,7 @@
 
 
 use App\Models\User;
-use App\Models\Option;
-use App\Models\UserAnswer;
-use Illuminate\Http\Request;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Notifications\NewAnnouncement;
@@ -12,13 +10,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckIfUserIsAdmin;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
-use App\Http\Controllers\CategoryController;
 
 // Get all users who commented on post
 // $comments = Comment::where('quiz_id', 7)->get();
@@ -27,6 +25,8 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/test', function () {
+    $comments = Comment::where('quiz_id', 25)->get();
+    $users = $comments->map->user->unique('id')->except(Auth::user()->id);
     return view('home.quiz.index');
 });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
@@ -56,7 +56,6 @@ Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('qu
 // Route::get('/more-comments', [CommentController::class, 'showMoreComment'])->name('comments.index');
 
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/send', function () {
         $messages = [
@@ -68,7 +67,7 @@ Route::middleware('auth')->group(function () {
 
         $user = User::where('is_admin', 0)->first();
 
-        $user->notify(new NewAnnouncement($messages));
+        // $user->notify(new NewAnnouncement($messages));
     });
 
     Route::get('/unread-notifications', function () {

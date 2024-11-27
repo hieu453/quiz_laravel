@@ -18,7 +18,7 @@
                     <a href="" class="text-reset text-decoration-none text-center">
                         <div class="card-body text-center">
                             <h3 class="card-title">{{ $category->name }}</h3>
-                            <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="card-link text-info"><i class="fa-regular fa-hand-point-right"></i> đề</a>
+                            <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="card-link text-info"><i class="fa-regular fa-hand-point-right"></i> {{ count($category->quizzes) }} đề</a>
                         </div>
                     </a>
                 </div>

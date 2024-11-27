@@ -4,9 +4,8 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -19,7 +18,8 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
      * Create a new notification instance.
      */
     public function __construct(
-        protected $messages
+        protected $messages,
+        protected $userIds
     )
     {
         //
@@ -40,10 +40,7 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage);
     }
 
     /**
@@ -64,18 +61,18 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
-            'title'     =>  $this->messages['title'],
-            'body'      =>  $this->messages['body'],
-            'link'      =>  $this->messages['link'],
-            'linkText'  =>  $this->messages['linkText'],
-            'unread'    =>  Auth::user()->unreadNotifications->count()
+            'title'     => $this->messages['title'],
+            'body'      => $this->messages['body'],
+            'link'      => $this->messages['link'],
+            'linkText'  => $this->messages['linkText'],
+            'sentUsers' => $this->userIds
         ]);
     }
 
     public function broadcastOn()
     {
         return [
-            new Channel('all'),
+            new Channel('all')
         ];
     }
 }

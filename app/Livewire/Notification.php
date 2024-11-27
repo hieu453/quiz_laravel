@@ -2,25 +2,24 @@
 
 namespace App\Livewire;
 
-use Illuminate\Notifications\DatabaseNotification;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\DatabaseNotification;
 
 class Notification extends Component
 {
     public $announcements;
 
-    public function markAsRead(DatabaseNotification $notification)
+    public function showNotification($notificationId)
     {
+        $notification = Auth::user()->notifications->where('id', $notificationId)->first();
         $notification->markAsRead();
-        return $this->redirect(route('index'));
+        return $this->redirect($notification->data['link']);
+
     }
 
     public function render()
     {
-        // return view('livewire.notification')-with([
-        //     // 'announcements' => Not
-        // ]);
-
         return view('livewire.notification');
     }
 }
