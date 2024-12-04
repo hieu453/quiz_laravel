@@ -87,7 +87,7 @@
             }
 
             // Show remaining time
-            let minutes = 50;
+            let minutes = 70;
             let seconds = 0;
             const questionForm = $('#question-form');
 
@@ -101,6 +101,7 @@
                 precision: 'seconds',
                 countdown: true,
                 startValues: {
+                    // hours: hours,
                     minutes: minutes,
                     seconds: seconds
                 },
@@ -115,7 +116,7 @@
             timer.addEventListener("secondsUpdated", function (e) {
                 $("#timer").html(timer.getTimeValues().toString());
                 let currentTime = {
-                    'minutes': timer.getTimeValues().minutes,
+                    'minutes': timer.getTotalTimeValues().minutes,
                     'seconds': timer.getTimeValues().seconds
                 }
                 localStorage.setItem('currentTime', JSON.stringify(currentTime))

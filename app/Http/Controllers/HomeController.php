@@ -47,15 +47,26 @@ class HomeController extends Controller
         ]);
     }
 
-    public function startQuizQuestions(int $id)
+    public function setQuestionsToSession(int $id)
     {
+        if (session('questions')) {
+            session()->forget('questions');
+        }
+
         $questions = Question::where([
             ['quiz_id', '=', $id],
             ['has_options', '=', 1]
-        ])->get();
+        ])->inRandomOrder()->limit(2)->get();
 
+        session(['questions' => $questions]);
+
+        return to_route('quiz.start', ['id' => $id]);
+    }
+
+    public function startQuizQuestions(int $id)
+    {
         return view('home.question.show', [
-            'questions' => $questions,
+            'questions' => session('questions'),
             'quiz_id'      => $id,
         ]);
     }
@@ -91,11 +102,11 @@ class HomeController extends Controller
             ]);
         }
 
-        // UserPoint::create([
-        //     'user_id' => Auth::user()->id,
-        //     'quiz_id' => $request->quiz_id,
-        //     'points'  => $points
-        // ]);
+        UserPoint::create([
+            'user_id' => Auth::user()->id,
+            'quiz_id' => $request->quiz_id,
+            'points'  => $points
+        ]);
 
         return view('home.question.result', [
             'points'    => $points,
@@ -106,7 +117,7 @@ class HomeController extends Controller
     public function showCorrectAnswer($id)
     {
         $userAnswersIds = UserAnswer::where('quiz_id', $id)->orderBy('id', 'desc')->first()->answers;
-        $questions = Quiz::find($id)->questions;
+        $questions = session('questions');
         // dd($questions);
 
         $userAnswers = Option::find($userAnswersIds);
@@ -121,6 +132,7 @@ class HomeController extends Controller
             }
         }
         // dd($userAnswers);
+
         return view('home.question.correct-answers', [
             'questions'             => $questions,
             'userAnswers'           => $userAnswers,

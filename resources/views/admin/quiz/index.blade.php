@@ -1,4 +1,5 @@
 @extends('admin.app')
+@section('title', 'Đề | Tất cả')
 @section('content')
     <!-- Modal Delete -->
     @include('admin.quiz.modals.delete-modal')
@@ -7,7 +8,15 @@
     @include('admin.quiz.modals.add-modal')
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">All Quizzes</h1>
+        <h1 class="mt-4">Tất cả đề</h1>
+
+        @error('title')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        @error('description')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,7 +29,7 @@
             <div class="card-header">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuizModal">
-                    Add Quiz
+                    Thêm đề
                 </button>
             </div>
             <div class="card-body">
@@ -29,11 +38,13 @@
                     <tr>
                         <th></th>
                         <th>Id</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
-                        <th>Action</th>
+                        <th>Tiêu đề</th>
+                        <th>Danh mục</th>
+                        {{-- <th>Mô tả</th> --}}
+                        <th>Đã có câu hỏi</th>
+                        <th>Tạo lúc</th>
+                        <th>Sửa lúc</th>
+                        <th>Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,16 +54,18 @@
                             <td>{{ $quiz->id }}</td>
                             <td>{{ $quiz->title }}</td>
                             <td>{{ $quiz->category->name }}</td>
+                            {{-- <td>{{ $quiz->description }}</td> --}}
+                            <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td>
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
-                                <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-success">Update</a>
+                                <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-success">Sửa</a>
 {{--                                <form action="{{ route('quiz.delete', ['id' => $quiz->id]) }}" method="POST" class="btn">--}}
 {{--                                    @csrf--}}
 {{--                                    @method('DELETE')--}}
 {{--                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>--}}
 {{--                                </form>--}}
-                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Delete</a>
+                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Xóa</a>
                             </td>
                         </tr>
                     @endforeach
@@ -72,7 +85,8 @@
         { searchable: false },
         { searchable: false },
         { searchable: false },
+        { searchable: false },
     ]
-    datatable('#quizTable', '#quizDeleteModal', "{{ route('quiz.deleteMultiple') }}", columnsSettings)
+    datatable('#quizTable', '#quizDeleteModal', "{{ route('quiz.deleteMultiple') }}", columnsSettings, [1,2,3,4,5,6])
 </script>
 @endpush

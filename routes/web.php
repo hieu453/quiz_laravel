@@ -5,7 +5,6 @@ use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Notifications\NewAnnouncement;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -17,6 +16,9 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Middleware\UserPlayed;
+use App\Models\Option;
 
 // Get all users who commented on post
 // $comments = Comment::where('quiz_id', 7)->get();
@@ -70,14 +72,14 @@ Route::middleware('auth')->group(function () {
         // $user->notify(new NewAnnouncement($messages));
     });
 
-    Route::get('/unread-notifications', function () {
-        return Auth::user()->unreadNotifications->count();
-    });
+    // Route::get('/unread-notifications', function () {
+    //     return Auth::user()->unreadNotifications->count();
+    // });
 
-
+    Route::get('/set-quetions-to-session/{id}', [HomeController::class, 'setQuestionsToSession'])->name('questions.session');
     Route::get('/quiz/{id}/start', [HomeController::class, 'startQuizQuestions'])->name('quiz.start');
     Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
-    Route::get('/show-correct-answer/quiz/{id}', [HomeController::class, 'showCorrectAnswer'])->name('show.correct');
+    Route::get('/show-correct-answer/quiz/{id}', [HomeController::class, 'showCorrectAnswer'])->middleware(UserPlayed::class)->name('show.correct');
 
     Route::post('/comment-store', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
@@ -115,20 +117,28 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::post('/question-import', [QuestionController::class, 'import'])->name('question.import.store');
     Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
     Route::get('/question-edit/{id}', [QuestionController::class, 'edit'])->name('question.edit');
-    Route::post('/question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
-    Route::delete('/question-delete/{id}', [QuestionController::class, 'destroy'])->name('question.delete');
+    Route::put('/question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
+    // Route::delete('/question-delete/{id}', [QuestionController::class, 'destroy'])->name('question.delete');
     Route::delete('/question-deleteMultiple', [QuestionController::class, 'deleteMultiple'])->name('question.deleteMultiple');
 
     //Option routes
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');
     Route::post('/option-store', [OptionController::class, 'store'])->name('option.store');
 
+    //Users routes
+    Route::get('/user-all', [UserController::class, 'all'])->name('user.all');
+    Route::post('/user-store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::put('/user-update-password/{id}', [UserController::class, 'updatePassword'])->name('user.update.password');
+    Route::delete('/user-deleteMultiple', [UserController::class, 'deleteMultiple'])->name('user.deleteMultiple');
+
     Route::get('/activities', [\App\Http\Controllers\ActivitiesController::class, 'activities'])->name('activities');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

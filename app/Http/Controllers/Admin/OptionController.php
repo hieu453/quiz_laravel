@@ -18,11 +18,12 @@ class OptionController extends Controller
 
     public function store(Request $request)
     {
-        $question = Question::findOrFail($request->get('question_id'));
-        $question->has_options = 1;
-        $question->save();
-
+        // dd($request->all());
         foreach ($request->get('options') as $key => $option) {
+            if ($option['text'] == null) {
+                return redirect()->back()->with(['error' => 'Phải điền hết trường lựa chọn']);
+            }
+
             if ($key == $request->correct) {
                 Option::create([
                     'question_id' => $request->get('question_id'),
@@ -37,6 +38,14 @@ class OptionController extends Controller
                 ]);
             }
         }
+
+        $request->validate([
+            'correct' => 'required'
+        ]);
+
+        $question = Question::findOrFail($request->get('question_id'));
+        $question->has_options = 1;
+        $question->save();
 
         return redirect()->back()->with('success', 'Option added');
     }

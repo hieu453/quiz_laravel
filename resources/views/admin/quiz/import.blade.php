@@ -1,5 +1,9 @@
 @extends('admin.app')
+@section('title', 'Đề | Import Excel')
 @section('content')
+    @error('spreadsheet')
+        <div class="alert alert-danger">Bạn phải chọn file.</div>
+    @enderror
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -15,7 +19,7 @@
     <form action="{{ route('quiz.import.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label class="form-label">Category</label>
+            <label class="form-label">Danh mục</label>
             <select class="form-select" name="category_id">
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -23,9 +27,10 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="exampleInputText" class="form-label">Quiz</label>
+            <label for="exampleInputText" class="form-label">Tiêu đề</label>
             <input type="file" name="spreadsheet" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Import</button>
+        <a href="{{ route('category.all') }}" class="btn btn-secondary">Trở lại</a>
     </form>
 @endsection

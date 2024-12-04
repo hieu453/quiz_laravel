@@ -70,7 +70,7 @@
                                 @else
                                     <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
                                         <label class="form-check-label">
-                                            {{ $option->text }} hello
+                                            {{ $option->text }}
                                         </label>
                                     </div>
                                 @endif

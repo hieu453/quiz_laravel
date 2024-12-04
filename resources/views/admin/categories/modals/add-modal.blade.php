@@ -4,18 +4,18 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="addModalLabel">Modal title</h1>
+              <h1 class="modal-title fs-5" id="addModalLabel">Thêm danh mục</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="exampleInputText" class="form-label">Category</label>
+                    <label for="exampleInputText" class="form-label">Tiêu đề</label>
                     <input type="text" name="name" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary">Thêm</button>
             </div>
           </div>
         </div>

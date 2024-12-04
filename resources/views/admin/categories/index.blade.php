@@ -1,4 +1,5 @@
 @extends('admin.app')
+@section('title', 'Danh mục | Tất cả')
 @section('content')
     <!-- Modal Delete -->
     @include('admin.categories.modals.delete-modal')
@@ -6,7 +7,7 @@
     @include('admin.categories.modals.add-modal')
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">All Categories</h1>
+        <h1 class="mt-4">Tất cả danh mục</h1>
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -15,10 +16,14 @@
             </div>
         @endif
 
+        @error('name')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
         <div class="card mb-4">
             <div class="card-header">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    Add Categories
+                    Thêm danh mục
                 </button>
             </div>
             <div class="card-body">
@@ -27,11 +32,11 @@
                     <tr>
                         <th></th>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>Tên</th>
                         <th>Slug</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
-                        <th>Action</th>
+                        <th>Tạo lúc</th>
+                        <th>Sửa lúc</th>
+                        <th>Hành động</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,8 +49,8 @@
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->updated_at }}</td>
                             <td>
-                                <a href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success">Update</a>
-                                <a class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#categoryDeleteModal">Delete</a>
+                                <a href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success">Sửa</a>
+                                <a class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#categoryDeleteModal">Xóa</a>
                             </td>
                         </tr>
                     @endforeach

@@ -1,4 +1,4 @@
-function datatable(tableId, modalId, url, columnsSetting) {
+function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3,4,5]) {
     const ids = [];
 
     let table = new DataTable(tableId, {
@@ -6,15 +6,22 @@ function datatable(tableId, modalId, url, columnsSetting) {
         columnDefs: [
             {
                 orderable: false,
+                // render ra ô select ở cột 0 (cột đầu tiên)
                 render: DataTable.render.select(),
                 targets: 0,
-            }
+            },
+            // {
+            //     render: function (data, type, row, meta) {
+            //         return data.substring(0, 43).trimEnd() + '...';
+            //     },
+            //     targets: 4
+            // }
         ],
         layout: {
             topStart: {
                 buttons: [
                     {
-                        text: 'Delete record(s): 0',
+                        text: 'Xoá nhiều bản ghi: 0',
                         className: 'btn btn-danger',
                         attr: {
                             'data-bs-toggle': "modal",
@@ -31,17 +38,17 @@ function datatable(tableId, modalId, url, columnsSetting) {
                     },
                     {
                         extend: 'excel',
-                        text: 'Export excel',
+                        text: 'Xuất file Excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4]
+                            columns: exportColumns
                         },
                         className: 'btn btn-primary'
                     },
                     {
                         extend: 'pdf',
-                        text: 'Export pdf',
+                        text: 'Xuất file PDF',
                         exportOptions: {
-                            columns: [1, 2, 3, 4]
+                            columns: exportColumns
                         },
                         className: 'btn btn-success'
                     },
@@ -70,7 +77,7 @@ function datatable(tableId, modalId, url, columnsSetting) {
     // Ajax call to delete records
     $('#delete-record').on('click', () => {
         const checkedRow = table.rows({ selected: true }).data();
-        
+
         if (checkedRow.length === 0) {
             alert('Vui lòng nếu xóa 1 bản ghi thì chỉ nhấn nút delete là được!')
         }

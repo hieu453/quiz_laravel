@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Quiz;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Question;
-use App\Models\Quiz;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -15,11 +16,13 @@ class DashboardController extends Controller
         $numberOfQuizzes = Quiz::all()->count();
         $numberOfQuestions = Question::all()->count();
         $numberOfCategories = Category::all()->count();
+        $numberOfUsers = User::all()->count();
 
         return view('admin.dashboard', [
             'numberOfQuizzes'       => $numberOfQuizzes,
             'numberOfQuestions'     => $numberOfQuestions,
-            'numberOfCategories'    => $numberOfCategories
+            'numberOfCategories'    => $numberOfCategories,
+            'numberOfUsers'         => $numberOfUsers
         ]);
     }
 }

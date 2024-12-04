@@ -22,10 +22,12 @@ class AdminCategoryController extends Controller
 
     public function store(Request $request)
     {
-        Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name) . '-' . Str::random()
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
         ]);
+        $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
+
+        Category::create($validatedData);
 
         return to_route('category.all');
     }
@@ -37,9 +39,16 @@ class AdminCategoryController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new CategoriesImport, $request->file('spreadsheet'));
+        $request->validate([
+            'spreadsheet' => 'required'
+        ]);
 
-        return redirect()->back()->with('success', 'Import success!');
+        try {
+            Excel::import(new CategoriesImport, $request->file('spreadsheet'));
+            return redirect()->back()->with('success', 'Nhập thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('warning', 'Có lỗi! Hãy kiểm tra lại file excel!');
+        }
     }
 
     public function edit(int $id)
@@ -51,18 +60,16 @@ class AdminCategoryController extends Controller
 
     public function update(int $id, Request $request)
     {
-        Category::where('id', $id)->first()->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name) . '-' . Str::random()
+        $validatedData = $request->validate([
+            'name' => 'required|max:255'
         ]);
+
+        $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
+
+        Category::where('id', $id)->first()->update($validatedData);
 
         return to_route('category.all');
     }
-
-    // public function destroy()
-    // {
-
-    // }
 
     public function deleteMultiple(Request $request)
     {

@@ -24,7 +24,7 @@
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>
         @if (Auth::check())
-            <a href="{{ route('quiz.start', ['id' => $quiz->id]) }}" class="text-success text-decoration-none play-link">
+            <a href="{{ route('questions.session', ['id' => $quiz->id]) }}" class="text-success text-decoration-none play-link">
                 <i class="fa-solid fa-hand-point-right"></i>
                 Bắt đầu làm bài!
             </a>

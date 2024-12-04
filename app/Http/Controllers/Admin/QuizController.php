@@ -27,7 +27,14 @@ class QuizController extends Controller
 
     public function store(Request $request)
     {
-        Quiz::create($request->all());
+        $validatedData = $request->validate([
+            'title'       => 'required|max:255',
+            'description' => 'required|max:255'
+        ]);
+        $validatedData['category_id'] = $request->category_id;
+        $validatedData['has_question'] = 0;
+
+        Quiz::create($validatedData);
 
         return to_route('quiz.all');
     }
@@ -41,12 +48,16 @@ class QuizController extends Controller
 
     public function import(Request $request)
     {
+        $request->validate([
+            'spreadsheet' => 'required'
+        ]);
+
         try {
             Excel::import(new QuizImport($request->category_id), $request->file('spreadsheet'));
-            return redirect()->back()->with('success', 'Import success!');
+            return redirect()->back()->with('success', 'Nhập thành công!');
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('warning', 'Kiểm tra lại file excel đi!');
+            return redirect()->back()->with('warning', 'Có lỗi! Hãy kiểm tra lại file excel!');
         }
     }
 
@@ -54,14 +65,21 @@ class QuizController extends Controller
     {
         return view('admin.quiz.edit', [
             'quiz' => Quiz::where('id', $id)->first(),
-            'categories'    => Category::all()
+            'categories' => Category::all()
         ]);
     }
 
     public function update(Request $request, int $id)
     {
-        $quiz = Quiz::where('id', $id)->first();
-        $quiz->update($request->all());
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required|max:255'
+        ]);
+
+        $validatedData['category_id'] = $request->category_id;
+
+        Quiz::where('id', $id)->first()->update($validatedData);
+        // $quiz->update($request->all());
 
         return to_route('quiz.all');
     }

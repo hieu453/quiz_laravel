@@ -1,4 +1,5 @@
 @extends('admin.app')
+@section('title', 'Câu hỏi | Import Excel')
 @section('content')
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,5 +22,6 @@
             <input type="file" name="spreadsheet" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{{ route('category.all') }}" class="btn btn-secondary">Trở lại</a>
     </form>
 @endsection

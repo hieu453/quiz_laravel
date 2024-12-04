@@ -33,7 +33,6 @@ class CommentController extends Controller
         }
 
         $users = User::find($userIds);
-        // Auth::user()->notify(new NewAnnouncement($messages));
 
         Notification::send($users, new NewAnnouncement($messages, $userIds));
 

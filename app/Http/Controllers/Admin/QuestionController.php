@@ -8,6 +8,7 @@ use App\Models\Option;
 use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionController extends Controller
@@ -26,10 +27,12 @@ class QuestionController extends Controller
         $quiz->has_questions = 1;
         $quiz->save();
 
-        Question::create([
-            'quiz_id' => $request->get('quiz_id'),
-            'title' => $request->get('title'),
+        $validatedData = $request->validate([
+            'title' => 'required|max:255'
         ]);
+        $validatedData['quiz_id'] = $request->get('quiz_id');
+
+        Question::create($validatedData);
 
         return redirect()->route('question.all');
     }
@@ -45,7 +48,7 @@ class QuestionController extends Controller
     {
         Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
 
-        return redirect()->back()->with('success', 'Excel Data Imported successfully.');
+        return redirect()->back()->with('success', 'Đã import thành công!.');
     }
 
     public function edit(int $id)
@@ -58,28 +61,36 @@ class QuestionController extends Controller
 
     public function update(int $id, Request $request)
     {
-        //dd($request->all());
-        $question = Question::find($id);
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'options' => 'required|max:255'
+        ]);
+        $validatedData['quiz_id'] = $request->quiz_id;
+        // dd($validatedData);
+        // $question = Question::find($id);
+        // $question->title = $request->title;
+        // $question->quiz_id = $request->quiz_id;
+        // $question->save();
 
-        $question->title = $request->title;
-        $question->quiz_id = $request->quiz_id;
+        Question::where('id', $id)->first()->update($validatedData);
 
-        $question->save();
-
-        if ($request->options) {
-            foreach ($request->options as $option) {
-                if ($option['option_id'] == $request->get('correct')) {
-                    Option::where('id', $request->get('correct'))->update([
-                        'text' => $option['text'],
-                        'is_correct' => 1
-                    ]);
-                    continue;
-                }
-
+        foreach ($request->options as $option) {
+            if ($option['text'] == null) {
+                return redirect()->back()->withErrors(['errors' => 'Phải điền hết trường lựa chọn']);
+            }
+            // kiem tra neu id cua cau hoi trung voi id cau hoi dung thi cap nhat, get('correct') la id cau hoi dung
+            if ($option['option_id'] == $request->get('correct')) {
+                Option::where('id', $request->get('correct'))->update([
+                    'text' => $option['text'],
+                    'is_correct' => 1
+                ]);
+                continue;
+            } else {
                 Option::where('id', $option['option_id'])->update([
                     'text' => $option['text'],
                     'is_correct' => 0
-                ]); 
+                ]);
             }
         }
 
