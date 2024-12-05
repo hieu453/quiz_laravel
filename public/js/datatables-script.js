@@ -10,19 +10,17 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
                 render: DataTable.render.select(),
                 targets: 0,
             },
-            // {
-            //     render: function (data, type, row, meta) {
-            //         return data.substring(0, 43).trimEnd() + '...';
-            //     },
-            //     targets: 4
-            // }
+           {
+                width: '20%',
+                targets: 3
+           }
         ],
         layout: {
             topStart: {
                 buttons: [
                     {
                         text: 'Xoá nhiều bản ghi: 0',
-                        className: 'btn btn-danger',
+                        className: 'btn btn-outline-danger',
                         attr: {
                             'data-bs-toggle': "modal",
                             'data-bs-target': modalId
@@ -42,7 +40,7 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
                         exportOptions: {
                             columns: exportColumns
                         },
-                        className: 'btn btn-primary'
+                        className: 'btn btn-outline-primary'
                     },
                     {
                         extend: 'pdf',
@@ -50,13 +48,14 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
                         exportOptions: {
                             columns: exportColumns
                         },
-                        className: 'btn btn-success'
+                        className: 'btn btn-outline-success'
                     },
                 ]
             }
         },
         select: true,
     })
+
 
     table.button().disable();
 
@@ -99,7 +98,7 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
                 $(modalId).modal('hide');
 
                 Toastify({
-                    text: "Selected rows deleted",
+                    text: "Đã xóa các bản ghi!",
                     close: true,
                     duration: 2000
                 }).showToast();

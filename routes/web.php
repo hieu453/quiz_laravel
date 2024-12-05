@@ -17,8 +17,9 @@ use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Middleware\UserPlayed;
-use App\Models\Option;
+use App\Notifications\Feedback;
 
 // Get all users who commented on post
 // $comments = Comment::where('quiz_id', 7)->get();
@@ -59,18 +60,18 @@ Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('qu
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/send', function () {
-        $messages = [
-            'title'     => 'Hello World',
-            'body'      => 'This is a text',
-            'link'      => '',
-            'linkText'  => ''
-        ];
+    // Route::get('/send', function () {
+    //     $messages = [
+    //         'title'     => 'Hello World',
+    //         'body'      => 'This is a text',
+    //         'link'      => '',
+    //         'linkText'  => ''
+    //     ];
 
-        $user = User::where('is_admin', 0)->first();
+    //     $user = User::where('is_admin', 0)->first();
 
-        // $user->notify(new NewAnnouncement($messages));
-    });
+    //     // $user->notify(new NewAnnouncement($messages));
+    // });
 
     // Route::get('/unread-notifications', function () {
     //     return Auth::user()->unreadNotifications->count();
@@ -84,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/comment-store', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
 
-    Route::get('/notification/{id}', [NotificationController::class, 'index'])->name('notification.index');
+    Route::post('/send-feedback', [FeedbackController::class, 'sendFeedback'])->name('feedback.send');
 });
 
 Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
@@ -133,7 +134,7 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::put('/user-update-password/{id}', [UserController::class, 'updatePassword'])->name('user.update.password');
     Route::delete('/user-deleteMultiple', [UserController::class, 'deleteMultiple'])->name('user.deleteMultiple');
 
-    Route::get('/activities', [\App\Http\Controllers\ActivitiesController::class, 'activities'])->name('activities');
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
 });
 
 Route::get('/dashboard', function () {

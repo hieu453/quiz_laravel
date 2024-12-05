@@ -12,4 +12,7 @@ Broadcast::channel('all', function ($user) {
     return true;
 });
 
+Broadcast::channel('feedback', function ($user) {
+    return $user->id == 1;
+});
 

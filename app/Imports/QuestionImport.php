@@ -33,7 +33,7 @@ class QuestionImport implements WithHeadingRow, OnEachRow
     public function onRow(Row $row)
     {
         $rowIndex = $row->getIndex();
-        $row      = $row->toArray();
+        $row      = $row->toArray(null, true);
 
         $question = Question::create([
             'title' => $row['title'],

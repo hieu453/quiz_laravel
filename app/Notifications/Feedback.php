@@ -2,14 +2,15 @@
 
 namespace App\Notifications;
 
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class NewAnnouncement extends Notification implements ShouldBroadcast
+class Feedback extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -17,8 +18,7 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
      * Create a new notification instance.
      */
     public function __construct(
-        protected $messages,
-        protected $userIds
+        protected $messages
     )
     {
         //
@@ -39,7 +39,10 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage);
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -50,9 +53,9 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
     public function toArray(object $notifiable): array
     {
         return [
-            'title'     =>  $this->messages['title'],
-            'body'      =>  $this->messages['body'],
-            'link'      =>  $this->messages['link'],
+            'title' => $this->messages['title'],
+            'body' => $this->messages['body'],
+            'link' => $this->messages['link']
         ];
     }
 
@@ -62,14 +65,13 @@ class NewAnnouncement extends Notification implements ShouldBroadcast
             'title'     => $this->messages['title'],
             'body'      => $this->messages['body'],
             'link'      => $this->messages['link'],
-            'sentUsers' => $this->userIds
         ]);
     }
 
     public function broadcastOn()
     {
         return [
-            new Channel('all')
+            new PrivateChannel('feedback')
         ];
     }
 }

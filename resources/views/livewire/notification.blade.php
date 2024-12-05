@@ -9,7 +9,7 @@
             </span>
         </i>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end announcements shadow" style="max-height: 350px; min-width: 300px;">
+    <ul class="dropdown-menu dropdown-menu-end announcements shadow" style="max-height: 350px; max-width: 300px;">
         <div class="sticky-top text-center header-notification py-2"><h3>Thông báo</h3></div>
         <div id="announcements-wrapper">
             @foreach (Auth::user()->notifications as $key => $notification)
@@ -19,7 +19,7 @@
                     <li>
                         <a class="dropdown-item {{ $notification->read_at == null ? 'listBgColor' : '' }}" href="#" wire:click.prevent="showNotification('{{$notification->id}}')">
                             <h5>{{ $notification->data['title'] }}</h5>
-                            {{ $notification->data['body'] }}
+                            <p class="truncated-string">{{ $notification->data['body'] }}</p>
                         </a>
                     </li>
             @endforeach
@@ -35,6 +35,7 @@
 <script type="module">
 Echo.channel('all')
     .notification((notification) => {
+        // chỉ những user đang đăng nhập có trong danh sách sentUsers mới được gửi thông báo bình luận mới
         if (notification.sentUsers.includes({{ Auth::user()->id }})) {
             const announcementsWrapper = $('#announcements-wrapper')
             const announcementList = $('.announcements li')
@@ -51,7 +52,7 @@ Echo.channel('all')
                     <li>
                         <a class="dropdown-item listBgColor" href="#" wire:click.prevent="showNotification('${notification.id}')">
                             <h5>${notification.title}</h5>
-                            ${notification.body}
+                            <p class="truncated-string">${notification.body}</p>
                         </a>
                     </li>
                 `)
@@ -60,13 +61,54 @@ Echo.channel('all')
                     <li>
                         <a class="dropdown-item listBgColor" href="#" wire:click.prevent="showNotification('${notification.id}')">
                             <h5>${notification.title}</h5>
-                            ${notification.body}
+                            <p class="truncated-string">${notification.body}</p>
                         </a>
                     </li>
                 `)
             }
         }
     });
+
+Echo.private('feedback')
+    .notification((notification) => {
+        const announcementsWrapper = $('#announcements-wrapper')
+        const announcementList = $('.announcements li')
+
+        if ($('.fa-bell').children().length > 0) {
+            $('.badge').html(`
+                <i class="fa-solid fa-circle"></i>
+            `)
+        }
+
+        if (announcementsWrapper.children().length == 10) {
+            announcementList.last().remove()
+            announcementsWrapper.prepend(`
+                <li>
+                    <a class="dropdown-item listBgColor" href="#" wire:click.prevent="showNotification('${notification.id}')">
+                        <h5>${notification.title}</h5>
+                        <p class="truncated-string">${notification.body}</p>
+                    </a>
+                </li>
+            `)
+        } else {
+            announcementsWrapper.prepend(`
+                <li>
+                    <a class="dropdown-item listBgColor" href="#" wire:click.prevent="showNotification('${notification.id}')">
+                        <h5>${notification.title}</h5>
+                        <p class="truncated-string">${notification.body}</p>
+                    </a>
+                </li>
+            `)
+        }
+    })
+
+let truncatedString = $('.truncated-string');
+
+for (let i = 0; i < truncatedString.length; ++i) {
+    if (truncatedString[i].textContent.length > 30) {
+        truncatedString[i].textContent = truncatedString[i].textContent.substring(0, 15) + '...'
+    }
+}
 </script>
 
 

@@ -1,6 +1,7 @@
 @extends('home.app')
 @section('content')
     <div class="pt-5">
+
         <div class="container">
             <div class="row">
                 <div class="col-6">
@@ -77,6 +78,22 @@
                             @endforeach
                         </div>
                     @endforeach
+                    <div class="mt-5">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        <h5>Phản hồi (nếu có câu hỏi nào đáp án chưa đúng hoặc chưa có đáp án, hãy phản hồi rõ tên câu hỏi và đáp án đúng)</h5>
+                        <form action="{{ route('feedback.send') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <textarea name="feedback" class="form-control" required></textarea>
+                            </div>
+                            <button class="btn btn-outline-dark">Gửi phản hồi</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-6">
                     <div class="d-flex flex-column ps-5" style="position: fixed; top: 20%;">
@@ -102,6 +119,7 @@
                     <div style="position: fixed; margin-top: 12%; margin-left: 5%;">
                         <p><b>Số câu đã làm: {{ $userAnswers ? count($userAnswers) : 0 }}/{{ count($questions) }}</b></p>
                         <p><b>Số câu làm đúng: {{ $userCorrectAnswers }}/{{ $userAnswers ? count($userAnswers) : 0 }}</b></p>
+                        {{-- Biến $question vẫn còn tồn tại sau khi kết thúc foreach --}}
                         <a href="{{ route('quiz.start', ['id' => $question->quiz_id]) }}" class="btn btn-info">Làm lại</a>
                     </div>
                 </div>

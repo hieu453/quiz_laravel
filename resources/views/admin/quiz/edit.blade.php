@@ -1,5 +1,5 @@
 @extends('admin.app')
-@section('title', 'Đề | Sửa')
+@section('title', 'Môn học | Sửa')
 @section('content')
 @error('title')
     <div class="alert alert-danger">{{ $message }}</div>
@@ -10,7 +10,7 @@
 <div class="mx-3 my-3">
     <div class="row">
         <div class="col-6">
-            <h2>Sửa đề</h2>
+            <h2>Sửa môn học</h2>
         </div>
         <div class="col-6">
             <a href="{{ route('quiz.all') }}" class="btn btn-secondary float-end">Trở lại</a>

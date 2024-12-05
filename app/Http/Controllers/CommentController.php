@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NewAnnouncement;
 use Illuminate\Support\Facades\Notification;
-use PhpParser\Node\Expr\New_;
 
 class CommentController extends Controller
 {
@@ -23,7 +22,6 @@ class CommentController extends Controller
             'title'     => Auth::user()->name . " đã bình luận!!",
             'body'      => $request->message,
             'link'      => route('quiz.detail', ['id' => $request->quiz_id]),
-            'linkText'  => ''
         ];
 
         foreach ($commentUniqueByUserId as $comment) {

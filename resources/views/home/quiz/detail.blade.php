@@ -20,7 +20,7 @@
 </div>
 
 <div class="container mt-5">
-    <div class="row rounded py-5" style="background-image: linear-gradient(#e7f0fd, #accbee)">
+    <div class="row rounded py-5">
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>
         @if (Auth::check())

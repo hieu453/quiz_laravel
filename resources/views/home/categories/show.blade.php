@@ -2,7 +2,7 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
-        <div class="col-2 py-5 mb-5 border rounded" style="background-image: linear-gradient(#D7FFFE, #FFFEFF);">
+        <div class="col-2 py-5 mb-5 border rounded">
             <h2>Danh mục</h2>
             <div class="list-group list-group-flush">
                 @foreach ($categories as $item)
@@ -14,7 +14,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-10 py-5 mb-5 border rounded" style="background-image: linear-gradient(#FFFEFF, #D7FFFE);">
+        <div class="col-10 py-5 mb-5 border rounded">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">Trang chủ</a></li>
@@ -23,7 +23,7 @@
                 </ol>
             </nav>
             <div class="row">
-                <h1>{{ $category->name }}</h1>
+                <h2>{{ $category->name }}</h2>
             </div>
             <div class="row">
                 @foreach ($category->quizzes as $quiz)

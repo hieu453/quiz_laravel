@@ -11,19 +11,6 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('index') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Danh muc khoa hoc
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
         @if (Auth::check())
@@ -33,12 +20,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ Auth::user()->name }}</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Settings</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Cài đặt tài khoản</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
+                                <button type="submit" class="dropdown-item">Đăng xuất</button>
                             </form>
                         </li>
                     </ul>
@@ -49,10 +36,10 @@
         <div class="nav navbar-nav navbar-right">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">Register</a>
+                <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
             </li>
         </ul>
         </div>

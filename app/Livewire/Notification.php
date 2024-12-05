@@ -15,7 +15,6 @@ class Notification extends Component
         $notification = Auth::user()->notifications->where('id', $notificationId)->first();
         $notification->markAsRead();
         return $this->redirect($notification->data['link']);
-
     }
 
     public function render()

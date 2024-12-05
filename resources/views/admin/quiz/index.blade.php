@@ -1,5 +1,5 @@
 @extends('admin.app')
-@section('title', 'Đề | Tất cả')
+@section('title', 'Môn học | Tất cả')
 @section('content')
     <!-- Modal Delete -->
     @include('admin.quiz.modals.delete-modal')
@@ -8,7 +8,7 @@
     @include('admin.quiz.modals.add-modal')
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Tất cả đề</h1>
+        <h1 class="mt-4">Tất cả môn học</h1>
 
         @error('title')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -28,8 +28,8 @@
         <div class="card mb-4">
             <div class="card-header">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuizModal">
-                    Thêm đề
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addQuizModal">
+                    Thêm môn học
                 </button>
             </div>
             <div class="card-body">
@@ -59,13 +59,13 @@
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
-                                <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-success">Sửa</a>
+                                <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-outline-success">Sửa</a>
 {{--                                <form action="{{ route('quiz.delete', ['id' => $quiz->id]) }}" method="POST" class="btn">--}}
 {{--                                    @csrf--}}
 {{--                                    @method('DELETE')--}}
 {{--                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>--}}
 {{--                                </form>--}}
-                                <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Xóa</a>
+                                <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Xóa</a>
                             </td>
                         </tr>
                     @endforeach

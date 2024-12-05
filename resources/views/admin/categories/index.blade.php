@@ -22,7 +22,7 @@
 
         <div class="card mb-4">
             <div class="card-header">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                     Thêm danh mục
                 </button>
             </div>
@@ -49,8 +49,8 @@
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->updated_at }}</td>
                             <td>
-                                <a href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-success">Sửa</a>
-                                <a class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#categoryDeleteModal">Xóa</a>
+                                <a href="{{ route('category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-outline-success">Sửa</a>
+                                <a class="btn btn-sm btn-outline-danger"  data-bs-toggle="modal" data-bs-target="#categoryDeleteModal">Xóa</a>
                             </td>
                         </tr>
                     @endforeach
