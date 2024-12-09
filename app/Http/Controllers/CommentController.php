@@ -19,7 +19,7 @@ class CommentController extends Controller
         $userIds = [];
 
         $messages = [
-            'title'     => Auth::user()->name . " đã bình luận!!",
+            'title'     => Auth::user()->name . " đã bình luận!",
             'body'      => $request->message,
             'link'      => route('quiz.detail', ['id' => $request->quiz_id]),
         ];

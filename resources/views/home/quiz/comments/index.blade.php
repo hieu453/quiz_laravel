@@ -1,10 +1,9 @@
-<div class="row py-3 rounded mt-3 border border-info">
+<div class="row py-3 mt-3">
     <h4>Bình luận ({{ $commentsAndRepliesLength }})</h4>
-    <hr />
 
     <div class="comment-wrapper">
     @foreach($comments as $comment)
-    <div id="{{ $comment->id }}" class="display-comment border border-info mb-3 px-3 py-3">
+    <div id="{{ $comment->id }}" class="display-comment border mb-3 px-3 py-3">
         <div class="d-flex">
             <div class="avatar text-center rounded"><i class="fa-regular fa-user"></i></div>
             <strong class="ms-2">{{ $comment->user->name }}</strong>
@@ -13,7 +12,7 @@
 
         @if (Auth::check())
         <a
-        class="text-decoration-none me-2"
+        class="text-decoration-none me-2 text-secondary"
         type="button"
         aria-expanded="false"
         data-bs-toggle="collapse"
@@ -26,7 +25,7 @@
 
         @if ($comment->replies()->exists())
             <a
-            class="text-decoration-none me-2"
+            class="text-decoration-none me-2 text-secondary"
             type="button"
             aria-expanded="false"
             data-bs-toggle="collapse"
@@ -40,7 +39,7 @@
         @if (Auth::check())
             @if (Auth::user()->id == $comment->user->id)
                 <a
-                    data-mdb-dropdown-init class="text-decoration-none"
+                    data-mdb-dropdown-init class="text-decoration-none text-secondary"
                     type="button"
                     id="dropdownMenuicon"
                     data-bs-toggle="dropdown"
@@ -68,7 +67,7 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-warning" value="Sửa" />
+                        <input type="submit" class="btn btn-dark" value="Sửa" />
                         <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
@@ -86,7 +85,7 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-warning" value="Reply" />
+                        <input type="submit" class="btn btn-dark" value="Reply" />
                         <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
@@ -98,7 +97,7 @@
         <div class="collapse" id="collapseReplies{{ $comment->id }}">
             @foreach ($comment->replies as $reply)
                 @if ($reply->parent_id == $comment->id)
-                    <div id="{{ $reply->id }}" class="display-comment ms-5 border-start border-info mb-3 px-3 py-1">
+                    <div id="{{ $reply->id }}" class="display-comment ms-5 border-start mb-3 px-3 py-1">
                         <div class="d-flex">
                             <div class="avatar rounded text-center"><i class="fa-regular fa-user"></i></div>
                             <strong class="ms-2">{{ $reply->user->name }}</strong>
@@ -137,7 +136,7 @@
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <input type="submit" class="btn btn-warning" value="Sửa" />
+                                    <input type="submit" class="btn btn-dark" value="Sửa" />
                                     <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Đóng</a>
                                 </div>
                             </form>
@@ -153,7 +152,7 @@
 
     @if (count($comments) > 0)
     <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-primary load-more-comments" type="button">Hiển thị thêm</button>
+        <button class="btn btn-dark load-more-comments" type="button">Hiển thị thêm</button>
     </div>
     @endif
 
@@ -167,7 +166,7 @@
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         </div>
         <div class="mb-3">
-            <input type="submit" class="btn btn-success" value="Đăng" />
+            <input type="submit" class="btn btn-dark" value="Đăng" />
         </div>
     </form>
     @else

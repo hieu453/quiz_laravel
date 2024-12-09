@@ -21,11 +21,6 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Middleware\UserPlayed;
 use App\Notifications\Feedback;
 
-// Get all users who commented on post
-// $comments = Comment::where('quiz_id', 7)->get();
-// $users = $comments->map->user->unique('id');
-
-
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/test', function () {
     $comments = Comment::where('quiz_id', 25)->get();
@@ -33,50 +28,12 @@ Route::get('/test', function () {
     return view('home.quiz.index');
 });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
+Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('home.category.show');
 
 Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
 
-// Route::get('/test', function (Request $request) {
-
-//     $quiz = Quiz::where('id', 7)->first();
-//     $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);
-//     // $replies = Comment::whereNotNull('parent_id')->get();
-//     $quiz_id = $quiz->id;
-
-//     if ($request->ajax()) {
-//         $view = view('home.quiz.comments.comments', compact('comments', 'quiz_id'))->render();
-
-//         return response()->json(['html' => $view]);
-//     }
-
-//     return view('home.quiz.comments.index', [
-//         'quiz'      =>  $quiz,
-//         'comments'  =>  $comments,
-//     ]);
-// })->name('comments.index');
-
-// Route::get('/more-comments', [CommentController::class, 'showMoreComment'])->name('comments.index');
-
-
 Route::middleware('auth')->group(function () {
-    // Route::get('/send', function () {
-    //     $messages = [
-    //         'title'     => 'Hello World',
-    //         'body'      => 'This is a text',
-    //         'link'      => '',
-    //         'linkText'  => ''
-    //     ];
-
-    //     $user = User::where('is_admin', 0)->first();
-
-    //     // $user->notify(new NewAnnouncement($messages));
-    // });
-
-    // Route::get('/unread-notifications', function () {
-    //     return Auth::user()->unreadNotifications->count();
-    // });
-
     Route::get('/set-quetions-to-session/{id}', [HomeController::class, 'setQuestionsToSession'])->name('questions.session');
     Route::get('/quiz/{id}/start', [HomeController::class, 'startQuizQuestions'])->name('quiz.start');
     Route::post('/check-result', [HomeController::class, 'checkResult'])->name('checkResult');
@@ -86,10 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
 
     Route::post('/send-feedback', [FeedbackController::class, 'sendFeedback'])->name('feedback.send');
+
+    Route::get('/notification/user', [NotificationController::class, 'all'])->name('notification.user');
 });
 
 Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/notification/admin', [NotificationController::class, 'all'])->name('notification.admin');
 
     //Categories routes
     Route::get('/category-all', [AdminCategoryController::class, 'all'])->name('category.all');

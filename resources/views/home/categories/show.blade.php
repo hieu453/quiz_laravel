@@ -4,21 +4,25 @@
     <div class="row">
         <div class="col-2 py-5 mb-5 border rounded">
             <h2>Danh mục</h2>
-            <div class="list-group list-group-flush">
+            <ul class="" style="list-style-type: none;">
                 @foreach ($categories as $item)
                     @if ($item->name == $category->name)
-                        <a href="{{ route('home.category.show', ['slug' => $item->slug]) }}" class="rounded list-group-item list-group-item-action active">{{ $item->name }}</a>
+                        <li class="px-2 py-2 active rounded">
+                            <a href="{{ route('home.category.show', ['slug' => $item->slug]) }}" class="text-secondary text-decoration-none">{{ $item->name }}</a>
+                        </li>
                     @else
-                        <a href="{{ route('home.category.show', ['slug' => $item->slug]) }}" class="rounded list-group-item list-group-item-action">{{ $item->name }}</a>
+                        <li class="px-2 py-2 rounded">
+                            <a href="{{ route('home.category.show', ['slug' => $item->slug]) }}" class="text-secondary text-decoration-none">{{ $item->name }}</a>
+                        </li>
                     @endif
                 @endforeach
-            </div>
+            </ul>
         </div>
         <div class="col-10 py-5 mb-5 border rounded">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home.category.all') }}">Danh mục</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home.category.all') }}" class="text-secondary text-decoration-none">Danh mục</a></li>
                     <li class="breadcrumb-item">{{ $category->name }}</li>
                 </ol>
             </nav>
@@ -39,7 +43,7 @@
                             </a>
                         </div>
                     </div> --}}
-                    <p><i class="fa-regular fa-hand-point-right"></i><a href="{{ route('quiz.detail', ['id' => $quiz->id]) }}" class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"> {{ $quiz->title }}</a></p>
+                    <p><i class="fa-regular fa-hand-point-right"></i><a href="{{ route('quiz.detail', ['id' => $quiz->id]) }}" class="text-decoration-none text-secondary"> {{ $quiz->title }}</a></p>
                 @endforeach
             </div>
         </div>

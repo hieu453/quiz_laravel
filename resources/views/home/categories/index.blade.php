@@ -3,7 +3,7 @@
 <div class="container py-5 my-5 rounded border rounded">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('index') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
             <li class="breadcrumb-item">Danh mục</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
                     <a href="" class="text-reset text-decoration-none text-center">
                         <div class="card-body text-center">
                             <h3 class="card-title">{{ $category->name }}</h3>
-                            <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="card-link text-info"><i class="fa-regular fa-hand-point-right"></i> {{ count($category->quizzes) }} môn</a>
+                            <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="card-link text-secondary text-decoration-none"><i class="fa-regular fa-hand-point-right"></i> {{ count($category->quizzes) }} môn</a>
                         </div>
                     </a>
                 </div>

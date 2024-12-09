@@ -122,11 +122,11 @@ ul {
 
 .header-notification {
     width: 100%;
-    background-color: #daf0f4;
+    background-color: #f3f3f3;
 }
 
 .footer-notification {
-    background-color: #daf0f4;
+    background-color: #f3f3f3;
     margin-bottom: 0;
 }
 
@@ -134,8 +134,16 @@ ul {
     font-weight: bolder;
 }
 
+.notification-link > div {
+    transition: 0.3s;
+}
+
+.notification-link:hover > div {
+    background-color: #e4e4e4;
+}
+
 .active {
-    background-color: #00d2ff!important;
+    background-color: #f3f3f3!important;
 }
 
 .card-link:hover {
@@ -148,9 +156,9 @@ ul {
 
 .checkbox-choose-question {
     border: 1px solid #17a2b8;
-    font-size: 11px;
-    height: 18px;
-    width: 16px;
+    font-size: 16px;
+    height: 32px;
+    width: 36px;
 }
 
 .annotation-box {

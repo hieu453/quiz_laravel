@@ -6,44 +6,54 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
+        <div class="collapse navbar-collapse d-flex justify-content-between">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('index') }}">Home</a>
                 </li>
             </ul>
-        </div>
-        @if (Auth::check())
-        <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <ul class="nav navbar-nav navbar-right ms-auto ms-md-0 me-3 me-lg-4">
-                <livewire:notification />
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ Auth::user()->name }}</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Cài đặt tài khoản</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item">Đăng xuất</button>
-                            </form>
+            <div class="">
+                <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
+                    <div class="col">
+                        <input type="text" name="c" class="form-control rounded-pill">
+                    </div>
+                    <div class="col ms-1">
+                        <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+            @if (Auth::check())
+                <div class="d-none d-md-inline-block form-inline me-0 me-md-3 my-2 my-md-0">
+                    <ul class="nav navbar-nav navbar-right ms-md-0 me-3 me-lg-4">
+                        <livewire:notification />
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ Auth::user()->name }}</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Cài đặt tài khoản</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
-                </li>
-            </ul>
+                </div>
+            @else
+                <div class="nav navbar-nav navbar-right">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
         </div>
-        @else
-        <div class="nav navbar-nav navbar-right">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
-            </li>
-        </ul>
-        </div>
-        @endif
     </div>
 </nav>
 @push('javascript')

@@ -1,5 +1,5 @@
 @foreach($comments as $comment)
-    <div id={{ $comment->id }} class="display-comment border border-info mb-3 px-3 py-3">
+    <div id={{ $comment->id }} class="display-comment border mb-3 px-3 py-3">
         <div class="d-flex">
             <div class="avatar rounded text-center"><i class="fa-regular fa-user"></i></div>
             <strong class="ms-2">{{ $comment->user->name }}</strong>
@@ -7,7 +7,7 @@
         <p class="ms-2">{{ $comment->message }}</p>
         @if (Auth::check())
         <a
-        class="text-decoration-none me-2"
+        class="text-decoration-none me-2 text-secondary"
         type="button"
         aria-expanded="false"
         data-bs-toggle="collapse"
@@ -34,7 +34,7 @@
         @if (Auth::check())
             @if (Auth::user()->id == $comment->user->id)
                 <a
-                    data-mdb-dropdown-init class="text-decoration-none"
+                    data-mdb-dropdown-init class="text-decoration-none text-secondary"
                     type="button"
                     id="dropdownMenuicon"
                     data-bs-toggle="dropdown"
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-warning" value="Sửa" />
+                        <input type="submit" class="btn btn-dark" value="Sửa" />
                         <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-warning" value="Reply" />
+                        <input type="submit" class="btn btn-dark" value="Reply" />
                         <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
@@ -92,7 +92,7 @@
         <div class="collapse" id="collapseReplies{{ $comment->id }}">
             @foreach ($comment->replies as $reply)
                 @if ($reply->parent_id == $comment->id)
-                    <div id="{{ $reply->id }}" class="display-comment ms-5 border-start border-info mb-3 px-3 py-1">
+                    <div id="{{ $reply->id }}" class="display-comment ms-5 border-start mb-3 px-3 py-1">
                         <div class="d-flex">
                             <div class="avatar rounded text-center"><i class="fa-regular fa-user"></i></div>
                             <strong class="ms-2">{{ $reply->user->name }}</strong>
@@ -101,7 +101,7 @@
                         @if (Auth::check())
                             @if (Auth::user()->id == $reply->user->id)
                                 <a
-                                    data-mdb-dropdown-init class="text-decoration-none"
+                                    data-mdb-dropdown-init class="text-decoration-none text-secondary"
                                     type="button"
                                     id="dropdownMenuicon"
                                     data-bs-toggle="dropdown"
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <input type="submit" class="btn btn-warning" value="Sửa" />
+                                    <input type="submit" class="btn btn-dark" value="Sửa" />
                                     <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Đóng</a>
                                 </div>
                             </form>

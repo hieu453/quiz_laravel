@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-6">
                     @foreach($questions as $key => $question)
-                        <div id="question_{{ $key + 1 }}" class="row border border-success rounded mb-3 px-2 py-2" style="scroll-margin: 70px;">
+                        <div id="question_{{ $key + 1 }}" class="row border border-dark rounded mb-3 px-2 py-2" style="scroll-margin: 70px;">
                             <h5>Câu {{ $key + 1 . ': ' . $question->title }}</h5>
                             @foreach($question->options as $option)
                                 <div class="form-check">
@@ -45,7 +45,7 @@
                     <div class="d-flex flex-row" style="position: fixed;">
                         @foreach ($questions as $key => $question)
                         <a href="#question_{{ $key + 1 }}" class="text-decoration-none text-reset">
-                            <div class="checkbox-choose-question text-center me-1" id="checkboxAnswer_{{ $key + 1 }}">
+                            <div class="d-flex align-items-center justify-content-center checkbox-choose-question text-center me-1" id="checkboxAnswer_{{ $key + 1 }}">
                                 {{ $key + 1 }}
                             </div>
                         </a>
