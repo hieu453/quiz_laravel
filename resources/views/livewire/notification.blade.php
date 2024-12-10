@@ -10,7 +10,7 @@
         </i>
     </a>
     <ul class="dropdown-menu dropdown-menu-end announcements shadow" style="max-height: 350px; max-width: 400px; min-width: 300px;">
-        <div class="sticky-top text-center header-notification py-2"><h3>Thông báox</h3></div>
+        <div class="sticky-top text-center header-notification py-2"><h3>Thông báo</h3></div>
         <div id="announcements-wrapper">
             @foreach (Auth::user()->notifications as $key => $notification)
                 @if ($key === 10)
@@ -26,9 +26,9 @@
         </div>
         @if (count(Auth::user()->notifications) > 0)
             @if (Auth::user()->is_admin == 1)
-                <p class="text-center sticky-bottom footer-notification py-1"><a href="/admin" class="text-decoration-none text-info-emphasis">Xem tất cả thông báo</a></p>
+                <p class="text-center sticky-bottom footer-notification py-1"><a href="{{ route('notification.admin') }}" class="text-decoration-none text-secondary">Xem tất cả thông báo</a></p>
             @else
-                <p class="text-center sticky-bottom footer-notification py-1"><a href="{{ route('notification.user') }}" class="text-decoration-none text-info-emphasis">Xem tất cả thông báo</a></p>
+                <p class="text-center sticky-bottom footer-notification py-1"><a href="{{ route('notification.user') }}" class="text-decoration-none text-secondary">Xem tất cả thông báo</a></p>
             @endif
         @else
             <p class="text-center sticky-bottom footer-notification py-1">Chưa có thông báo nào</p>

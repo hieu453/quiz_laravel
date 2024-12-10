@@ -1,3 +1,21 @@
+{{-- Delete Comment Modal --}}
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Xóa bình luận</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có chắc muốn xóa bình luận
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-danger">Xóa</button>
+        </div>
+      </div>
+    </div>
+</div>
 <div class="row py-3 mt-3">
     <h4>Bình luận ({{ $commentsAndRepliesLength }})</h4>
 
@@ -39,7 +57,7 @@
         @if (Auth::check())
             @if (Auth::user()->id == $comment->user->id)
                 <a
-                    data-mdb-dropdown-init class="text-decoration-none text-secondary"
+                    class="text-decoration-none text-secondary"
                     type="button"
                     id="dropdownMenuicon"
                     data-bs-toggle="dropdown"
@@ -51,7 +69,7 @@
                 <div class="dropdown">
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Sửa</a></li>
-                        <li><a class="dropdown-item text-danger" href="#">Xóa</a></li>
+                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">Xóa</a></li>
                     </ul>
                 </div>
             @endif
@@ -67,8 +85,8 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-dark" value="Sửa" />
-                        <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Đóng</a>
+                        <input type="submit" class="btn btn-outline-dark" value="Sửa" />
+                        <a class="btn btn-outline-danger" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
             </div>
@@ -85,8 +103,8 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-dark" value="Reply" />
-                        <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
+                        <input type="submit" class="btn btn-outline-dark" value="Trả lời" />
+                        <a class="btn btn-outline-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
             </div>
@@ -107,7 +125,7 @@
                         @if (Auth::check())
                             @if (Auth::user()->id == $reply->user->id)
                                 <a
-                                    data-mdb-dropdown-init class="text-decoration-none"
+                                    data-mdb-dropdown-init class="text-decoration-none text-secondary"
                                     type="button"
                                     id="dropdownMenuicon"
                                     data-bs-toggle="dropdown"
@@ -166,7 +184,7 @@
             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         </div>
         <div class="mb-3">
-            <input type="submit" class="btn btn-dark" value="Đăng" />
+            <input type="submit" class="btn btn-outline-dark" value="Đăng" />
         </div>
     </form>
     @else

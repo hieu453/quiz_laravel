@@ -1,9 +1,6 @@
 <?php
 
 
-use App\Models\User;
-use App\Models\Comment;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
@@ -19,13 +16,10 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Middleware\UserPlayed;
-use App\Notifications\Feedback;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/test', function () {
-    $comments = Comment::where('quiz_id', 25)->get();
-    $users = $comments->map->user->unique('id')->except(Auth::user()->id);
-    return view('home.quiz.index');
+    
 });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
@@ -97,9 +91,9 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -48,7 +48,7 @@
             </ul>
         </div>
         <div class="col-6 text-end align-self-center">
-            <span style="font-size: 34px;">{{ $avgStar }}</span>
+            <span style="font-size: 34px;">{{ $avgStar }} / 5</span>
             <i style="font-size: 34px;" class="fa-solid fa-star"></i>
             <p>Có {{ $ratedCount }} lượt đánh giá</p>
         </div>
@@ -57,7 +57,7 @@
             <h3>Đăng nhập để đánh giá</h3>
         </div>
         <div class="col-6 text-end align-self-center">
-            <span style="font-size: 34px;">{{ $avgStar }}</span>
+            <span style="font-size: 34px;">{{ $avgStar }} / 5</span>
             <i style="font-size: 34px;" class="fa-solid fa-star"></i>
             <p>Có {{ $ratedCount }} lượt đánh giá</p>
         </div>

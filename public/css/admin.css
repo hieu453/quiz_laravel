@@ -48,3 +48,11 @@ ul {
 .footer-notification:hover {
     font-weight: bolder;
 }
+
+.notification-link > div {
+    transition: 0.3s;
+}
+
+.notification-link:hover > div {
+    background-color: #e4e4e4;
+}

@@ -9,7 +9,10 @@
         <div class="collapse navbar-collapse d-flex justify-content-between">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('index') }}">Home</a>
+                    <a class="nav-link" href="{{ route('index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home.category.all') }}">Danh mục</a>
                 </li>
             </ul>
             <div class="">

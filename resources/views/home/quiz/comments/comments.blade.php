@@ -20,7 +20,7 @@
 
         @if ($comment->replies()->exists())
             <a
-            class="text-decoration-none me-2"
+            class="text-decoration-none me-2 text-secondary"
             type="button"
             aria-expanded="false"
             data-bs-toggle="collapse"
@@ -80,8 +80,8 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <input type="submit" class="btn btn-dark" value="Reply" />
-                        <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
+                        <input type="submit" class="btn btn-outline-dark" value="Trả lời" />
+                        <a class="btn btn-outline-danger" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}">Đóng</a>
                     </div>
                 </form>
             </div>
@@ -130,8 +130,8 @@
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <input type="submit" class="btn btn-dark" value="Sửa" />
-                                    <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Đóng</a>
+                                    <input type="submit" class="btn btn-outline-dark" value="Sửa" />
+                                    <a class="btn btn-outline-danger" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Đóng</a>
                                 </div>
                             </form>
                         </div>
