@@ -45,6 +45,13 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
+    public function destroy(Request $request)
+    {
+        Comment::destroy($request->comment_id);
+
+        return redirect()->back()->with('success', 'Đã xóa bình luận');
+    }
+
     // public function showMoreComment(Request $request)
     // {
     //     $comments = Comment::whereNull('parent_id')->orderBy('created_at', 'DESC')->paginate(2);

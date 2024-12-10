@@ -32,7 +32,7 @@ class HomeController extends Controller
     {
         $quiz = Quiz::find($id);
         $comments = Comment::whereNull('parent_id')->where('quiz_id', $id)->orderBy('created_at', 'DESC')->paginate(3);
-        $commentsAndRepliesLength = Comment::where('quiz_id', $id)->orderBy('created_at', 'DESC')->count();
+        $commentsAndRepliesLength = Comment::where('quiz_id', $id)->count();
 
         if ($request->ajax()) {
             $view = view('home.quiz.comments.comments', compact('comments'))->render();

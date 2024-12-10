@@ -1,25 +1,26 @@
 <?php
 
 
+use Illuminate\Http\Request;
+use App\Http\Middleware\UserPlayed;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckIfUserIsAdmin;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\QuizController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\FeedbackController;
-use App\Http\Middleware\UserPlayed;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/test', function () {
-    
+Route::delete('/test', function (Request $request) {
+    dd($request->all());
 });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/comment-store', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comment-update/{id}', [CommentController::class, 'update'])->name('comment.update');
+    Route::delete('comment-delete', [CommentController::class, 'destroy'])->name('comment.destroy');
 
     Route::post('/send-feedback', [FeedbackController::class, 'sendFeedback'])->name('feedback.send');
 

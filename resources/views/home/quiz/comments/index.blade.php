@@ -1,22 +1,10 @@
-{{-- Delete Comment Modal --}}
-<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">Xóa bình luận</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Bạn có chắc muốn xóa bình luận
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-danger">Xóa</button>
-        </div>
-      </div>
-    </div>
-</div>
 <div class="row py-3 mt-3">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <h4>Bình luận ({{ $commentsAndRepliesLength }})</h4>
 
     <div class="comment-wrapper">
@@ -69,7 +57,14 @@
                 <div class="dropdown">
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Sửa</a></li>
-                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">Xóa</a></li>
+                        <li>
+                            <form action="{{ route('comment.destroy') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                <button onclick="confirmDelete(event)" class="dropdown-item text-danger" type="submit">Xóa</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             @endif
@@ -137,7 +132,14 @@
                                 <div class="dropdown">
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Sửa</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Xóa</a></li>
+                                        <li>
+                                            <form action="{{ route('comment.destroy') }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="comment_id" value="{{ $reply->id }}">
+                                                <button onclick="confirmDelete(event)" class="dropdown-item text-danger" type="submit">Xóa</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             @endif
@@ -194,6 +196,12 @@
 
 @push('javascript')
 <script>
+    function confirmDelete(e) {
+        if(! confirm('Bạn có chắc muốn xóa?')) {
+            e.preventDefault();
+        }
+    }
+
     const ENDPOINT = '{{ route('quiz.detail', ["id" => $quiz->id]) }}'
     let page = 1;
     const loadMoreButton = $('.load-more-comments')

@@ -46,7 +46,14 @@
                 <div class="dropdown">
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" data-bs-toggle="collapse" href="#collapseCommentEdit{{ $comment->id }}">Sửa</a></li>
-                        <li><a class="dropdown-item text-danger" href="#">Xóa</a></li>
+                        <li>
+                            <form action="{{ route('comment.destroy') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                <button onclick="confirmDelete(event)" class="dropdown-item text-danger" type="submit">Xóa</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             @endif
@@ -113,7 +120,14 @@
                                 <div class="dropdown">
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" data-bs-toggle="collapse" href="#collapseReplyEdit{{ $reply->id }}">Sửa</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Xóa</a></li>
+                                        <li>
+                                            <form action="{{ route('comment.destroy') }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="comment_id" value="{{ $reply->id }}">
+                                                <button onclick="confirmDelete(event)" class="dropdown-item text-danger" type="submit">Xóa</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             @endif
