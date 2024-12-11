@@ -45,10 +45,16 @@ class AdminCategoryController extends Controller
 
         try {
             Excel::import(new CategoriesImport, $request->file('spreadsheet'));
-            return redirect()->back()->with('success', 'Nhập thành công!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('warning', 'Có lỗi! Hãy kiểm tra lại file excel!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $message = '';
+            foreach ($failures as $failure) {
+                $message = "Tên danh mục '{$failure->values()['name']}' đã tồn tại! Kiểm tra lại dòng số {$failure->row()}";
+                break;
+            }
+            return redirect()->back()->with('danger', $message);
         }
+        return redirect()->back()->with('success', 'Nhập thành công!');
     }
 
     public function edit(int $id)

@@ -6,9 +6,10 @@ use App\Models\Question;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Row;
 
-class QuestionImport implements WithHeadingRow, OnEachRow
+class QuestionImport implements WithHeadingRow, OnEachRow, WithValidation
 {
     public function __construct(
         private int $quizId
@@ -30,9 +31,22 @@ class QuestionImport implements WithHeadingRow, OnEachRow
     //     ]);
     // }
 
+    public function rules(): array
+    {
+        return [
+            'title' => 'unique:questions',
+        ];
+    }
+
+    // public function customValidationMessages()
+    // {
+    //     return [
+    //         'title.unique' => 'Trường :attribute đã tồn tại'
+    //     ];
+    // }
+
     public function onRow(Row $row)
     {
-        $rowIndex = $row->getIndex();
         $row      = $row->toArray(null, true);
 
         $question = Question::create([

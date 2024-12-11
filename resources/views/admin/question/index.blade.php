@@ -35,9 +35,9 @@
                     <tr>
                         <th></th>
                         <th>Id</th>
-                        <th>Đề</th>
+                        <th>Môn học</th>
                         <th>Tiêu đề câu hỏi</th>
-                        <th>Đã có lựa chọn</th>
+                        {{-- <th>Đã có lựa chọn</th> --}}
                         <th>Tạo lúc</th>
                         <th>Sửa lúc</th>
                         <th>Hành động</th>
@@ -50,7 +50,7 @@
                             <td>{{ $question->id }}</td>
                             <td>{{ $question->quizz->title }}</td>
                             <td class="truncated-name">{{ $question->title }}</td>
-                            <td>{{ $question->has_options ? 'Đã có' : 'Chưa có' }}</td>
+                            {{-- <td>{{ $question->has_options ? 'Đã có' : 'Chưa có' }}</td> --}}
                             <td>{{ $question->created_at }}</td>
                             <td>{{ $question->updated_at }}</td>
                             <td>
@@ -75,9 +75,9 @@
     const columnsSettings = [
         { searchable: false },
         { searchable: false },
-        { searchable: false },
         null,
-        { searchable: false },
+        null,
+        // { searchable: false },
         { searchable: false },
         { searchable: false },
         { searchable: false },

@@ -98,19 +98,19 @@
                 <div class="col-6">
                     <div class="d-flex flex-column ps-5" style="position: fixed; top: 20%;">
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: #f2476a;">
+                            <div class="annotation-box rounded-pill mb-2" style="background-color: #f2476a;">
 
                             </div>
                             <p>: Đáp án của bạn sai</p>
                         </div>
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: #add8e6;">
+                            <div class="annotation-box rounded-pill mb-2" style="background-color: #add8e6;">
 
                             </div>
                             <p>: Đáp án của bạn đúng</p>
                         </div>
                         <div class="d-flex flex-row">
-                            <div class="annotation-box mb-2" style="background-color: #90ee90;">
+                            <div class="annotation-box rounded-pill mb-2" style="background-color: #90ee90;">
 
                             </div>
                             <p>: Đáp án của câu hỏi</p>
@@ -120,7 +120,8 @@
                         <p><b>Số câu đã làm: {{ $userAnswers ? count($userAnswers) : 0 }}/{{ count($questions) }}</b></p>
                         <p><b>Số câu làm đúng: {{ $userCorrectAnswers }}/{{ $userAnswers ? count($userAnswers) : 0 }}</b></p>
                         {{-- Biến $question vẫn còn tồn tại sau khi kết thúc foreach --}}
-                        <a href="{{ route('quiz.start', ['id' => $question->quiz_id]) }}" class="btn btn-info">Làm lại</a>
+                        <a href="{{ route('quiz.start', ['id' => $question->quiz_id]) }}" class="btn btn-outline-dark">Làm lại</a>
+                        <a href="{{ route('quiz.detail', ['id' => $question->quiz_id]) }}" class="btn btn-outline-secondary">Thảo luận</a>
                     </div>
                 </div>
             </div>

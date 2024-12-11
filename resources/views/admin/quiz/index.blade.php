@@ -41,7 +41,7 @@
                         <th>Tiêu đề</th>
                         <th>Danh mục</th>
                         {{-- <th>Mô tả</th> --}}
-                        <th>Đã có câu hỏi</th>
+                        {{-- <th>Đã có câu hỏi</th> --}}
                         <th>Tạo lúc</th>
                         <th>Sửa lúc</th>
                         <th>Hành động</th>
@@ -55,7 +55,7 @@
                             <td>{{ $quiz->title }}</td>
                             <td>{{ $quiz->category->name }}</td>
                             {{-- <td>{{ $quiz->description }}</td> --}}
-                            <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td>
+                            {{-- <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td> --}}
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
@@ -81,7 +81,7 @@
         { searchable: false },
         { searchable: false },
         null,
-        { searchable: false },
+        // { searchable: false },
         { searchable: false },
         { searchable: false },
         { searchable: false },

@@ -1,5 +1,5 @@
 @extends('admin.app')
-@section('title', 'Đề | Import Excel')
+@section('title', 'Môn học | Import Excel')
 @section('content')
     @error('spreadsheet')
         <div class="alert alert-danger">Bạn phải chọn file.</div>
@@ -10,9 +10,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @if (session('warning'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{ session('warning') }}
+    @if (session('danger'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('danger') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -27,7 +27,7 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="exampleInputText" class="form-label">Tiêu đề</label>
+            <label for="exampleInputText" class="form-label">File excel</label>
             <input type="file" name="spreadsheet" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Import</button>

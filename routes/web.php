@@ -1,7 +1,5 @@
 <?php
 
-
-use Illuminate\Http\Request;
 use App\Http\Middleware\UserPlayed;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -19,8 +17,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::delete('/test', function (Request $request) {
-    dd($request->all());
+Route::get('/test', function () {
+
 });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
@@ -72,6 +70,8 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::get('/question-all', [QuestionController::class, 'all'])->name('question.all');
     Route::get('/question-import', [QuestionController::class, 'importSpreadsheet'])->name('question.import');
     Route::post('/question-import', [QuestionController::class, 'import'])->name('question.import.store');
+    Route::get('/question-pdf-select', [QuestionController::class, 'selectExportPDF'])->name('question.export.select');
+    Route::post('/question-pdf-download', [QuestionController::class, 'download'])->name('question.export.download');
     Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
     Route::get('/question-edit/{id}', [QuestionController::class, 'edit'])->name('question.edit');
     Route::put('/question-update/{id}', [QuestionController::class, 'update'])->name('question.update');

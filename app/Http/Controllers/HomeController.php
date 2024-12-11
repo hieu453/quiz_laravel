@@ -56,7 +56,7 @@ class HomeController extends Controller
         $questions = Question::where([
             ['quiz_id', '=', $id],
             ['has_options', '=', 1]
-        ])->inRandomOrder()->limit(2)->get();
+        ])->inRandomOrder()->limit(10)->get();
 
         session(['questions' => $questions]);
 
@@ -86,7 +86,7 @@ class HomeController extends Controller
             }
         }
 
-        $points = number_format((float)$points, 2, '.', '');
+        $points = number_format((float)$points, 1, '.', '');
 
         $answered = UserAnswer::where('quiz_id', $request->quiz_id)->first();
         if ($answered) {

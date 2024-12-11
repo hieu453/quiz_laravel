@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse d-flex justify-content-between">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('index') }}">Home</a>
+                    <a class="nav-link" href="{{ route('index') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home.category.all') }}">Danh mục</a>
@@ -33,6 +33,9 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Cài đặt tài khoản</a></li>
+                                @if (Auth::user()->is_admin == 1)
+                                <li><a href="{{ route('admin.dashboard') }}" class="dropdown-item">Trang quản trị</a></li>
+                                @endif
                                 <li><hr class="dropdown-divider" /></li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Imports\QuestionImport;
+use App\Models\Quiz;
 use App\Models\Option;
 use App\Models\Question;
-use App\Models\Quiz;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Imports\QuestionImport;
+use Spatie\LaravelPdf\Facades\Pdf;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
@@ -46,9 +48,46 @@ class QuestionController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
+        $request->validate([
+            'spreadsheet' => 'required'
+        ]);
 
+        try {
+            Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $message = '';
+            foreach ($failures as $failure) {
+                $message = "Tiêu đề câu hỏi '{$failure->values()['title']}' đã tồn tại! Kiểm tra lại dòng số {$failure->row()}";
+                break;
+            }
+            return redirect()->back()->with('danger', $message);
+        }
         return redirect()->back()->with('success', 'Đã import thành công!.');
+    }
+
+    public function selectExportPDF()
+    {
+        return view('admin.question.export_pdf', [
+            'quizzes' => Quiz::all()
+        ]);
+    }
+
+    public function download(Request $request)
+    {
+        $quiz = Quiz::find($request->quiz_id);
+        $questions = Question::where('quiz_id', $quiz->id)->get();
+        $fileName = "bộ_đề_môn_{$quiz->title}.pdf";
+
+        Pdf::view('admin.question.export_template', [
+            'quiz' => $quiz,
+            'questions' => $questions
+        ])
+        ->disk('local')
+        ->format('a4')
+        ->save($fileName);
+
+        return Storage::download($fileName);
     }
 
     public function edit(int $id)
@@ -61,7 +100,6 @@ class QuestionController extends Controller
 
     public function update(int $id, Request $request)
     {
-        // dd($request->all());
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'options' => 'required|max:255'
@@ -95,13 +133,6 @@ class QuestionController extends Controller
         }
 
         return redirect()->route('question.all');
-    }
-
-    public function destroy(int $id)
-    {
-        Question::where('id', $id)->delete();
-
-        return redirect()->back()->with('success', 'Question deleted successfully.');
     }
 
     public function deleteMultiple(Request $request)

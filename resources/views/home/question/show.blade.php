@@ -56,7 +56,7 @@
                         <h4 id="timer"></h4>
                     </div>
                     <div class="row" style="position: fixed; margin: 130px 0 0 0;">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal">
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#submitModal">
                             Nộp bài
                         </button>
                     </div>
@@ -71,7 +71,7 @@
         const checkedBox = JSON.parse(localStorage.getItem('checkedBox')) ?? {};
         for (let i = 1; i <= questions; i++) {
             $(`.answer_${i}`).change(function() {
-                $(`#checkboxAnswer_${i}`).addClass('bg-info text-white')
+                $(`#checkboxAnswer_${i}`).addClass('bg-secondary text-white')
                 checkedBox[i] = i
                 localStorage.setItem('checkedBox', JSON.stringify(checkedBox))
             })
@@ -82,12 +82,12 @@
             const checkedBox = JSON.parse(localStorage.getItem('checkedBox'))
             if (checkedBox) {
                 for (let index of Object.values(checkedBox)) {
-                    $(`#checkboxAnswer_${checkedBox[index]}`).addClass('bg-info text-white')
+                    $(`#checkboxAnswer_${checkedBox[index]}`).addClass('bg-secondary text-white')
                 }
             }
 
             // Show remaining time
-            let minutes = 70;
+            let minutes = 10;
             let seconds = 0;
             const questionForm = $('#question-form');
 

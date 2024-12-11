@@ -55,7 +55,7 @@ class Feedback extends Notification implements ShouldBroadcast
         return [
             'title' => $this->messages['title'],
             'body' => $this->messages['body'],
-            'link' => $this->messages['link']
+            'link' => "{$this->messages['link']}",
         ];
     }
 

@@ -61,14 +61,14 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
 
     table.on('select', () => {
         table.button().enable();
-        table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+        table.button().text(`Xoá nhiều bản ghi: ${table.rows({ selected: true }).count()}`);
     })
 
     table.on('deselect', () => {
         if (table.rows({ selected: true }).count()) {
-            table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+            table.button().text(`Xoá nhiều bản ghi: ${table.rows({ selected: true }).count()}`);
         } else {
-            table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+            table.button().text(`Xoá nhiều bản ghi: ${table.rows({ selected: true }).count()}`);
             table.button().disable();
         }
     })
