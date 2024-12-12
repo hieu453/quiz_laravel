@@ -18,7 +18,7 @@
             </div>
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-primary text-white mb-4">
-                    <div class="card-body">Đề ({{ $numberOfQuizzes }})</div>
+                    <div class="card-body">Môn học ({{ $numberOfQuizzes }})</div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="{{ route('quiz.all') }}">Xem chi tiết</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -46,21 +46,44 @@
         </div>
         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
         Charts
-        <div style="width: 18rem;">
-            <canvas id="chartStatistics"></canvas>
+        <div class="row justify-content-around">
+            <div style="width: 18rem;">
+                <canvas id="doughnutChart"></canvas>
+            </div>
+            <div style="width: 18rem;">
+                <select name="" id="quiz" class="form-select">
+                    <option value="">Chọn môn học</option>
+                    @foreach ($quizzes as $quiz)
+                        <option value="{{ $quiz->id }}">{{ $quiz->title }}</option>
+                    @endforeach
+                </select>
+                <canvas id="barChart"></canvas>
+            </div>
         </div>
     </div>
 @endsection
 @push('javascript')
 <script>
-    const ctx = $('#chartStatistics')
+    const doughnutChart = $('#doughnutChart')
+    const barChart = $('#barChart')
+    const userPointsDistinct = {!! $userPointsDistinct !!}
+    const userPointsData = {!! $userPoints !!}
 
-    new Chart(ctx, {
+    let userPoints = userPointsDistinct.map((item) => {
+            let count = 0
+            userPointsData.forEach(el => {
+                if (el.points == item.points) {
+                    count++;
+                }
+            });
+            return count;
+        });
+
+    new Chart(doughnutChart, {
         type: 'doughnut',
         data: {
-            labels: ['Đề', 'Câu hỏi', 'Danh mục', 'Người dùng'],
+            labels: ['Môn học', 'Câu hỏi', 'Danh mục', 'Người dùng'],
             datasets: [{
-                label: 'Dataset',
                 data: [{{ $numberOfQuizzes }}, {{ $numberOfQuestions }}, {{ $numberOfCategories }}, {{ $numberOfUsers }}],
                 backgroundColor: [
                     'rgb(13, 110, 253)',
@@ -73,5 +96,50 @@
             }],
         },
     });
+
+    const chart = new Chart(barChart, {
+        type: 'bar',
+        data: {
+            labels: userPointsDistinct.map((item) => `Điểm ${item.points}`),
+            datasets: [{
+                label: 'Số lượng',
+                data: userPoints,
+                hoverOffset: 4,
+                borderWidth: 0.5
+            }],
+        },
+    });
+
+    $('#quiz').change(function (event) {
+        $.ajax({
+            url: "{{ route('admin.dashboard') }}",
+            data: {
+                'quiz_id': Number($(this).val()),
+            },
+            success: function (data) {
+                // console.log(data);
+                userPoints = data.userPointsDistinct.map((item) => {
+                    let count = 0
+                    data.userPointsData.forEach(el => {
+                        if (el.points == item.points) {
+                            count++;
+                        }
+                    });
+                    return count;
+                });
+
+                // console.log(userPoints)
+
+                chart.data.labels = data.userPointsDistinct.map((item) => `Điểm ${item.points}`);
+                chart.data.datasets.forEach((dataset) => {
+                    dataset.data = userPoints
+                });
+
+                chart.update();
+            }
+        })
+    })
+
+
 </script>
 @endpush

@@ -36,7 +36,7 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
                 Thêm người dùng
             </button>
         </div>
