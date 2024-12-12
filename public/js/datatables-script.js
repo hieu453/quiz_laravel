@@ -5,7 +5,6 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
         language: {
             // "paging"
         },
-        dom: 'lrtip',
         initComplete: function () {
             this.api()
                 .columns()
@@ -43,6 +42,7 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
            }
         ],
         layout: {
+            topEnd: null,
             topStart: {
                 buttons: [
                     {
@@ -78,7 +78,7 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
                     //     className: 'btn btn-outline-success'
                     // },
                 ]
-            }
+            },
         },
         select: true,
     })

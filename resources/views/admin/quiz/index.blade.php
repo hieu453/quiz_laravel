@@ -68,11 +68,6 @@
                             <td>{{ $quiz->updated_at }}</td>
                             <td>
                                 <a href="{{ route('quiz.edit', ['id' => $quiz->id]) }}" class="btn btn-sm btn-outline-success">Sửa</a>
-{{--                                <form action="{{ route('quiz.delete', ['id' => $quiz->id]) }}" method="POST" class="btn">--}}
-{{--                                    @csrf--}}
-{{--                                    @method('DELETE')--}}
-{{--                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>--}}
-{{--                                </form>--}}
                                 <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#quizDeleteModal">Xóa</a>
                             </td>
                         </tr>
