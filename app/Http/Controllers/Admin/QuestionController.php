@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Quiz;
 use App\Models\Option;
+use App\Models\Category;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Imports\QuestionImport;
@@ -69,13 +70,18 @@ class QuestionController extends Controller
     public function selectExportPDF()
     {
         return view('admin.question.export_pdf', [
+            'categories' => Category::all()->toJson(),
             'quizzes' => Quiz::all()
         ]);
     }
 
     public function download(Request $request)
     {
-        $quiz = Quiz::find($request->quiz_id);
+        if ($request->quiz == null || $request->category == null) {
+            return redirect()->back()->with('danger', 'Phải chọn tên danh mục và tên môn học.');
+        }
+        
+        $quiz = Quiz::find($request->quiz);
         $questions = Question::where('quiz_id', $quiz->id)->get();
         $fileName = "bộ_đề_môn_{$quiz->title}.pdf";
 

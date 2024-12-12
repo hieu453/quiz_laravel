@@ -31,6 +31,15 @@
             </div>
             <div class="card-body">
                 <table id="questionTable" class="table table-striped">
+                    <tfoot>
+                        <th></th>
+                        <th></th>
+                        <th>Môn học</th>
+                        <th>Tiêu đề câu hỏi</th>
+                        {{-- <th>Đã có lựa chọn</th> --}}
+                        <th></th>
+                        <th></th>
+                    </tfoot>
                     <thead>
                     <tr>
                         <th></th>
@@ -72,17 +81,7 @@
 @endsection
 @push('javascript')
 <script>
-    const columnsSettings = [
-        { searchable: false },
-        { searchable: false },
-        null,
-        null,
-        // { searchable: false },
-        { searchable: false },
-        { searchable: false },
-        { searchable: false },
-    ]
-    datatable('#questionTable', '#questionDeleteModal', "{{ route('question.deleteMultiple') }}", columnsSettings, [1,2,3,4,5,6])
+    datatable('#questionTable', '#questionDeleteModal', "{{ route('question.deleteMultiple') }}", [2,3])
 
     let truncatedString = $('.truncated-name');
     for (let i = 0; i < truncatedString.length; ++i) {

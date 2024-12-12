@@ -65,7 +65,7 @@
     <div class="row">
         <div class="col">
             <div class="test py-5 text-center">
-                <h1 class="section-heading">Limitless Options</h1>
+                <h1 class="section-heading">Limitless ABC</h1>
                 <p>Phasellus sed nisi ac dui interdum semper. Etiam consequat fermentum sollicitudin. Fusce vulputate porta faucibus. Vivamus nulla tellus, accumsan non efficitur id, pretium quis ante</p>
             </div>
         </div>
@@ -111,7 +111,7 @@
     <div class="row">
         <div class="col">
             <div class="test py-5 text-center">
-                <h1 class="section-heading">Limitless Options</h1>
+                <h1 class="section-heading">Limitless ABC</h1>
                 <p>Phasellus sed nisi ac dui interdum semper. Etiam consequat fermentum sollicitudin. Fusce vulputate porta faucibus. Vivamus nulla tellus, accumsan non efficitur id, pretium quis ante</p>
             </div>
         </div>

@@ -34,12 +34,20 @@
             </div>
             <div class="card-body">
                 <table id="quizTable" class="table table-striped display">
+                    <tfoot>
+                        <th></th>
+                        <th></th>
+                        <th>Danh mục</th>
+                        <th>Tiêu đề</th>
+                        <th></th>
+                        <th></th>
+                    </tfoot>
                     <thead>
                     <tr>
                         <th></th>
                         <th>Id</th>
-                        <th>Tiêu đề</th>
                         <th>Danh mục</th>
+                        <th>Tiêu đề</th>
                         {{-- <th>Mô tả</th> --}}
                         {{-- <th>Đã có câu hỏi</th> --}}
                         <th>Tạo lúc</th>
@@ -52,8 +60,8 @@
                         <tr>
                             <td></td>
                             <td>{{ $quiz->id }}</td>
-                            <td>{{ $quiz->title }}</td>
                             <td>{{ $quiz->category->name }}</td>
+                            <td>{{ $quiz->title }}</td>
                             {{-- <td>{{ $quiz->description }}</td> --}}
                             {{-- <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td> --}}
                             <td>{{ $quiz->created_at }}</td>
@@ -77,16 +85,6 @@
 @endsection
 @push('javascript')
 <script>
-    const columnsSettings = [
-        { searchable: false },
-        { searchable: false },
-        null,
-        // { searchable: false },
-        { searchable: false },
-        { searchable: false },
-        { searchable: false },
-        { searchable: false },
-    ]
-    datatable('#quizTable', '#quizDeleteModal', "{{ route('quiz.deleteMultiple') }}", columnsSettings, [1,2,3,4,5,6])
+    datatable('#quizTable', '#quizDeleteModal', "{{ route('quiz.deleteMultiple') }}", [2,3])
 </script>
 @endpush

@@ -28,6 +28,16 @@
             </div>
             <div class="card-body">
                 <table id="categoriesTable" class="table table-striped">
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Tên</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                     <thead>
                     <tr>
                         <th></th>
@@ -55,6 +65,7 @@
                         </tr>
                     @endforeach
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -62,15 +73,6 @@
 @endsection
 @push('javascript')
 <script>
-    const columnsSettings = [
-        { searchable: false },
-        { searchable: false },
-        null,
-        { searchable: false },
-        { searchable: false },
-        { searchable: false },
-        { searchable: false },
-    ]
-    datatable('#categoriesTable', '#categoryDeleteModal', "{{ route('category.deleteMultiple') }}", columnsSettings)
+    datatable('#categoriesTable', '#categoryDeleteModal', "{{ route('category.deleteMultiple') }}", [2])
 </script>
 @endpush

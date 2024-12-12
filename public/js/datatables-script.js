@@ -1,8 +1,35 @@
-function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3,4,5]) {
+function datatable(tableId, modalId, url, searchIndividual = []) {
     const ids = [];
 
     let table = new DataTable(tableId, {
-        columns: columnsSetting,
+        language: {
+            // "paging"
+        },
+        dom: 'lrtip',
+        initComplete: function () {
+            this.api()
+                .columns()
+                .every(function () { // lặp qua các cột của bảng
+                    // kiểm tra xem nếu cột hiện tại nằm trong các cột muốn tìm (searchIndividual) thì hiển thị ô tìm kiếm
+                    if (searchIndividual.includes(this[0][0])) {
+                        let column = this;
+                            let title = column.footer().textContent;
+
+                            // Create input element
+                            let input = document.createElement('input');
+                            input.placeholder = title;
+                            column.footer().replaceChildren(input);
+
+                            // Event listener for user input
+                            input.addEventListener('keyup', () => {
+                                if (column.search() !== this.value) {
+                                    column.search(input.value).draw();
+                                }
+                            });
+                    }
+                })
+        },
+        // columns: columnsSetting,
         columnDefs: [
             {
                 orderable: false,
@@ -34,22 +61,22 @@ function datatable(tableId, modalId, url, columnsSetting, exportColumns = [1,2,3
                             })
                         }
                     },
-                    {
-                        extend: 'excel',
-                        text: 'Xuất file Excel',
-                        exportOptions: {
-                            columns: exportColumns
-                        },
-                        className: 'btn btn-outline-primary'
-                    },
-                    {
-                        extend: 'pdf',
-                        text: 'Xuất file PDF',
-                        exportOptions: {
-                            columns: exportColumns
-                        },
-                        className: 'btn btn-outline-success'
-                    },
+                    // {
+                    //     extend: 'excel',
+                    //     text: 'Xuất file Excel',
+                    //     exportOptions: {
+                    //         columns: exportColumns
+                    //     },
+                    //     className: 'btn btn-outline-primary'
+                    // },
+                    // {
+                    //     extend: 'pdf',
+                    //     text: 'Xuất file PDF',
+                    //     exportOptions: {
+                    //         columns: exportColumns
+                    //     },
+                    //     className: 'btn btn-outline-success'
+                    // },
                 ]
             }
         },
