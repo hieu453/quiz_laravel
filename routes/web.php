@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\DocumentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/test', function () {
@@ -77,6 +78,10 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::put('/question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
     // Route::delete('/question-delete/{id}', [QuestionController::class, 'destroy'])->name('question.delete');
     Route::delete('/question-deleteMultiple', [QuestionController::class, 'deleteMultiple'])->name('question.deleteMultiple');
+
+    //Document routes
+    Route::get('/document-all', [DocumentController::class, 'all'])->name('document.all');
+    Route::get('/document-edit', [DocumentController::class, 'edit'])->name('document.edit');
 
     //Option routes
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');

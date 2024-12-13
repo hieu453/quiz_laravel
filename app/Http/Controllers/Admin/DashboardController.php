@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
 
         if ($request->ajax()) {
-            $quiz_id = $request->quiz_id;
+            $quiz_id = $request->quiz_id ? $request->quiz_id : 1;
             if ($quiz_id) {
                 $userPoints = UserPoint::where('quiz_id', $quiz_id)->get();
                 $userPointsDistinct = DB::table('user_points')

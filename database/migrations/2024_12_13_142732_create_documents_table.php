@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            $table->bigInteger('category_id');
-            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        Schema::create('documents', function (Blueprint $table) {
+            $table->id();
+            $table->string('youtube_link')->nullable();
+            $table->string('document_link')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('documents');
     }
 };

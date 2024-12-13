@@ -108,6 +108,16 @@
                 borderWidth: 0.5
             }],
         },
+        // Chỗ này để cho giá trị cột y là số nguyên
+        options: {
+            scales: {
+                y: {
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
     });
 
     $('#quiz').change(function (event) {

@@ -3,7 +3,12 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
 
     let table = new DataTable(tableId, {
         language: {
-            // "paging"
+            info: 'Hiển thị _START_ đến _END_ trong tổng số _TOTAL_ bản ghi',
+            emptyTable: 'Không có bản ghi nào',
+            zeroRecords: 'Không tìm thấy bản ghi nào',
+            lengthMenu: '_MENU_ bản ghi',
+            infoFiltered: ' Tìm trong _MAX_ bản ghi',
+            infoEmpty: '',
         },
         initComplete: function () {
             this.api()
@@ -77,7 +82,8 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
                     //     },
                     //     className: 'btn btn-outline-success'
                     // },
-                ]
+                ],
+                pageLength: {},
             },
         },
         select: true,
