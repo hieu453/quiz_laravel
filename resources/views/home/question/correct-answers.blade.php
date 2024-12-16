@@ -1,31 +1,32 @@
 @extends('home.app')
+@section('title', 'Đáp án')
 @section('content')
     <div class="pt-5">
-
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 bg-secondary bg-opacity-25 px-5 py-3 shadow-sm">
+                    <h3 class="text-center">Đáp án</h3>
                     @foreach ($questions as $key => $question)
-                        <div class="row border border-success rounded mb-3">
+                        <div class="row mb-3 bg-white px-2 py-3 rounded shadow-sm">
                             <h5>Câu {{ $key + 1 }}: {{ $question->title }}</h5>
                             @foreach ($question->options as $option)
                                 @if ($userAnswers)
                                     @if (count($userAnswers) == count($questions))
                                         @foreach ($userAnswers as $answer)
                                             @if ($answer->id == $option->id && $answer->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: #add8e6;">
+                                                <div class="form-check rounded-pill" style="background-color: #add8e6;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
                                             @elseif ($option->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: #90ee90;">
+                                                <div class="form-check rounded-pill" style="background-color: #90ee90;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
                                                 </div>
                                             @elseif ($answer->id == $option->id && !$answer->is_correct && $answer->question->id == $question->id)
-                                                <div class="form-check" style="background-color: #f2476a;">
+                                                <div class="form-check rounded-pill" style="background-color: #f2476a;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
@@ -43,24 +44,24 @@
                                         @foreach ($userAnswers as $answer)
                                             @if ($answer->id == $option->id && $answer->is_correct && $answer->question->id == $question->id)
                                                 @php $answeredFlag = true @endphp
-                                                <div class="form-check" style="background-color: #add8e6;">
+                                                <div class="form-check rounded-pill" style="background-color: #add8e6;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
-                                                    <label>(Đáp án của bạn)</label>
+                                                    {{-- <label>(Đáp án của bạn)</label> --}}
                                                 </div>
                                             @elseif ($answer->id == $option->id && !$answer->is_correct && $answer->question->id == $question->id)
                                                 @php $answeredFlag = true @endphp
-                                                <div class="form-check" style="background-color: #f2476a;">
+                                                <div class="form-check rounded-pill" style="background-color: #f2476a;">
                                                     <label class="form-check-label">
                                                         {{ $option->text }}
                                                     </label>
-                                                    <label>(Đáp án của bạn)</label>
+                                                    {{-- <label>(Đáp án của bạn)</label> --}}
                                                 </div>
                                             @endif
                                         @endforeach
                                         @if (!$answeredFlag)
-                                        <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
+                                        <div class="form-check rounded-pill {{ $option->is_correct ? 'correct-option' : '' }}">
                                             <label class="form-check-label">
                                                 {{ $option->text }}
                                             </label>
@@ -69,7 +70,7 @@
                                         @php $answeredFlag = false @endphp
                                     @endif
                                 @else
-                                    <div class="form-check {{ $option->is_correct ? 'correct-option' : '' }}">
+                                    <div class="form-check rounded-pill {{ $option->is_correct ? 'correct-option' : '' }}">
                                         <label class="form-check-label">
                                             {{ $option->text }}
                                         </label>

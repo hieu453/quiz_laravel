@@ -14,4 +14,9 @@ class Document extends Model
         'youtube_link',
         'document_link',
     ];
+
+    public function quizz()
+    {
+        return $this->belongsTo(Quiz::class, 'quiz_id', 'id');
+    }
 }

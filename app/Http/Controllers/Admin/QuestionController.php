@@ -31,7 +31,7 @@ class QuestionController extends Controller
         $quiz->save();
 
         $validatedData = $request->validate([
-            'title' => 'required|max:255'
+            'title' => 'required|max:255|unique:questions'
         ]);
         $validatedData['quiz_id'] = $request->get('quiz_id');
 
@@ -52,6 +52,10 @@ class QuestionController extends Controller
         $request->validate([
             'spreadsheet' => 'required'
         ]);
+
+        $quiz = Quiz::where('id', $request->get('quiz_id'))->first();
+        $quiz->has_questions = 1;
+        $quiz->save();
 
         try {
             Excel::import(new QuestionImport($request->get('quiz_id')), $request->file('spreadsheet'));
@@ -80,7 +84,7 @@ class QuestionController extends Controller
         if ($request->quiz == null || $request->category == null) {
             return redirect()->back()->with('danger', 'Phải chọn tên danh mục và tên môn học.');
         }
-        
+
         $quiz = Quiz::find($request->quiz);
         $questions = Question::where('quiz_id', $quiz->id)->get();
         $fileName = "bộ_đề_môn_{$quiz->title}.pdf";

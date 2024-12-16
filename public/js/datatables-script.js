@@ -32,6 +32,7 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
                             });
                     }
                 })
+            console.log(this.api().columns()[0].length)
         },
         // columns: columnsSetting,
         columnDefs: [
@@ -44,6 +45,10 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
            {
                 width: '20%',
                 targets: 3
+           },
+           {
+                orderable: false,
+                targets: -1
            }
         ],
         layout: {

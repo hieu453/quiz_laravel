@@ -15,7 +15,9 @@ class Quiz extends Model
         'title',
         'category_id',
         'has_questions',
-        'description'
+        'description',
+        'status',
+        'time',
     ];
 
     public function questions(): HasMany

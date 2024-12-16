@@ -41,6 +41,7 @@
                         <th>Tiêu đề</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tfoot>
                     <thead>
                     <tr>
@@ -50,6 +51,7 @@
                         <th>Tiêu đề</th>
                         {{-- <th>Mô tả</th> --}}
                         {{-- <th>Đã có câu hỏi</th> --}}
+                        <th>Trạng thái</th>
                         <th>Tạo lúc</th>
                         <th>Sửa lúc</th>
                         <th>Hành động</th>
@@ -64,6 +66,7 @@
                             <td>{{ $quiz->title }}</td>
                             {{-- <td>{{ $quiz->description }}</td> --}}
                             {{-- <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td> --}}
+                            <td><span class="badge rounded-pill text-bg-{{ $quiz->status ? 'primary' : 'danger' }}">{{ $quiz->status ? 'Đang mở' : 'Đã khóa' }}</span></td>
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>
                             <td>

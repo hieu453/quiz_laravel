@@ -24,8 +24,8 @@ Route::get('/test', function () {
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('home.category.show');
-
 Route::get('/quiz/{id}/detail', [HomeController::class, 'quizDetail'])->name('quiz.detail');
+Route::get('/quiz/{id}/documents', [HomeController::class, 'quizDocuments'])->name('quiz.documents');
 
 Route::middleware('auth')->group(function () {
     Route::get('/set-quetions-to-session/{id}', [HomeController::class, 'setQuestionsToSession'])->name('questions.session');
@@ -81,7 +81,10 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
 
     //Document routes
     Route::get('/document-all', [DocumentController::class, 'all'])->name('document.all');
-    Route::get('/document-edit', [DocumentController::class, 'edit'])->name('document.edit');
+    Route::post('/document-store', [DocumentController::class, 'store'])->name('document.store');
+    Route::get('/document-edit/{id}', [DocumentController::class, 'edit'])->name('document.edit');
+    Route::put('/document-update/{id}', [DocumentController::class, 'update'])->name('document.update');
+    Route::delete('/document-deleteMultiple', [DocumentController::class, 'deleteMultiple'])->name('document.deleteMultiple');
 
     //Option routes
     Route::get('/option-create', [OptionController::class, 'create'])->name('option.create');

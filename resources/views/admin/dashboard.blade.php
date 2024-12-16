@@ -51,7 +51,7 @@
                 <canvas id="doughnutChart"></canvas>
             </div>
             <div style="width: 18rem;">
-                <select name="" id="quiz" class="form-select">
+                <select name="quiz_id" id="quiz" class="form-select">
                     <option value="">Chọn môn học</option>
                     @foreach ($quizzes as $quiz)
                         <option value="{{ $quiz->id }}">{{ $quiz->title }}</option>

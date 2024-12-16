@@ -1,6 +1,11 @@
 @extends('admin.app')
 @section('title', 'Tài liệu | Tất cả')
 @section('content')
+{{-- Modal Delete --}}
+@include('admin.documents.modals.delete-modal')
+{{-- Modal Add --}}
+@include('admin.documents.modals.add-modal')
+
 <div class="container-fluid px-4">
     <h1 class="mt-4">Tất cả tài liệu</h1>
 
@@ -23,9 +28,10 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th>Câu hỏi</th>
+                        <th>Môn học</th>
                         <th>Link Youtube</th>
                         <th>Link tài liệu</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -34,9 +40,10 @@
                 <tr>
                     <th></th>
                     <th>Id</th>
-                    <th>Câu hỏi</th>
+                    <th>Môn học</th>
                     <th>Link Youtube</th>
                     <th>Link tài liệu</th>
+                    <th>Tạo lúc</th>
                     <th>Sửa lúc</th>
                     <th>Hành động</th>
                 </tr>
@@ -46,6 +53,7 @@
                     <tr>
                         <td></td>
                         <td>{{ $document->id }}</td>
+                        <td>{{ $document->quizz->title }}</td>
                         <td>{{ $document->youtube_link }}</td>
                         <td>{{ $document->document_link }}</td>
                         <td>{{ $document->created_at }}</td>
@@ -65,6 +73,6 @@
 @endsection
 @push('javascript')
 <script>
-    datatable('#documentsTable', '#documentDeleteModal', "{{ route('category.deleteMultiple') }}", [2,3,4])
+    datatable('#documentsTable', '#documentDeleteModal', "{{ route('document.deleteMultiple') }}", [2,3,4])
 </script>
 @endpush

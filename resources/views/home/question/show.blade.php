@@ -1,21 +1,19 @@
 @extends('home.app')
+@section('title', 'Bài làm')
 @section('content')
 {{-- Modal when click submit btn --}}
 <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc muốn nộp bài?</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn có chắc muốn nộp bài?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button id="submit-exam" type="button" class="btn btn-primary">Nộp</button>
+            </div>
         </div>
-        {{-- <div class="modal-body">
-          ...
-        </div> --}}
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button id="submit-exam" type="button" class="btn btn-primary">Nộp</button>
-        </div>
-      </div>
     </div>
 </div>
 {{-- Content --}}
@@ -23,12 +21,12 @@
         <form id="question-form" action="{{ route('checkResult') }}" method="POST">
             @csrf
             <input type="hidden" name="number_of_questions" value="{{ count($questions) }}">
-            <input type="hidden" name="quiz_id" value="{{ $quiz_id }}">
+            <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
 
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 bg-secondary bg-opacity-25 shadow-sm px-5 py-4">
                     @foreach($questions as $key => $question)
-                        <div id="question_{{ $key + 1 }}" class="row border border-dark rounded mb-3 px-2 py-2" style="scroll-margin: 70px;">
+                        <div id="question_{{ $key + 1 }}" class="bg-white shadow-sm rounded mb-3 px-3 py-3" style="scroll-margin: 70px;">
                             <h5>Câu {{ $key + 1 . ': ' . $question->title }}</h5>
                             @foreach($question->options as $option)
                                 <div class="form-check">
@@ -53,7 +51,7 @@
                     </div>
                     <div class="row mt-5" style="position: fixed;">
                         <span>Thời gian:</span>
-                        <h4 id="timer"></h4>
+                        <h3 id="timer"></h3>
                     </div>
                     <div class="row" style="position: fixed; margin: 130px 0 0 0;">
                         <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#submitModal">
@@ -68,6 +66,7 @@
 @push('javascript')
     <script>
         const questions = {{ count($questions) }};
+
         const checkedBox = JSON.parse(localStorage.getItem('checkedBox')) ?? {};
         for (let i = 1; i <= questions; i++) {
             $(`.answer_${i}`).change(function() {
@@ -79,15 +78,15 @@
 
 
         $(document).ready(function() {
-            const checkedBox = JSON.parse(localStorage.getItem('checkedBox'))
-            if (checkedBox) {
-                for (let index of Object.values(checkedBox)) {
-                    $(`#checkboxAnswer_${checkedBox[index]}`).addClass('bg-secondary text-white')
-                }
-            }
+            // const checkedBox = JSON.parse(localStorage.getItem('checkedBox'))
+            // if (checkedBox) {
+            //     for (let index of Object.values(checkedBox)) {
+            //         $(`#checkboxAnswer_${checkedBox[index]}`).addClass('bg-secondary text-white')
+            //     }
+            // }
 
             // Show remaining time
-            let minutes = 10;
+            let minutes = {{ $quiz->time }};
             let seconds = 0;
             const questionForm = $('#question-form');
 
@@ -153,22 +152,22 @@
 
             // remain answers
             //get the selected radios from storage, or create a new empty object
-            var radioGroups = JSON.parse(localStorage.getItem('selected') ?? '{}');
+            // var radioGroups = JSON.parse(localStorage.getItem('selected') ?? '{}');
 
             //loop over the ids we previously selected and select them again
-            Object.values(radioGroups).forEach(function(radioId){
-                document.getElementById(radioId).checked = true;
-            });
+            // Object.values(radioGroups).forEach(function(radioId){
+            //     document.getElementById(radioId).checked = true;
+            // });
 
             //handle the click of each radio
-            $('.radio').on('click', function(){
-                //set the id in the object based on the radio group name
-                //the name lets us segregate the values and easily replace
-                //previously selected radios in the same group
-                radioGroups[this.name] = this.id;
-                //finally store the updated object in storage for later use
-                localStorage.setItem("selected", JSON.stringify(radioGroups));
-            });
+            // $('.radio').on('click', function(){
+            //     //set the id in the object based on the radio group name
+            //     //the name lets us segregate the values and easily replace
+            //     //previously selected radios in the same group
+            //     radioGroups[this.name] = this.id;
+            //     //finally store the updated object in storage for later use
+            //     localStorage.setItem("selected", JSON.stringify(radioGroups));
+            // });
         });
 
 
