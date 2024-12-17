@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5" style="min-height: 90vh;">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>

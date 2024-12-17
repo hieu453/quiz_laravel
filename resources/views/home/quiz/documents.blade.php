@@ -1,8 +1,8 @@
 @extends('home.app')
 @section('title', 'Tài liệu')
 @section('content')
-<div class="container py-5">
-    <div class="row">
+<div class="container bg-secondary bg-opacity-25 px-5 py-5" style="min-height: 90vh;">
+    <div class="row shadow bg-white px-4 py-4 rounded">
         <div class="d-flex mb-3 justify-content-between">
             <h3>Tài liệu ôn tập</h3>
             <a href="{{ route('quiz.detail', ['id' => $quiz_id]) }}" class="btn btn-outline-secondary float-end">Trở lại</a>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(220, 205, 186)">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('index') }}">
             <img src="https://media.istockphoto.com/id/1186386668/vector/quiz-in-comic-pop-art-style-quiz-brainy-game-word-vector-illustration-design.jpg?s=612x612&w=0&k=20&c=mBQMqQ6kZuC9ZyuV5_uCm80QspqSJ7vRm0MfwL3KLZY=" alt="" width="30" height="24" style="border-radius: 30px">
@@ -13,12 +13,12 @@
                 </li>
             </ul>
             <div class="">
-                <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
-                    <div class="col">
-                        <input type="text" name="c" class="form-control rounded-pill">
-                    </div>
-                    <div class="col ms-1">
-                        <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
+                <form action="{{ route('home.category.search') }}" method="GET">
+                    <div class="input-group">
+                        <input type="text" name="c" class="form-control rounded-start-pill" placeholder="Tìm kiếm">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
                 </form>
             </div>
