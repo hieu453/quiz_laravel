@@ -28,7 +28,7 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title'       => 'required|max:255',
+            'title'       => 'required|max:255|unique:quizzes',
             'description' => 'required|max:255'
         ]);
         $validatedData['category_id'] = $request->category_id;
@@ -83,6 +83,8 @@ class QuizController extends Controller
         ]);
 
         $validatedData['category_id'] = $request->category_id;
+        $validatedData['time'] = (int)$request->time;
+        $validatedData['status'] = (int)$request->status;
 
         Quiz::where('id', $id)->first()->update($validatedData);
         // $quiz->update($request->all());

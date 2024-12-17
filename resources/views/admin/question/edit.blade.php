@@ -28,7 +28,7 @@
         @csrf
         @method('PUT')
         <div class="mb-3">
-            <label class="form-label fw-bold">Đề</label>
+            <label class="form-label fw-bold">Môn học</label>
             <select class="form-select" name="quiz_id">
                 @foreach($quizzes as $quiz)
                     <option value="{{ $quiz->id }}" {{ $question->quizz->id == $quiz->id ? "selected" : '' }}>{{ $quiz->title }}</option>

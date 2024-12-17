@@ -5,7 +5,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <h4>Bình luận ({{ $commentsAndRepliesLength }})</h4>
+    <h4>Thảo luận ({{ $commentsAndRepliesLength }})</h4>
 
     <div class="comment-wrapper">
     @foreach($comments as $comment)
@@ -176,7 +176,7 @@
     </div>
     @endif
 
-    <h4>Viết bình luận</h4>
+    <h4>Viết thảo luận</h4>
     @if (Auth::check())
     <form method="POST" action="{{ route('comment.store') }}">
         @csrf
@@ -190,7 +190,7 @@
         </div>
     </form>
     @else
-    <p><a href="{{ route('login') }}">Đăng nhập</a> để bình luận</p>
+    <p><a href="{{ route('login') }}">Đăng nhập</a> để thảo luận</p>
     @endif
 </div>
 

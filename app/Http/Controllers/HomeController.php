@@ -3,23 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
-use App\Models\User;
 use App\Models\Option;
 use App\Models\Comment;
-use App\Events\PlayQuiz;
+use App\Models\Document;
 use App\Models\Question;
 use App\Models\UserPoint;
 use App\Models\UserAnswer;
 use Illuminate\Http\Request;
-use App\Events\NotificationEvent;
-use App\Notifications\ClickButton;
-use App\Notifications\exBroadcast;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $quizzes = Quiz::where('has_questions', 1)->cursorPaginate(2);
 
@@ -33,6 +29,14 @@ class HomeController extends Controller
         $quiz = Quiz::find($id);
         $comments = Comment::whereNull('parent_id')->where('quiz_id', $id)->orderBy('created_at', 'DESC')->paginate(3);
         $commentsAndRepliesLength = Comment::where('quiz_id', $id)->count();
+        $userPoints = DB::table('user_points')
+                            ->join('users', 'users.id', '=', 'user_points.user_id')
+                            ->select('user_points.points', 'users.name')
+                            ->where('quiz_id', $id)
+                            ->orderBy('points', 'desc')
+                            ->distinct()
+                            ->limit(5)
+                            ->get();
 
         if ($request->ajax()) {
             $view = view('home.quiz.comments.comments', compact('comments'))->render();
@@ -41,9 +45,18 @@ class HomeController extends Controller
         }
 
         return view('home.quiz.detail', [
-            'quiz'      =>  $quiz,
-            'comments'  =>  $comments,
-            'commentsAndRepliesLength' => $commentsAndRepliesLength
+            'quiz'                      =>  $quiz,
+            'topFiveUsers'            => $userPoints,
+            'comments'                  =>  $comments,
+            'commentsAndRepliesLength'  => $commentsAndRepliesLength
+        ]);
+    }
+
+    public function quizDocuments(int $id)
+    {
+        return view('home.quiz.documents', [
+            'quiz_id'   => $id,
+            'documents' => Document::where('quiz_id', $id)->get(),
         ]);
     }
 
@@ -67,7 +80,7 @@ class HomeController extends Controller
     {
         return view('home.question.show', [
             'questions' => session('questions'),
-            'quiz_id'      => $id,
+            'quiz'      => Quiz::find($id),
         ]);
     }
 

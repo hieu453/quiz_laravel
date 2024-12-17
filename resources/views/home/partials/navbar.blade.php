@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(220, 205, 186)">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('index') }}">
             <img src="https://media.istockphoto.com/id/1186386668/vector/quiz-in-comic-pop-art-style-quiz-brainy-game-word-vector-illustration-design.jpg?s=612x612&w=0&k=20&c=mBQMqQ6kZuC9ZyuV5_uCm80QspqSJ7vRm0MfwL3KLZY=" alt="" width="30" height="24" style="border-radius: 30px">
@@ -6,9 +6,9 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between nav-custom">
-            <ul class="navbar-nav mb-2 mb-lg-0 fw-bolds">
-                <li class="nav-item ">
+        <div class="collapse navbar-collapse d-flex justify-content-between">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('index') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
@@ -18,10 +18,10 @@
             <div class="">
                 <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
                     <div class="col">
-                        <input type="text" name="c" class="input-search form-control rounded-pill">
+                        <input type="text" name="c" class="form-control rounded-pill">
                     </div>
                     <div class="col ms-1">
-                        <button class="btn btn-light rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
+                        <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
                     </div>
                 </form>
             </div>

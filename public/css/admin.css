@@ -27,8 +27,8 @@
 
 .announcements::-webkit-scrollbar-thumb {
     border-radius: 1rem;
-    background-color: #00d2ff;
-    background-image: linear-gradient(to top, #00d2ff 0%, #3a7bd5 100%);
+    background-color: #9ea7a9;
+    /* background-image: linear-gradient(to top, #00d2ff 0%, #3a7bd5 100%); */
 }
 
 ul {
@@ -37,11 +37,11 @@ ul {
 
 .header-notification {
     width: 100%;
-    background-color: #f3f3f3;
+    background-color: white;
 }
 
 .footer-notification {
-    background-color: #f3f3f3;
+    background-color: white;
     margin-bottom: 0;
 }
 

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     @vite('resources/js/app.js')
     @livewireStyles
-    <title>Document</title>
+    <title>@yield('title')</title>
 </head>
 <body>
     @include('home.partials.navbar')

@@ -23,7 +23,7 @@ class AdminCategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:categories',
         ]);
         $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
 
