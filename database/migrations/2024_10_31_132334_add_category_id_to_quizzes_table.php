@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('quizzes', function (Blueprint $table) {
             $table->bigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

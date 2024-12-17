@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 example">
     <div class="row rounded py-5">
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>

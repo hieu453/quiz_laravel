@@ -6,9 +6,9 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between">
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
+        <div class="collapse navbar-collapse d-flex justify-content-between nav-custom">
+            <ul class="navbar-nav mb-2 mb-lg-0 fw-bolds">
+                <li class="nav-item ">
                     <a class="nav-link" href="{{ route('index') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
@@ -18,10 +18,10 @@
             <div class="">
                 <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
                     <div class="col">
-                        <input type="text" name="c" class="form-control rounded-pill">
+                        <input type="text" name="c" class="input-search form-control rounded-pill">
                     </div>
                     <div class="col ms-1">
-                        <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
+                        <button class="btn btn-light rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
                     </div>
                 </form>
             </div>
@@ -50,10 +50,10 @@
             @else
                 <div class="nav navbar-nav navbar-right">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item btn btn-info m-1">
                             <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item btn btn-success m-1 ">
                             <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
                         </li>
                     </ul>
