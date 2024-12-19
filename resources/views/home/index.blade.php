@@ -7,7 +7,7 @@
     </div>
 @endif
 <div class="bg landing-background">
-    <h3 class="fw-bold" style="position: relative">Luyện tập trắc nghiệm</h3>
+    <h3 class="fw-bold" style="position: relative">Luyện tập</h3>
     <a href="/categories" class="btn btn-outline-success" style="position: relative">Khám phá ngay</a>
 </div>
 {{-- <div class="container">
