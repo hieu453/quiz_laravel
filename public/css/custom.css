@@ -55,15 +55,62 @@
     border: solid 2px #bdc2e8;
 } */
 
+.btn {
+    background-color: #00d2ff;
+    font-weight: bold;
+
+}
+
+.btn:hover {
+    color: black;
+}
+
+.example {
+    text-align: center;
+}
+
+.input-search {
+    border: 1px solid black;
+}
+
+.item-contact {
+    margin: 10px;
+    border: 1px solid black;
+    background-color: yellowgreen;
+    border-radius: 80px;
+}
+
+.card-img-top {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+}
+
+.btn-router:hover {
+    color: white;;
+}
+
+.card {
+    background-image: linear-gradient(to bottom right, #18A5A7, #B6C0C5);
+}
+
+.list-cate {
+    background-image: linear-gradient(to bottom right, #18a5a7, #bfffc7);
+}
+
+.container-cate {
+    background-color: #CC6633;
+}
+
 .navbar-nav .nav-item:hover {
-    background-color: #c7c7c7;
+    background-color: whitesmoke;
     border-radius: 6px;
     transition: all .2s ease-out;
 }
 
 .side-image {
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
     object-fit: cover;
     background-color: #ffb606;
 }
@@ -175,4 +222,41 @@ ul {
     background-color: #cbc8c8;
     width: 30px;
     height: 30px;
+}
+
+.title-category {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.name-category {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 100;
+    font-weight: bolder;
+}
+
+.container {
+    max-width: 100%;
+    max-height: 100%;
+    background-image: url('https://png.pngtree.com/background/20220724/original/pngtree-abstract-green-and-white-background-with-flowing-lines-picture-image_1745664.jpg');
+}
+
+.container-menu {
+    background-color: #CC6633;
+}
+
+.detail-category {
+    background-color: orange;
+    max-width: 50%;
+    margin-left: 10px;
+}
+
+.title-detail {
+    font-weight: bold;
+}
+
+.title-detail:hover {
+    color: #3a7bd5;
 }
