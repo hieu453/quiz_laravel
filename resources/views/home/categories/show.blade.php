@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
-        <div class="col-2 py-5 mb-5 border rounded">
+        {{-- <div class="col-2 py-5 mb-5 border rounded">
             <h2>Danh mục</h2>
             <ul class="" style="list-style-type: none;">
                 @foreach ($categories as $item)
@@ -18,7 +18,7 @@
                     @endif
                 @endforeach
             </ul>
-        </div>
+        </div> --}}
         <div class="col-10 py-5 mb-5 border rounded">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -32,7 +32,7 @@
             </div>
             <div class="row">
                 @foreach ($category->quizzes as $quiz)
-                    {{-- <div class="col-lg-3 d-flex justify-content-center mt-3">
+                    <div class="col-3 d-flex justify-content-center mt-3">
                         <div class="card box-shadow" style="width: 18rem; background-image: linear-gradient(#c1dfc4, #deecdd);">
                             <i class="fa-regular fa-bookmark"></i>
                             <a href="" class="text-reset text-decoration-none text-center">

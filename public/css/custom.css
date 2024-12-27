@@ -37,12 +37,12 @@
     background: #ffb606;
 }
 
-.card svg {
+/* .card svg {
     position: absolute;
 	top: 19rem;
     transition: all .2s ease-out;
 	filter: drop-shadow(2px -9px 4px rgba(0, 69, 134, 0.2));
-}
+} */
 
 /* .box-shadow {
 	box-shadow: 0 1px 1px rgba(72,78,85,.6);
@@ -55,13 +55,13 @@
     border: solid 2px #bdc2e8;
 } */
 
-.btn {
+/* .btn {
     background-color: #00d2ff;
     font-weight: bold;
 
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
     color: black;
 }
 
@@ -100,7 +100,7 @@
 
 .container-cate {
     background-color: #CC6633;
-}
+} */
 
 .navbar-nav .nav-item:hover {
     background-color: whitesmoke;
@@ -224,7 +224,7 @@ ul {
     height: 30px;
 }
 
-.title-category {
+/* .title-category {
     text-align: center;
     font-weight: bold;
     color: white;
@@ -235,28 +235,26 @@ ul {
     margin-bottom: 5px;
     font-size: 100;
     font-weight: bolder;
-}
+} */
 
 .container {
-    max-width: 100%;
-    max-height: 100%;
     background-image: url('https://png.pngtree.com/background/20220724/original/pngtree-abstract-green-and-white-background-with-flowing-lines-picture-image_1745664.jpg');
 }
 
-.container-menu {
+/* .container-menu {
     background-color: #CC6633;
-}
+} */
 
-.detail-category {
+/* .detail-category {
     background-color: orange;
     max-width: 50%;
     margin-left: 10px;
-}
-
+} */
+/* 
 .title-detail {
     font-weight: bold;
 }
 
 .title-detail:hover {
     color: #3a7bd5;
-}
+} */
