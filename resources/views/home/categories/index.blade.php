@@ -13,15 +13,17 @@
     </div>
     <div class="row">
         @foreach ($categories as $category)
-            <div class="col-lg-3 d-flex justify-content-center mt-3">
-                <div class="card box-shadow" style="width: 18rem;">
-                    <a href="" class="text-reset text-decoration-none text-center">
-                        <div class="card-body text-center">
-                            <h3 class="card-title">{{ $category->name }}</h3>
-                            <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="card-link text-secondary text-decoration-none"><i class="fa-regular fa-hand-point-right"></i> {{ count($category->quizzes) }} môn</a>
-                        </div>
-                    </a>
-                </div>
+            <div class="col-3 my-3">
+                <div class="card shadow bg-primary bg-opacity-25">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $category->name }}</h5>
+                        {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
+                        <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="btn btn-outline-dark">Xem ngay</a>
+                        <span class="float-end">
+                            <i class="fa-solid fa-star"></i>
+                        </span>
+                    </div>
+                 </div>
             </div>
         @endforeach
     </div>

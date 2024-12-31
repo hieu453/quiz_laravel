@@ -23,7 +23,13 @@ class OptionController extends Controller
             if ($option['text'] == null) {
                 return redirect()->back()->with(['error' => 'Phải điền hết trường lựa chọn']);
             }
+        }
 
+        $request->validate([
+            'correct' => 'required'
+        ]);
+
+        foreach ($request->get('options') as $key => $option) {
             if ($key == $request->correct) {
                 Option::create([
                     'question_id' => $request->get('question_id'),
@@ -38,10 +44,6 @@ class OptionController extends Controller
                 ]);
             }
         }
-
-        $request->validate([
-            'correct' => 'required'
-        ]);
 
         $question = Question::findOrFail($request->get('question_id'));
         $question->has_options = 1;

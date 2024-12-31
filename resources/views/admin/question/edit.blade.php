@@ -1,12 +1,12 @@
 @extends('admin.app')
 @section('title', 'Câu hỏi | Sửa')
 @section('content')
-@error('title')
+{{-- @error('title')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
 @error('options')
     <div class="alert alert-danger">{{ $message }}</div>
-@enderror
+@enderror --}}
 @if(count($errors) > 0)
     @foreach ($errors->all() as $error)
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
