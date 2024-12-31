@@ -18,7 +18,7 @@
             <div class="">
                 <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
                     <div class="col">
-                        <input type="text" name="c" class="form-control rounded-pill">
+                        <input type="text" name="c" class="form-control rounded-pill" placeholder="Tên danh mục">
                     </div>
                     <div class="col ms-1">
                         <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
