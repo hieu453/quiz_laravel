@@ -14,7 +14,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         Comment::create($request->all());
-        $comments = Comment::where('quiz_id', 25)->get();
+        $comments = Comment::where('quiz_id', $request->quiz_id)->get();
         $commentUniqueByUserId = $comments->unique('user_id');
         $userIds = [];
 

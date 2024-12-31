@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body">
             <div class="mb-3">
-                <label class="form-label">Đề</label>
+                <label class="form-label">Môn học</label>
                 <select name="quiz_id" class="form-select">
                     @foreach($quizzes as $quiz)
                         <option value="{{ $quiz->id }}">{{ $quiz->title }}</option>

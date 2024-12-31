@@ -11,7 +11,7 @@
     <div class="row bg-secondary bg-opacity-25 rounded">
         <h2 class="text-center">Danh mục</h2>
         @foreach ($categories as $category)
-            <div class="col-lg-3 my-3">
+            <div class="col-3 my-3">
                 <div class="card shadow bg-primary bg-opacity-25">
                     <div class="card-body">
                         <h5 class="card-title">{{ $category->name }}</h5>
