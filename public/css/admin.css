@@ -60,7 +60,3 @@ ul {
 tfoot {
     display: table-header-group;
 }
-
-table.dataTable tbody td {
-    word-break: break-word; word-break: break-all; white-space: normal;
-  }

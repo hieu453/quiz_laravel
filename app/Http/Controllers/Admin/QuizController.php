@@ -36,7 +36,7 @@ class QuizController extends Controller
 
         Quiz::create($validatedData);
 
-        return to_route('quiz.all');
+        return to_route('quiz.all')->with('success', 'Đã thêm môn học.');
     }
 
     public function importSpreadsheet()
@@ -87,9 +87,8 @@ class QuizController extends Controller
         $validatedData['status'] = (int)$request->status;
 
         Quiz::where('id', $id)->first()->update($validatedData);
-        // $quiz->update($request->all());
 
-        return to_route('quiz.all');
+        return to_route('quiz.all')->with('success', 'Đã cập nhật môn học.');
     }
 
     // public function destroy(int $id)
