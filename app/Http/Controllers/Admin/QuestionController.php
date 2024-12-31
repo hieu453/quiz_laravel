@@ -37,7 +37,7 @@ class QuestionController extends Controller
 
         Question::create($validatedData);
 
-        return redirect()->route('question.all');
+        return to_route('question.all')->with('success', 'Đã thêm câu hỏi.');
     }
 
     public function importSpreadsheet()
@@ -110,39 +110,47 @@ class QuestionController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'options' => 'required|max:255'
-        ]);
-        $validatedData['quiz_id'] = $request->quiz_id;
-        // dd($validatedData);
-        // $question = Question::find($id);
-        // $question->title = $request->title;
-        // $question->quiz_id = $request->quiz_id;
-        // $question->save();
+        if ($request->options) {
+            $validatedData = $request->validate([
+                'title' => 'required|max:255|unique:questions',
+                'options' => 'required'
+            ]);
+            $validatedData['quiz_id'] = $request->quiz_id;
+            // dd($validatedData);
+            // $question = Question::find($id);
+            // $question->title = $request->title;
+            // $question->quiz_id = $request->quiz_id;
+            // $question->save();
 
-        Question::where('id', $id)->first()->update($validatedData);
+            Question::where('id', $id)->first()->update($validatedData);
 
-        foreach ($request->options as $option) {
-            if ($option['text'] == null) {
-                return redirect()->back()->withErrors(['errors' => 'Phải điền hết trường lựa chọn']);
+            foreach ($request->options as $option) {
+                if ($option['text'] == null) {
+                    return redirect()->back()->withErrors(['errors' => 'Phải điền hết trường lựa chọn']);
+                }
+                // kiem tra neu id cua cau hoi trung voi id cau hoi dung thi cap nhat, get('correct') la id cau hoi dung
+                if ($option['option_id'] == $request->get('correct')) {
+                    Option::where('id', $request->get('correct'))->update([
+                        'text' => $option['text'],
+                        'is_correct' => 1
+                    ]);
+                    continue;
+                } else {
+                    Option::where('id', $option['option_id'])->update([
+                        'text' => $option['text'],
+                        'is_correct' => 0
+                    ]);
+                }
             }
-            // kiem tra neu id cua cau hoi trung voi id cau hoi dung thi cap nhat, get('correct') la id cau hoi dung
-            if ($option['option_id'] == $request->get('correct')) {
-                Option::where('id', $request->get('correct'))->update([
-                    'text' => $option['text'],
-                    'is_correct' => 1
-                ]);
-                continue;
-            } else {
-                Option::where('id', $option['option_id'])->update([
-                    'text' => $option['text'],
-                    'is_correct' => 0
-                ]);
-            }
+        } else {
+            $validatedData = $request->validate([
+                'title' => 'required|max:255|unique:questions',
+            ]);
+            $validatedData['quiz_id'] = $request->quiz_id;
+            Question::where('id', $id)->first()->update($validatedData);
         }
 
-        return redirect()->route('question.all');
+        return to_route('question.all')->with('success', 'Đã cập nhật câu hỏi');
     }
 
     public function deleteMultiple(Request $request)

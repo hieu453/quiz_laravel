@@ -29,7 +29,7 @@ class AdminCategoryController extends Controller
 
         Category::create($validatedData);
 
-        return to_route('category.all');
+        return to_route('category.all')->with('success', 'Đã thêm danh mục.');
     }
 
     public function importSpreadsheet()
@@ -74,7 +74,7 @@ class AdminCategoryController extends Controller
 
         Category::where('id', $id)->first()->update($validatedData);
 
-        return to_route('category.all');
+        return to_route('category.all')->with('success', 'Đã cập nhật danh mục.');
     }
 
     public function deleteMultiple(Request $request)
