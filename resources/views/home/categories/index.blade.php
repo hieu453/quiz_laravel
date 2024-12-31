@@ -1,15 +1,17 @@
 @extends('home.app')
 @section('title', 'Danh mục')
 @section('content')
-<div class="container py-5 bg-opacity-10" style="min-height: 90vh;">
+<div class="container py-5 my-5 rounded border rounded">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-primary bg-opacity-25 rounded px-2 py-2">
+        <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
             <li class="breadcrumb-item">Danh mục</li>
         </ol>
     </nav>
-    <div class="row bg-secondary bg-opacity-25 rounded">
-        <h2 class="text-center">Danh mục</h2>
+    <div class="row">
+        <h1>Danh mục</h1>
+    </div>
+    <div class="row">
         @foreach ($categories as $category)
             <div class="col-3 my-3">
                 <div class="card shadow bg-primary bg-opacity-25">
@@ -21,9 +23,10 @@
                             <i class="fa-solid fa-star"></i>
                         </span>
                     </div>
-                </div>
+                 </div>
             </div>
         @endforeach
     </div>
+    
 </div>
 @endsection

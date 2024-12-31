@@ -20,17 +20,8 @@
     </div>
 </div>
 
-<div class="container mt-5" style="min-height: 90vh;">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home.category.all') }}" class="text-secondary text-decoration-none">Danh mục</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home.category.show', ['slug' => $quiz->category->slug]) }}" class="text-secondary text-decoration-none">{{ $quiz->category->name }}</a></li>
-            <li class="breadcrumb-item">{{ $quiz->title }}</li>
-        </ol>
-    </nav>
-
-    <div class="py-5">
+<div class="container mt-5">
+    <div class="row rounded py-5">
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>
         @if (Auth::check())
