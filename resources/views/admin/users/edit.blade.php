@@ -1,10 +1,10 @@
 @extends('admin.app')
 @section('title', 'Người dùng | Sửa')
 @section('content')
-@error('title')
+@error('name')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
-@error('description')
+@error('email')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
 @error('current_password')
@@ -37,7 +37,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="exampleInputText" class="form-label">Tên người dùng</label>
+                <label class="form-label">Tên người dùng</label>
                 <input type="text" name="name" class="form-control" value="{{ $user->name }}">
             </div>
             <div class="mb-3">

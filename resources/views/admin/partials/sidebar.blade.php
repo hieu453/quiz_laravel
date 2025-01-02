@@ -49,7 +49,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts4" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('quiz.import') }}">Nhập excel</a>
+                        {{-- <a class="nav-link" href="{{ route('quiz.import') }}">Nhập excel</a> --}}
                         <a class="nav-link" href="{{ route('document.all') }}">Tất cả tài liệu</a>
                     </nav>
                 </div>
@@ -60,7 +60,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('question.import')  }}">Nhập excel</a>
+                        {{-- <a class="nav-link" href="{{ route('question.import')  }}">Nhập excel</a> --}}
                         <a class="nav-link" href="{{ route('user.all') }}">Tất cả người dùng</a>
                     </nav>
                 </div>

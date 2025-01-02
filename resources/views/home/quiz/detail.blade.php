@@ -22,7 +22,7 @@
 
 <div class="container mt-5" style="min-height: 90vh;">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb bg-primary bg-opacity-25 rounded px-2 py-2">
             <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('home.category.all') }}" class="text-secondary text-decoration-none">Danh mục</a></li>
             <li class="breadcrumb-item"><a href="{{ route('home.category.show', ['slug' => $quiz->category->slug]) }}" class="text-secondary text-decoration-none">{{ $quiz->category->name }}</a></li>
