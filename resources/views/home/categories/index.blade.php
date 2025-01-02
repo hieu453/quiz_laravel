@@ -13,6 +13,7 @@
         @foreach ($categories as $category)
             <div class="col-3 my-3">
                 <div class="card shadow bg-primary bg-opacity-25">
+                    <img src="{{ asset('storage/category_image/'.$category->image) }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ $category->name }}</h5>
                         {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}

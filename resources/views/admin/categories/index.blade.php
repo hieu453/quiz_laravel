@@ -19,6 +19,9 @@
     @error('name')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
+    @error('image')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
 
     <div class="card mb-4">
         <div class="card-header">

@@ -7,7 +7,9 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Imports\CategoriesImport;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Collection;
 
 class AdminCategoryController extends Controller
 {
@@ -24,10 +26,27 @@ class AdminCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255|unique:categories',
+            'image' => 'required|mimes:jpg,png,jpeg|mimetypes:image/jpeg,image/png,image/jpg',
         ]);
         $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
 
-        Category::create($validatedData);
+        // get file name and extension
+        $file = $validatedData['image']->getClientOriginalName();
+
+        // get file name
+        $fileName = pathinfo($file, PATHINFO_FILENAME);
+        // get file extension
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+        $finalFileName = "{$fileName}".Str::random().".{$fileExtension}";
+
+        Category::create([
+            'name' => $validatedData['name'],
+            'slug' => $validatedData['slug'],
+            'image' => $finalFileName,
+        ]);
+
+        Storage::putFileAs('category_image', $validatedData['image'], $finalFileName);
 
         return to_route('category.all')->with('success', 'Đã thêm danh mục.');
     }
@@ -67,18 +86,45 @@ class AdminCategoryController extends Controller
     public function update(int $id, Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'image' => 'required|mimes:jpg,png,jpeg|mimetypes:image/jpeg,image/png,image/jpg',
         ]);
-
         $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
 
-        Category::where('id', $id)->first()->update($validatedData);
+        // get file name and extension
+        $file = $validatedData['image']->getClientOriginalName();
+        // get file name
+        $fileName = pathinfo($file, PATHINFO_FILENAME);
+        // get file extension
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+        $finalFileName = "{$fileName}".Str::random().".{$fileExtension}";
+
+        $category = Category::where('id', $id)->first();
+        Storage::delete("category_image/{$category->image}");
+        $category->update([
+            'name' => $validatedData['name'],
+            'slug' => $validatedData['slug'],
+            'image' => $finalFileName,
+        ]);
+
+        Storage::putFileAs('category_image', $validatedData['image'], $finalFileName);
 
         return to_route('category.all')->with('success', 'Đã cập nhật danh mục.');
     }
 
     public function deleteMultiple(Request $request)
     {
+        $categories = Category::find($request->get('ids'));
+
+        if ($categories instanceof Collection) {
+            foreach ($categories as $category) {
+                Storage::delete("category_image/{$category->image}");
+            }
+        } else {
+            Storage::delete("category_image/{$categories->image}");
+        }
+
         Category::destroy($request->get('ids'));
         return response()->json(['message' => 'Delete category success!']);
     }
