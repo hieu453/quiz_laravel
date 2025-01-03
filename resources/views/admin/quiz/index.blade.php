@@ -14,6 +14,10 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
+        @error('image')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
         @error('description')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror

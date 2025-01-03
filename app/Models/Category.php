@@ -14,10 +14,11 @@ class Category extends Model
         'name',
         'slug',
         'image',
+        'status',
     ];
 
     public function quizzes(): HasMany
     {
-        return $this->hasMany(Quiz::class);
+        return $this->hasMany(Quiz::class)->where('status', 1);
     }
 }

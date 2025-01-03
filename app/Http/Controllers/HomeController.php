@@ -17,11 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $quizzes = Quiz::where('has_questions', 1)->cursorPaginate(2);
-
-        return view('home.index', [
-            'quizzes' => $quizzes
-        ]);
+        return view('home.index');
     }
 
     public function quizDetail(int $id, Request $request)

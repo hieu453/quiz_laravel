@@ -7,6 +7,9 @@
 @error('description')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
+@error('image')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
 <div class="mx-3 my-3">
     <div class="row">
         <div class="col-6">
@@ -16,7 +19,7 @@
             <a href="{{ route('quiz.all') }}" class="btn btn-secondary float-end">Trở lại</a>
         </div>
     </div>
-    <form action="{{ route('quiz.update', ['id' => $quiz->id]) }}" method="POST">
+    <form action="{{ route('quiz.update', ['id' => $quiz->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -45,6 +48,13 @@
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="mb-3">
+            <div>
+                <img src="{{ asset("storage/quiz_image/{$quiz->image}") }}" alt="" width="350" height="350">
+            </div>
+            <label class="form-label">Ảnh</label>
+            <input type="file" name="image" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">Mô tả</label>

@@ -16,7 +16,6 @@
                     <img src="{{ asset('storage/category_image/'.$category->image) }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ $category->name }}</h5>
-                        {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
                         <a href="{{ route('home.category.show', ['slug' => $category->slug]) }}" class="btn btn-outline-dark">Xem ngay</a>
                         <span class="float-end">
                             <i class="fa-solid fa-star"></i>

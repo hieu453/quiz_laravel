@@ -9,8 +9,19 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label class="form-label">Tiêu đề</label>
-                    <input type="text" name="name" class="form-control">
+                    <div class="row">
+                        <div class="col-6">
+                                <label class="form-label">Tiêu đề</label>
+                                <input type="text" name="name" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Trạng thái</label>
+                            <select name="status" class="form-select">
+                                <option value="0">Khóa</option>
+                                <option value="1" selected>Mở</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Ảnh</label>

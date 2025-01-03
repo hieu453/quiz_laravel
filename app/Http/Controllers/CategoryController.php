@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function all()
     {
         return view('home.categories.index', [
-            'categories' => Category::all()
+            'categories' => Category::where('status', 1)->get(),
         ]);
     }
 
@@ -20,15 +20,15 @@ class CategoryController extends Controller
         $categories = Category::where('name', 'like', "%{$request->get('c')}%")->get();
 
         return view('home.categories.index', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
     public function show($slug)
     {
         return view('home.categories.show', [
-            'categories' => Category::all(),
-            'category'   => Category::where('slug', $slug)->first()
+            // 'categories' => Category::all(),
+            'category'   => Category::where('slug', $slug)->first(),
         ]);
     }
 }

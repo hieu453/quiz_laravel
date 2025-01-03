@@ -1,4 +1,4 @@
-<form action="{{ route('quiz.store') }}" method="POST">
+<form action="{{ route('quiz.store') }}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="modal fade" id="addQuizModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -17,8 +17,23 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label class="form-label">Tiêu đề</label>
-                <input type="text" name="title" class="form-control">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label">Tiêu đề</label>
+                        <input type="text" name="title" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Trạng thái</label>
+                        <select name="status" class="form-select">
+                            <option value="0">Khóa</option>
+                            <option value="1" selected>Mở</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ảnh</label>
+                <input type="file" name="image" class="form-control">
             </div>
             <div class="mb-3">
                 <label class="form-label">Mô tả</label>

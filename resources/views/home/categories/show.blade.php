@@ -15,6 +15,7 @@
             @foreach ($category->quizzes as $quiz)
                 <div class="col-lg-3 my-3">
                     <div class="card shadow">
+                        <img src="{{ asset('storage/quiz_image/'.$quiz->image) }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ $quiz->title }}</h5>
                             <p class="card-text">{{ $quiz->description }}</p>

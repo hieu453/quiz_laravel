@@ -18,6 +18,7 @@ class Quiz extends Model
         'description',
         'status',
         'time',
+        'image',
     ];
 
     public function questions(): HasMany

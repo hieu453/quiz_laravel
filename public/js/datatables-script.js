@@ -130,7 +130,7 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
             },
             success: function (data) {
                 table.rows({ selected: true }).remove().draw();
-                table.button().text(`Delete record(s): ${table.rows({ selected: true }).count()}`);
+                table.button().text(`Xoá nhiều bản ghi: ${table.rows({ selected: true }).count()}`);
                 table.button().disable();
 
                 $(modalId).modal('hide');

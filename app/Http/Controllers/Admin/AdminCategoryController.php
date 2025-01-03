@@ -27,12 +27,12 @@ class AdminCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255|unique:categories',
             'image' => 'required|mimes:jpg,png,jpeg|mimetypes:image/jpeg,image/png,image/jpg',
+            'status' => 'required',
         ]);
         $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
 
         // get file name and extension
         $file = $validatedData['image']->getClientOriginalName();
-
         // get file name
         $fileName = pathinfo($file, PATHINFO_FILENAME);
         // get file extension
@@ -44,6 +44,7 @@ class AdminCategoryController extends Controller
             'name' => $validatedData['name'],
             'slug' => $validatedData['slug'],
             'image' => $finalFileName,
+            'status' => $validatedData['status'],
         ]);
 
         Storage::putFileAs('category_image', $validatedData['image'], $finalFileName);
@@ -88,6 +89,7 @@ class AdminCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'image' => 'required|mimes:jpg,png,jpeg|mimetypes:image/jpeg,image/png,image/jpg',
+            'status' => 'required',
         ]);
         $validatedData['slug'] = Str::slug($request->name) . '-' . Str::random();
 
@@ -106,6 +108,7 @@ class AdminCategoryController extends Controller
             'name' => $validatedData['name'],
             'slug' => $validatedData['slug'],
             'image' => $finalFileName,
+            'status' => $validatedData['status'],
         ]);
 
         Storage::putFileAs('category_image', $validatedData['image'], $finalFileName);
