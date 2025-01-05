@@ -15,7 +15,7 @@
             <div class="">
                 <form action="{{ route('home.category.search') }}" method="GET">
                     <div class="input-group">
-                        <input type="text" name="c" class="form-control rounded-start-pill" placeholder="Tìm kiếm">
+                        <input type="text" name="c" class="form-control rounded-start-pill" placeholder="Tìm kiếm danh mục">
                         <button class="btn btn-outline-secondary" type="submit">
                             <i class="fa fa-search"></i>
                         </button>

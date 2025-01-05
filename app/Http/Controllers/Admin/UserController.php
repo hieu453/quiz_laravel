@@ -69,7 +69,7 @@ class UserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('success', 'Đã sửa mật khẩu người');
+        return redirect()->back()->with('success', 'Đã sửa mật khẩu người dùng!');
     }
 
     public function deleteMultiple(Request $request)
