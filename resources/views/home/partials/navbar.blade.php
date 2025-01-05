@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(220, 205, 186)">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(220, 205, 186);">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('index') }}">
             <img src="https://media.istockphoto.com/id/1186386668/vector/quiz-in-comic-pop-art-style-quiz-brainy-game-word-vector-illustration-design.jpg?s=612x612&w=0&k=20&c=mBQMqQ6kZuC9ZyuV5_uCm80QspqSJ7vRm0MfwL3KLZY=" alt="" width="30" height="24" style="border-radius: 30px">
@@ -9,19 +9,19 @@
         <div class="collapse navbar-collapse d-flex justify-content-between">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('index') }}">Trang chủ</a>
+                    <a class="nav-link " style="font-weight: 600" href="{{ route('index') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home.category.all') }}">Danh mục</a>
+                    <a class="nav-link" style="font-weight: 600" href="{{ route('home.category.all') }}">Danh mục</a>
                 </li>
             </ul>
             <div class="">
                 <form action="{{ route('home.category.search') }}" method="GET" class="d-flex justify-content-center align-items-center">
                     <div class="col">
-                        <input type="text" name="c" class="form-control rounded-pill" placeholder="Tên danh mục">
+                        <input type="text" name="c" class="form-control " placeholder="Tên danh mục">
                     </div>
                     <div class="col ms-1">
-                        <button class="btn btn-sm rounded-pill btn-outline-dark" type="submit">Tìm kiếm</button>
+                        <button class="btn btn-sm  btn-outline-dark" type="submit">Tìm kiếm</button>
                     </div>
                 </form>
             </div>

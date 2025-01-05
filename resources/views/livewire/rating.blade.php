@@ -1,7 +1,7 @@
 <div>
     <div class="row mt-3 py-3 rounded bg-body-secondary">
     @if (Auth::check())
-        <div class="col-6">
+        <div class="col-6 px-5">
             <h1>Đánh giá</h1>
             <hr>
             <ul class="rounded" style="list-style-type: none;">

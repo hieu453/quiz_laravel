@@ -1,4 +1,4 @@
-<div class="row py-3 mt-3">
+<div class="row py-3 mt-3 px-5">
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}

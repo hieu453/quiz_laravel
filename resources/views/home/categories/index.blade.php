@@ -1,7 +1,7 @@
 @extends('home.app')
 @section('title', 'Danh mục')
 @section('content')
-<div class="container py-5 my-5 rounded border rounded">
+<div class="container py-5 my-5 rounded border ">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>

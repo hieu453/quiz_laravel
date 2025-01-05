@@ -1,9 +1,8 @@
 @extends('home.app')
 @section('title', 'Môn học')
 @section('content')
-<div class="container py-5">
-    <div class="row">
-        <div class="py-5 mb-5 border rounded">
+<div class="py-5">
+        <div class="container py-5 border rounded">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
@@ -30,6 +29,5 @@
             @endforeach
             </div>
         </div>
-    </div>
 </div>
 @endsection

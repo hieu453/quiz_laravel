@@ -1,6 +1,8 @@
 .landing-background {
     position: relative;
-    height: 100vh;
+    /* height: calc( 100vh - 186px); */
+    height: calc( 100vh - 56.2
+    px);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -173,7 +175,10 @@ ul {
 } */
 
 .container {
-    background-image: url('https://png.pngtree.com/background/20220724/original/pngtree-abstract-green-and-white-background-with-flowing-lines-picture-image_1745664.jpg');
+    background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjk2MC1uaW5nLTMwLmpwZw.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: calc(100vh - 282px);
 }
 
 /* .container-menu {
@@ -193,3 +198,9 @@ ul {
 .title-detail:hover {
     color: #3a7bd5;
 } */
+
+
+.text-body-secondary{
+    font-weight: 600;
+    color: black;
+}

@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($request->user()->id)],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
             'is_admin' => ['required']
         ]);
 
@@ -69,7 +69,7 @@ class UserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('success', 'Đã sửa mật khẩu người');
+        return redirect()->back()->with('success', 'Đã sửa mật khẩu người dùng.');
     }
 
     public function deleteMultiple(Request $request)

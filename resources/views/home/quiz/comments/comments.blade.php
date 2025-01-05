@@ -1,5 +1,5 @@
 @foreach($comments as $comment)
-    <div id={{ $comment->id }} class="display-comment border mb-3 px-3 py-3">
+    <div id={{ $comment->id }} class="display-comment border border-dark  mb-3 px-3 py-3">
         <div class="d-flex">
             <div class="avatar rounded text-center"><i class="fa-regular fa-user"></i></div>
             <strong class="ms-2">{{ $comment->user->name }}</strong>

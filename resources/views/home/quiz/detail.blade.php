@@ -21,25 +21,31 @@
 </div>
 
 <div class="container mt-5">
-    <div class="row rounded py-5">
+    <div class="row rounded py-5 px-2">
         <h1>{{ $quiz->title }}</h1>
         <p>{{ $quiz->description }}</p>
-        @if (Auth::check())
-            <a href="{{ route('questions.session', ['id' => $quiz->id]) }}" class="btn btn-outline-primary">
-                <i class="fa-solid fa-hand-point-right"></i>
-                Bắt đầu làm bài!
-            </a>
-        @else
-            <!-- Button trigger modal -->
-            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <i class="fa-solid fa-hand-point-right"></i>
-                Bắt đầu làm bài!
-            </a>
-        @endif
-        <a href="{{ route('quiz.documents', ['id' => $quiz->id]) }}" class="btn btn-outline-secondary">Xem tài liệu</a>
+
+        <div class="d-flex flex-column gap-2 justify-items-center align-items-center">
+            
+    
+            @if (Auth::check())
+                <a href="{{ route('questions.session', ['id' => $quiz->id]) }}" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-hand-point-right"></i>
+                    Bắt đầu làm bài!
+                </a>
+            @else
+                <!-- Button trigger modal -->
+                <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fa-solid fa-hand-point-right"></i>
+                    Bắt đầu làm bài!
+                </a>
+            @endif
+            <a href="{{ route('quiz.documents', ['id' => $quiz->id]) }}" class="btn btn-outline-secondary">Xem tài liệu</a>
     </div>
 
-    <div class="row">
+    </div>
+
+    <div class="row px-5">
         <h3 class="text-center">Top điểm cao</h3>
         <table class="table table-striped">
             <thead class="table-primary">
@@ -64,6 +70,8 @@
     {{-- Comment section --}}
     @include('home.quiz.comments.index', ['quiz' => $quiz, 'comments' => $comments, 'commentsAndRepliesLength' => $commentsAndRepliesLength])
     {{-- Rating section --}}
-    <livewire:rating :quizId="$quiz->id"></livewire:rating>
+
+
+    <livewire:rating :quizId="$quiz->id"></livewire:rating> 
 </div>
 @endsection
