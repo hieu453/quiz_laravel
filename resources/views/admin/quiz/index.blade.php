@@ -69,7 +69,6 @@
                             <td>{{ $quiz->category->name }}</td>
                             <td>{{ $quiz->title }}</td>
                             {{-- <td>{{ $quiz->description }}</td> --}}
-                            {{-- <td>{{ $quiz->has_questions ? 'Đã có' : 'Chưa có' }}</td> --}}
                             <td><span class="badge rounded-pill text-bg-{{ $quiz->status ? 'primary' : 'danger' }}">{{ $quiz->status ? 'Đang mở' : 'Đã khóa' }}</span></td>
                             <td>{{ $quiz->created_at }}</td>
                             <td>{{ $quiz->updated_at }}</td>

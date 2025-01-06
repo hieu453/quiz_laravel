@@ -37,7 +37,7 @@ class QuizController extends Controller
             'status' => 'required',
         ]);
         $validatedData['category_id'] = $request->category_id;
-        $validatedData['has_questions'] = 0;
+        // $validatedData['has_questions'] = 0;
 
         // get file name and extension
         $file = $validatedData['image']->getClientOriginalName();
@@ -52,7 +52,7 @@ class QuizController extends Controller
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'category_id' => $validatedData['category_id'],
-            'has_questions' => $validatedData['has_questions'],
+            // 'has_questions' => $validatedData['has_questions'],
             'status' => $validatedData['status'],
             'image' => $finalFileName,
         ]);

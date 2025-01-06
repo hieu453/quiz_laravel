@@ -31,7 +31,7 @@ class QuizImport implements ToModel, WithValidation, WithHeadingRow
             'title'         => $row['title'],
             'description'   => $row['description'],
             'category_id'   => $this->category_id,
-            'has_questions' => 0
+            // 'has_questions' => 0
         ]);
     }
 

@@ -64,7 +64,7 @@ class HomeController extends Controller
 
         $questions = Question::where([
             ['quiz_id', '=', $id],
-            ['has_options', '=', 1]
+            // ['has_options', '=', 1]
         ])->inRandomOrder()->limit(10)->get();
 
         session(['questions' => $questions]);

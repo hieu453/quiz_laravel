@@ -27,7 +27,7 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $quiz = Quiz::where('id', $request->get('quiz_id'))->first();
-        $quiz->has_questions = 1;
+        // $quiz->has_questions = 1;
         $quiz->save();
 
         $validatedData = $request->validate([
@@ -54,7 +54,7 @@ class QuestionController extends Controller
         ]);
 
         $quiz = Quiz::where('id', $request->get('quiz_id'))->first();
-        $quiz->has_questions = 1;
+        // $quiz->has_questions = 1;
         $quiz->save();
 
         try {

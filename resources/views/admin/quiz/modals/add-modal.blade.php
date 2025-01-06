@@ -39,7 +39,7 @@
                 <label class="form-label">Mô tả</label>
                 <textarea name="description" class="form-control"></textarea>
             </div>
-            <input type="hidden" name="has_questions" value="0">
+            {{-- <input type="hidden" name="has_questions" value="0"> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
