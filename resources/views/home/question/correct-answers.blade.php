@@ -1,7 +1,7 @@
 @extends('home.app')
 @section('title', 'Đáp án')
 @section('content')
-    <div class="pt-5">
+    <div class="py-5 container-image">
         <div class="container">
             <div class="row">
                 <div class="col-6 bg-secondary bg-opacity-25 px-5 py-3 shadow-sm">

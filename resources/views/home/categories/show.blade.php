@@ -11,8 +11,8 @@
     </nav>
     <div class="row">
         <h2 class="text-center">{{ $category->name }}</h2>
-        <div class="row bg-secondary bg-opacity-25">
-            @foreach ($category->quizzes as $quiz)
+        <div class="row bg-secondary bg-opacity-25 container-image">
+            @foreach ($quizzes as $quiz)
                 <div class="col-lg-3 my-3">
                     <div class="card shadow">
                         <img src="{{ asset('storage/quiz_image/'.$quiz->image) }}" class="card-img-top" alt="...">
@@ -25,6 +25,9 @@
                 </div>
             @endforeach
         </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        {{ $quizzes->links() }}
     </div>
 </div>
 @endsection

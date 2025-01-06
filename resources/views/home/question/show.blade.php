@@ -17,7 +17,7 @@
     </div>
 </div>
 {{-- Content --}}
-<div class="container py-5">
+<div class="container py-5 container-image my-3 rounded">
         <form id="question-form" action="{{ route('checkResult') }}" method="POST">
             @csrf
             <input type="hidden" name="number_of_questions" value="{{ count($questions) }}">

@@ -8,7 +8,7 @@
             <li class="breadcrumb-item">Danh mục</li>
         </ol>
     </nav>
-    <div class="row bg-secondary bg-opacity-25 rounded">
+    <div class="row bg-secondary bg-opacity-25 rounded container-image">
         <h2 class="text-center">Danh mục</h2>
         @foreach ($categories as $category)
             <div class="col-3 my-3">
@@ -24,6 +24,9 @@
                 </div>
             </div>
         @endforeach
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        {{ $categories->links() }}
     </div>
 </div>
 @endsection

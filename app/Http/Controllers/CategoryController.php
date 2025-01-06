@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function all()
     {
         return view('home.categories.index', [
-            'categories' => Category::where('status', 1)->get(),
+            'categories' => Category::where('status', 1)->paginate(12),
         ]);
     }
 
@@ -26,9 +26,10 @@ class CategoryController extends Controller
 
     public function show($slug)
     {
+        $quizzes = Category::where('slug', $slug)->first()->quizzes()->paginate(12);
         return view('home.categories.show', [
-            // 'categories' => Category::all(),
-            'category'   => Category::where('slug', $slug)->first(),
+            'category' => Category::where('slug', $slug)->first(),
+            'quizzes' => $quizzes,
         ]);
     }
 }

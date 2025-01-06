@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="container mt-5" style="min-height: 90vh;">
+<div class="container mt-5">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-primary bg-opacity-25 rounded px-2 py-2">
             <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-secondary text-decoration-none">Trang chủ</a></li>
@@ -29,23 +29,29 @@
             <li class="breadcrumb-item">{{ $quiz->title }}</li>
         </ol>
     </nav>
+</div>
 
-    <div class="py-5">
-        <h1>{{ $quiz->title }}</h1>
-        <p>{{ $quiz->description }}</p>
-        @if (Auth::check())
-            <a href="{{ route('questions.session', ['id' => $quiz->id]) }}" class="btn btn-outline-primary">
-                <i class="fa-solid fa-hand-point-right"></i>
-                Bắt đầu làm bài!
-            </a>
-        @else
-            <!-- Button trigger modal -->
-            <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <i class="fa-solid fa-hand-point-right"></i>
-                Bắt đầu làm bài!
-            </a>
-        @endif
-        <a href="{{ route('quiz.documents', ['id' => $quiz->id]) }}" class="btn btn-outline-secondary">Xem tài liệu</a>
+<div class="container container-image rounded mb-3" style="min-height: 90vh;">
+    <div class="d-flex justify-content-center">
+        <div class="py-5">
+            <h1 class="text-center">{{ $quiz->title }}</h1>
+            <p class="text-center">{{ $quiz->description }}</p>
+            <div class="text-center">
+                @if (Auth::check())
+                    <a href="{{ route('questions.session', ['id' => $quiz->id]) }}" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-hand-point-right"></i>
+                        Bắt đầu làm bài!
+                    </a>
+                @else
+                    <!-- Button trigger modal -->
+                    <a class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fa-solid fa-hand-point-right"></i>
+                        Bắt đầu làm bài!
+                    </a>
+                @endif
+                <a href="{{ route('quiz.documents', ['id' => $quiz->id]) }}" class="btn btn-outline-secondary">Xem tài liệu</a>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -74,5 +80,6 @@
     @include('home.quiz.comments.index', ['quiz' => $quiz, 'comments' => $comments, 'commentsAndRepliesLength' => $commentsAndRepliesLength])
     {{-- Rating section --}}
     <livewire:rating :quizId="$quiz->id"></livewire:rating>
+    </div>
 </div>
 @endsection
