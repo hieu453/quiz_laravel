@@ -18,7 +18,7 @@
                             <label class="form-label">Trạng thái</label>
                             <select name="status" class="form-select">
                                 <option value="0">Khóa</option>
-                                <option value="1" selected>Mở</option>
+                                <option value="1" selected>Đang mở</option>
                             </select>
                         </div>
                     </div>

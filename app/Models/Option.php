@@ -16,6 +16,8 @@ class Option extends Model
         'is_correct'
     ];
 
+    public $timestamps = false;
+
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);

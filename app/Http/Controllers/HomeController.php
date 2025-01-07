@@ -97,6 +97,7 @@ class HomeController extends Controller
 
         $points = number_format((float)$points, 1, '.', '');
 
+        // update lai cau tra loi da co
         $answered = UserAnswer::where('quiz_id', $request->quiz_id)->first();
         if ($answered) {
             $answered->update([

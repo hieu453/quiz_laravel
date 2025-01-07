@@ -44,7 +44,7 @@ function datatable(tableId, modalId, url, searchIndividual = []) {
             },
            {
                 width: '20%',
-                targets: 3
+                targets: -1
            },
            {
                 orderable: false,

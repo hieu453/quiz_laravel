@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-6">
                     <label class="form-label">Thời gian</label>
-                    <input type="number" value="{{ $quiz->time }}" class="form-control" name="time" min="10" max="50" step="1" oninput="this.value = Math.round(this.value);">
+                    <input type="number" value="{{ $quiz->time }}" class="form-control" name="time" min="1" max="50" step="1" oninput="this.value = Math.round(this.value);">
                 </div>
                 <div class="col-6">
                     <label class="form-label">Trạng thái</label>

@@ -18,9 +18,9 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\DocumentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/test', function () {
+// Route::get('/test', function () {
 
-});
+// });
 Route::get('/categories', [CategoryController::class, 'all'])->name('home.category.all');
 Route::get('/categories/search', [CategoryController::class, 'search'])->name('home.category.search');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('home.category.show');
@@ -99,6 +99,7 @@ Route::prefix('admin')->middleware(['auth', CheckIfUserIsAdmin::class])->group(f
     Route::delete('/user-deleteMultiple', [UserController::class, 'deleteMultiple'])->name('user.deleteMultiple');
 
     Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+    Route::get('/feedback/{id}', [FeedbackController::class, 'detail'])->name('feedback.detail');
 });
 
 // Route::get('/dashboard', function () {
